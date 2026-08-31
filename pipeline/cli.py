@@ -12,10 +12,11 @@ import argparse
 import sys
 
 FASES_PENDENTES = {
-    "ingerir": "Fase 2 — depende do dicionário de naturezas (Fase 1)",
-    "calcular": "Fase 2 — depende da ingestão",
-    "cobertura": "Fase 3 — depende da varredura municipal completa",
-    "publicar": "Fase 5 — depende da série calculada",
+    "ingerir": "sem uso próprio — `ctb calcular` busca e cacheia sob demanda "
+               "(pipeline/fontes/http.py), não há passo de ingestão separado que "
+               "valha a pena manter",
+    "cobertura": "Fase 3 — depende da varredura municipal completa dos dez anos",
+    "publicar": "Fase 5 — depende da série calculada (2016-2025) e do site",
     "comparar-historico": "Fase 4 — depende da série calculada",
 }
 
@@ -64,6 +65,11 @@ def main(argv: list[str] | None = None) -> int:
     val.add_argument("--tolerancia", type=float, default=0.1,
                      help="diferença máxima aceita por rubrica, em R$ bi")
 
+    calc = sub.add_parser(
+        "calcular", help="Fase 2 — agrega, imputa e monta os quadros de um ano"
+    )
+    calc.add_argument("--anos", type=_intervalo, required=True)
+
     for nome, fase in FASES_PENDENTES.items():
         sub.add_parser(nome, help=f"[não implementado] {fase}")
 
@@ -90,6 +96,13 @@ def main(argv: list[str] | None = None) -> int:
         from pipeline.dominio.validar import validar
 
         return validar(args.esfera, args.anos, args.tolerancia)
+
+    if args.comando == "calcular":
+        from pipeline.dominio.calcular import executar
+
+        for ano in args.anos:
+            executar(ano)
+        return 0
 
     parser.error(f"comando não tratado: {args.comando}")
     return 2

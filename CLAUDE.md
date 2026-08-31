@@ -164,11 +164,15 @@ Salvaguardas obrigatórias, todas com efeito de parada ou aviso:
 
 ## Convenções
 
-- Python, `uv` para dependências, `polars` ou `pandas` (escolha uma e mantenha)
+- Python, `uv` para dependências, `polars` (escolhido na Fase 2)
 - Formato longo em todo o `intermediario/`; os quatro indicadores (R$ bi, % PIB,
-  % total, per capita) são **calculados na publicação**, nunca armazenados
-- Nomes de colunas em português, snake_case, alinhados ao vocabulário do Siconfi
-  (`co_natureza`, `no_natureza`, `an_exercicio`, `id_ente`)
+  % total, per capita) são **calculados na publicação**, nunca armazenados. Esquema
+  vigente (opção B, `pipeline/dominio/agregacao.py`): `ano | esfera | id_ente |
+  nome_ente | rubrica | base_incidencia | valor_reais | imputado | metodo_imputacao |
+  fonte | versao_dicionario`. `esfera` aqui é o **bloco de publicação** (U/E/M), não o
+  literal esfera da DCA — o DF (esfera `D`) tem parte do que declara publicada no
+  bloco Municípios (regra do DF)
+- Nomes de colunas em português, snake_case
 - Dicionários em CSV com `;` e UTF-8 BOM, para abrirem direto no Excel
 - Commits em português, no imperativo
 
@@ -178,8 +182,9 @@ Salvaguardas obrigatórias, todas com efeito de parada ou aviso:
 uv run ctb fontes testar                  # Fase 0 — diagnóstico de endpoints
 uv run ctb fontes varrer-municipios --anos 2024   # censo dos 5.569 municípios (~15 min/ano)
 uv run ctb dicionario validar --esfera U  # Fase 1 — estrutura, cobertura e reconciliação
-uv run ctb ingerir --anos 2016-2025       # baixa e cacheia
-uv run ctb calcular --anos 2016-2025      # imputa, aplica dicionário, agrega
+uv run ctb calcular --anos 2024           # Fase 2 — agrega, imputa, byGOVDetalhado e
+                                           # Bases de Incidência (ainda não os 5 quadros
+                                           # nem a série completa — ver PROJETO-CTB.md)
 uv run ctb cobertura                      # relatório de declarantes e imputação
 uv run ctb publicar                       # gera dados/publicado/*.json
 uv run pytest testes/invariantes          # somas fecham, sem natureza órfã

@@ -1,4 +1,4 @@
-"""Critério de aceite da Fase 1.
+﻿"""Critério de aceite da Fase 1.
 
 O dicionário só vale se três coisas forem verdade ao mesmo tempo:
 
@@ -21,6 +21,7 @@ from pathlib import Path
 from pipeline.dominio.dicionario import (
     ErroDicionario, carregar_mapeamentos, carregar_politica_colunas, classificar,
 )
+from pipeline.fontes.cache import DIR_CACHE_DCA, esferas_por_ente, itens_dca
 from pipeline.fontes.diagnostico import ABAS_MICRODADO, _publicado_uniao, br
 
 # Ramos patrimoniais fora do escopo de arrecadação (não são carga tributária, nunca
@@ -48,9 +49,6 @@ def _casar_linha(publicado: dict[str, float], rubrica: str) -> float | None:
             return v
     return None
 from pipeline.fontes.http import RAIZ
-
-DIR_CACHE = RAIZ / "dados" / "bruto" / "siconfi_dca"
-DIR_ENTES = RAIZ / "dados" / "bruto" / "siconfi_entes" / "cadastro" / "entes.json"
 
 # Prefixo de natureza de 8 dígitos (planilha) → rubrica do dicionário. Serve só para
 # construir o alvo da reconciliação a partir do CTB2024.xlsx; não é usado no cálculo.
@@ -92,29 +90,6 @@ TOLERANCIA_AMPLIADA = {
 }
 
 
-def _esferas() -> dict[str, str]:
-    entes = json.loads(DIR_ENTES.read_text(encoding="utf-8"))["items"]
-    return {str(e["cod_ibge"]): e["esfera"] for e in entes}
-
-
-# O DF usa o dicionário dos estados: entrega uma DCA só, com competências das duas
-# esferas. A separação acontece na coluna `bloco`, não na leitura.
-ESFERAS_DO_DICIONARIO = {"U": ("U",), "E": ("E", "D"), "M": ("M",)}
-
-
-def _itens_do_cache(ano: int, esfera_alvo: str, esferas: dict[str, str]) -> dict[str, list[dict]]:
-    dir_ano = DIR_CACHE / str(ano)
-    if not dir_ano.exists():
-        return {}
-    aceitas = ESFERAS_DO_DICIONARIO[esfera_alvo]
-    por_ente = {}
-    for arq in dir_ano.iterdir():
-        if esferas.get(arq.stem) not in aceitas:
-            continue
-        por_ente[arq.stem] = json.loads(arq.read_text(encoding="utf-8")).get("items", [])
-    return por_ente
-
-
 def _alvo_opcao_b() -> dict[str, float]:
     """Alvo por rubrica: principal + acessórios dos microdados de 2024 da planilha."""
     import openpyxl
@@ -153,11 +128,11 @@ def validar(esfera: str, anos: range, tolerancia_bi: float = 0.1) -> int:
           f"{len({m.rubrica for m in mapas})} rubricas, nenhuma dupla contagem")
 
     # 2. cobertura
-    esferas = _esferas()
+    esferas = esferas_por_ente()
     orfas_por_ano: dict[int, dict[str, int]] = {}
     for ano in anos:
         contagem: dict[str, int] = collections.Counter()
-        for itens in _itens_do_cache(ano, esfera, esferas).values():
+        for itens in itens_dca(ano, esfera, esferas).values():
             _, orfas = classificar(itens, esfera, ano, mapas, politica)
             contagem.update(orfas)
         if contagem:
@@ -246,7 +221,7 @@ def _politica_bruta(politica: dict[tuple[str, str], str]) -> dict[tuple[str, str
 
 def _somar_por_bloco(esfera, mapas, politica, esferas, ano) -> dict[tuple[str, str], float]:
     calculado: dict[tuple[str, str], float] = collections.defaultdict(float)
-    for itens in _itens_do_cache(ano, esfera, esferas).values():
+    for itens in itens_dca(ano, esfera, esferas).values():
         valores, _ = classificar(itens, esfera, ano, mapas, politica, por_bloco=True)
         for chave, v in valores.items():
             calculado[chave] += v
@@ -269,7 +244,7 @@ def _reconciliar_bloco(esfera, mapas, politica, esferas, tolerancia_bi: float) -
     if esfera == "M":
         mapas_e = carregar_mapeamentos("E")
         politica_e_bruta = _politica_bruta(politica)
-        for arq_ente, itens in _itens_do_cache(2024, "E", esferas).items():
+        for arq_ente, itens in itens_dca(2024, "E", esferas).items():
             if esferas.get(arq_ente) != "D":
                 continue
             valores, _ = classificar(itens, "D", 2024, mapas_e, politica_e_bruta, por_bloco=True)
@@ -364,7 +339,7 @@ def _serie(esfera: str, anos: range, mapas, politica, esferas) -> int:
     entes_por_ano: dict[int, int] = {}
     for ano in anos:
         acumulado: dict[str, float] = collections.defaultdict(float)
-        cache = _itens_do_cache(ano, esfera, esferas)
+        cache = itens_dca(ano, esfera, esferas)
         entes_por_ano[ano] = sum(1 for itens in cache.values() if itens)
         for itens in cache.values():
             valores, _ = classificar(itens, esfera, ano, mapas, politica)
@@ -405,7 +380,7 @@ def _serie(esfera: str, anos: range, mapas, politica, esferas) -> int:
 
 def _nota_extracao(esfera: str) -> None:
     """A DCA municipal é retificada continuamente: divergir da planilha é esperado."""
-    dir_ano = DIR_CACHE / "2024"
+    dir_ano = DIR_CACHE_DCA / "2024"
     if not dir_ano.exists():
         return
     datas = [arq.stat().st_mtime for arq in dir_ano.iterdir()]
@@ -423,7 +398,7 @@ def _nota_extracao(esfera: str) -> None:
 def _rotulos(anos: range, esfera: str, esferas: dict[str, str]) -> dict[str, str]:
     rot = {}
     for ano in anos:
-        for itens in _itens_do_cache(ano, esfera, esferas).values():
+        for itens in itens_dca(ano, esfera, esferas).values():
             for i in itens:
                 rot.setdefault(i["cod_conta"], i["conta"])
     return rot
@@ -432,7 +407,7 @@ def _rotulos(anos: range, esfera: str, esferas: dict[str, str]) -> dict[str, str
 def _contas_em_ramos(anos: range, esfera: str, esferas: dict[str, str], ramos) -> set[str]:
     achadas = set()
     for ano in anos:
-        for itens in _itens_do_cache(ano, esfera, esferas).values():
+        for itens in itens_dca(ano, esfera, esferas).values():
             for i in itens:
                 if i["cod_conta"].startswith(ramos):
                     achadas.add(i["cod_conta"])
@@ -442,7 +417,7 @@ def _contas_em_ramos(anos: range, esfera: str, esferas: dict[str, str], ramos) -
 def _reconciliar(mapas, politica, esferas, tolerancia_bi: float) -> int:
     alvo = _alvo_opcao_b()
     calculado: dict[str, float] = collections.defaultdict(float)
-    for itens in _itens_do_cache(2024, "U", esferas).values():
+    for itens in itens_dca(2024, "U", esferas).values():
         valores, _ = classificar(itens, "U", 2024, mapas, politica)
         for rubrica, v in valores.items():
             calculado[rubrica] += v

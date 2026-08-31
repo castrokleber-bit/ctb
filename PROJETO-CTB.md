@@ -342,11 +342,46 @@ O ponto de atenção específico da opção B: a árvore de contas da DCA é hie
 `RO1.1.1.0.00.0.0` já contém `RO1.1.1.3.00.0.0`. Somar pai e filho conta duas vezes. O
 dicionário precisa declarar, por rubrica, qual é o nível de agregação.
 
-### Fase 2 — Ingestão e cálculo de um ano
+### Fase 2 — Ingestão e cálculo de um ano ✅ **primeira passada em 2026-08-31**
 Módulos de fonte com cache e retry. Reconstruir 2024 **inteiramente a partir das APIs**,
 sem tocar no Excel, incluindo a imputação municipal.
 **Critério de aceite:** o total de 2024 sai coerente com a ordem de grandeza conhecida
 (~36% do PIB) e toda divergência contra a planilha tem causa identificada.
+
+`uv run ctb calcular --anos 2024` roda de ponta a ponta e escreve
+`docs/resultado-2024.md`. Total calculado: **R$ 3.981,516 bi (33,80% do PIB)**. Fecha o
+critério de aceite: somando de volta o gap conhecido de FGTS + Sistema S (fontes
+manuais, ainda não ingeridas — R$ 221,3 bi, 1,88 p.p.), o total sobe para **35,68%**,
+muito perto dos 35,950% publicados; o resíduo final (~0,27 p.p.) é o efeito deliberado
+da decisão 6 (receita líquida em estados/municípios) somado aos resíduos pequenos já
+documentados em `docs/divergencias.md`.
+
+Imputação municipal: 5.544 declarantes + 25 imputados = 5.569 municípios, 99,82% da
+população coberta, 0,095% da receita municipal imputada. As faixas 16 e 17 (as de menos
+de 30 declarantes, previstas na decisão 3) mesclaram com a faixa vizinha, como
+projetado.
+
+**Escopo desta passada — dois dos cinco quadros**, deliberadamente:
+`byGOVDetalhado` e `Bases de Incidência`, que são reproduzíveis direto do dicionário já
+validado na Fase 1. Ficam para uma passada seguinte: `AD ESFERA` (precisa de uma
+categoria econômica que ainda não existe no dicionário), `PRINCIPAIS TRIBUTOS` (precisa
+de regras de agregação cruzando esferas, ex. "Imposto de Renda Global" = IR da União +
+IRRF de estados e municípios) e `RD ESFERA` (depende de transferências constitucionais;
+a fonte já foi identificada na decisão 5, mas o bloco Estados→Municípios continua sem
+fonte).
+
+Módulos novos: `pipeline/fontes/sidra.py` (PIB e população), `pipeline/fontes/cache.py`
+e `pipeline/fontes/planilha_referencia.py` (extraídos de `validar.py`/`diagnostico.py`
+para reaproveitar sem duplicar), `pipeline/dominio/imputacao.py`,
+`pipeline/dominio/agregacao.py`, `pipeline/dominio/quadros.py` e
+`pipeline/dominio/calcular.py` (orquestrador). `classificar()` em `dicionario.py` ganhou
+o parâmetro `com_base`, porque rubrica não determina base de incidência univocamente
+(rubricas residuais como "Outros impostos" agregam contas de bases diferentes).
+
+Achado de dados durante a construção: um município (Boa Esperança do Norte-MT) não tem
+estimativa de população na tabela do SIDRA usada; o pipeline usa o cadastro de entes do
+Siconfi como respaldo e avisa — sem isso, o município seria excluído do universo de
+imputação em silêncio.
 
 ### Fase 3 — Série 2016–2025
 Rodar os dez anos. Aqui aparecem as quebras de série: mudanças de codificação de
@@ -432,30 +467,57 @@ e a fonte do bloco Estados→Municípios das transferências (item 5 acima).
 
 ## 9. Estado atual do repositório
 
-Fases 0 e 1 concluídas. O que existe:
+Fases 0 e 1 concluídas; Fase 2 com a primeira passada feita (2024, dois dos cinco
+quadros). O que existe:
 
 ```
-pipeline/fontes/http.py         cache em disco + retry; nunca refaz download sem --force
-pipeline/fontes/diagnostico.py  Fase 0, reexecutável
-pipeline/dominio/dicionario.py  carrega e aplica o dicionário — 3 operações de coluna,
-                                 detecção de dupla contagem, conta órfã é erro
-pipeline/dominio/validar.py     Fase 1 — estrutura, cobertura, continuidade, reconciliação
-pipeline/cli.py                 `ctb fontes testar/varrer-municipios`, `ctb dicionario
-                                 validar`; as demais fases recusam-se a rodar
-docs/viabilidade-fontes.md      entregável da Fase 0 (gerado)
-docs/divergencias.md            8 itens: 4 resolvidas, 4 abertas mas não urgentes
-docs/decisoes-pendentes.md      8 decisões, todas tomadas, com números e efeito medido
-dicionario/                     6 CSVs — contas das 3 esferas, política de colunas,
-                                 bases de incidência, faixas populacionais (FPM)
-dados/bruto/                    cache do Siconfi, 2,18 GB, fora do git
+pipeline/fontes/http.py              cache em disco + retry; nunca refaz download
+                                      sem --force
+pipeline/fontes/cache.py             leitura do cache DCA já baixado (esferas dos
+                                      entes, itens por esfera/ano)
+pipeline/fontes/sidra.py             PIB corrente e população — SIDRA/IBGE
+pipeline/fontes/planilha_referencia.py  leitura da aba byGOVDetalhado do CTB2024.xlsx,
+                                      só para comparação
+pipeline/fontes/diagnostico.py       Fase 0, reexecutável
+pipeline/dominio/dicionario.py       carrega e aplica o dicionário — 3 operações de
+                                      coluna, `com_base` para não perder a base de
+                                      incidência de rubricas residuais, dupla
+                                      contagem e conta órfã são erro
+pipeline/dominio/validar.py          Fase 1 — estrutura, cobertura, continuidade,
+                                      reconciliação
+pipeline/dominio/imputacao.py        imputação municipal por faixa do FPM, com as
+                                      duas salvaguardas do CLAUDE.md
+pipeline/dominio/agregacao.py        monta a tabela intermediária de um ano
+                                      (dados/intermediario/{ano}.parquet)
+pipeline/dominio/quadros.py          byGOVDetalhado e Bases de Incidência a partir
+                                      da tabela intermediária
+pipeline/dominio/calcular.py         orquestra a Fase 2, escreve
+                                      docs/resultado-{ano}.md
+pipeline/cli.py                      `ctb fontes testar/varrer-municipios`,
+                                      `ctb dicionario validar`, `ctb calcular`; as
+                                      demais fases recusam-se a rodar
+docs/viabilidade-fontes.md           entregável da Fase 0 (gerado)
+docs/resultado-2024.md               entregável da primeira passada da Fase 2 (gerado)
+docs/divergencias.md                 8 itens: 4 resolvidas, 4 abertas mas não urgentes
+docs/decisoes-pendentes.md           8 decisões, todas tomadas, com números e efeito
+                                      medido
+dicionario/                          6 CSVs — contas das 3 esferas, política de
+                                      colunas, bases de incidência, faixas
+                                      populacionais (FPM)
+dados/bruto/                         cache do Siconfi + SIDRA, fora do git
+dados/intermediario/                 parquet por ano, fora do git (reproduzível do
+                                      cache)
 ```
 
 ```bash
 uv sync
 uv run ctb fontes testar --anos 2016-2025           # regenera o relatório a partir do cache
 uv run ctb dicionario validar --esfera U            # idem, U/E/M
+uv run ctb calcular --anos 2024                     # gera docs/resultado-2024.md
 ```
 
-**Próximo passo:** Fase 2 — ingestão e cálculo de 2024 inteiramente a partir das APIs,
-incluindo o módulo de transferências constitucionais (fonte já identificada e testada,
-decisão 5) e a imputação municipal (faixas já definidas, decisão 3).
+**Próximo passo:** completar os três quadros restantes (AD ESFERA, PRINCIPAIS
+TRIBUTOS, RD ESFERA — cada um precisa de investigação própria, ver Fase 2 acima) e/ou
+avançar para a Fase 3 (rodar os dez anos). O módulo de transferências constitucionais
+(fonte já identificada e testada, decisão 5) ainda não foi escrito — é pré-requisito de
+RD ESFERA.

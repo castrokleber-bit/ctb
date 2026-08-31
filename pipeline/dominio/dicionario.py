@@ -178,12 +178,22 @@ def classificar(
     mapas: list[Mapeamento] | None = None,
     politica: dict[tuple[str, str], str] | None = None,
     por_bloco: bool = False,
+    com_base: bool = False,
 ) -> tuple[dict, list[str]]:
     """Agrega os itens de um ente por rubrica, aplicando a política de colunas.
 
-    Devolve `(valores, contas_orfas)`. A chave de `valores` é a rubrica, ou a tupla
-    `(bloco, rubrica)` quando `por_bloco` — necessário para separar o DF, cujos ISS,
-    IPTU e ITBI são publicados no bloco Municípios.
+    Devolve `(valores, contas_orfas)`. A chave de `valores` é a rubrica por padrão;
+    `por_bloco` antepõe o bloco (`(bloco, rubrica)`) — necessário para separar o DF,
+    cujos ISS, IPTU e ITBI são publicados no bloco Municípios; `com_base` acrescenta a
+    base de incidência ao fim da chave.
+
+    `com_base` existe porque **rubrica não determina base_incidencia univocamente**:
+    rubricas residuais como "Outros impostos" e "Contribuições de Melhoria e
+    Econômicas" agregam contas de bases diferentes (ex.: ITR de convênio é
+    `patrimonio`, IOF lançado por município é `transacoes_financeiras`, mas os dois
+    caem na mesma rubrica "Outros impostos"). Quem precisa do quadro `Bases de
+    Incidência` correto tem que pedir `com_base=True`; agregar só por rubrica e depois
+    tentar adivinhar a base de uma delas produziria número errado silenciosamente.
 
     Quem chama decide o que fazer com as órfãs: o pipeline falha, o diagnóstico relata.
     """
@@ -220,6 +230,12 @@ def classificar(
         if operacao == "ignorar":
             continue
         sinal = 1.0 if operacao == "somar" else -1.0
-        chave = (alvo.bloco, alvo.rubrica) if por_bloco else alvo.rubrica
+        partes = []
+        if por_bloco:
+            partes.append(alvo.bloco)
+        partes.append(alvo.rubrica)
+        if com_base:
+            partes.append(alvo.base_incidencia)
+        chave = tuple(partes) if len(partes) > 1 else partes[0]
         valores[chave] = valores.get(chave, 0.0) + sinal * i["valor"]
     return valores, sorted(orfas)
