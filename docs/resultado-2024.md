@@ -23,6 +23,46 @@ O total acima fecha em 33,80% do PIB, abaixo dos 35,950% da série publicada de 
 
 O restante é resíduo pequeno e já documentado — ver `docs/divergencias.md` e `docs/decisoes-pendentes.md` (Contribuições Econômicas da União, IPTU e IRRF municipais).
 
+## AD ESFERA
+
+### União
+
+| rubrica | R$ bi | % PIB | % total | per capita (R$) |
+|---|---|---|---|---|
+| Impostos | 1.018,529 | 8,647 | 25,581 | 4.791,19 |
+| Contribuições Sociais | 706,103 | 5,994 | 17,735 | 3.321,53 |
+| Previdência Social | 636,975 | 5,408 | 15,998 | 2.996,35 |
+| Demais | 153,898 | 1,307 | 3,865 | 723,94 |
+
+
+### Estados
+
+| rubrica | R$ bi | % PIB | % total | per capita (R$) |
+|---|---|---|---|---|
+| ICMS | 808,157 | 6,861 | 20,298 | 3.801,59 |
+| IPVA | 87,053 | 0,739 | 2,186 | 409,50 |
+| Demais | 211,744 | 1,798 | 5,318 | 996,05 |
+
+
+### Municípios
+
+| rubrica | R$ bi | % PIB | % total | per capita (R$) |
+|---|---|---|---|---|
+| ISS | 142,091 | 1,206 | 3,569 | 668,40 |
+| IPTU | 74,042 | 0,629 | 1,860 | 348,29 |
+| Demais | 142,923 | 1,213 | 3,590 | 672,31 |
+
+
+**Contra o valor publicado em 2024** (informativo — a diferença é esperada: opção B redistribuiu os acessórios de volta às rubricas de origem, e a linha *Contribuições Sociais* da União aqui não inclui Sistema S, ainda não ingerido):
+
+| esfera | categoria | calculado | publicado 2024 | diferença |
+|---|---|---|---|---|
+| União | Impostos | 1.018,529 | 994,879 | +23,650 |
+| União | Contribuições Sociais | 706,103 | 710,864 | −4,761 |
+| União | Demais | 153,898 | 225,833 | −71,935 |
+| Estados | Demais | 211,744 | 211,532 | +0,212 |
+| Municípios | Demais | 142,923 | 139,529 | +3,394 |
+
 ## byGOVDetalhado
 
 ### União
@@ -78,6 +118,36 @@ O restante é resíduo pequeno e já documentado — ver `docs/divergencias.md` 
 | Outros impostos | 0,511 | 0,004 | 0,013 | 2,41 |
 
 
+## PRINCIPAIS TRIBUTOS
+
+| tributo | R$ bi | % PIB | % total | per capita (R$) |
+|---|---|---|---|---|
+| Imposto de Renda (Global) | 915,984 | 7,776 | 23,006 | 4.308,81 |
+| ICMS | 808,157 | 6,861 | 20,298 | 3.801,59 |
+| Previdência Social Ampliada | 721,560 | 6,126 | 18,123 | 3.394,24 |
+| Cofins | 367,242 | 3,118 | 9,224 | 1.727,52 |
+| CSLL | 166,760 | 1,416 | 4,188 | 784,44 |
+| ISS | 142,091 | 1,206 | 3,569 | 668,40 |
+| PIS-PASEP | 103,824 | 0,881 | 2,608 | 488,39 |
+| IPVA | 87,053 | 0,739 | 2,186 | 409,50 |
+| IPI | 84,373 | 0,716 | 2,119 | 396,89 |
+| Comércio Exterior (Importação + Exportação) | 77,762 | 0,660 | 1,953 | 365,80 |
+| IPTU | 74,042 | 0,629 | 1,860 | 348,29 |
+| IOF | 67,748 | 0,575 | 1,702 | 318,69 |
+| ITBI | 25,083 | 0,213 | 0,630 | 117,99 |
+| ITCD | 18,425 | 0,156 | 0,463 | 86,67 |
+| ITR | 3,493 | 0,030 | 0,088 | 16,43 |
+| CPMF | -0,017 | -0,000 | -0,000 | -0,08 |
+| Demais tributos | 317,936 | 2,699 | 7,985 | 1.495,58 |
+
+
+**Contra o valor publicado em 2024** (informativo, mesma ressalva da opção B acima):
+
+| tributo | calculado | publicado 2024 | diferença |
+|---|---|---|---|
+| Imposto de Renda (Global) | 915,984 | 894,479 | +21,505 |
+| Previdência Social Ampliada | 721,560 | 673,083 | +48,477 |
+
 ## Bases de Incidência
 
 | base de incidência | R$ bi | % PIB | % total | per capita (R$) |
@@ -99,8 +169,7 @@ O restante é resíduo pequeno e já documentado — ver `docs/divergencias.md` 
 - Imputados: 25 (0,095% da receita municipal)
 - Faixas com menos de 30 declarantes, mescladas com a faixa vizinha para o cálculo da média: 16←[15], 17←[18]
 
-## O que falta nesta passada
+## O que falta
 
-- **AD ESFERA** e **PRINCIPAIS TRIBUTOS** — precisam de investigação nova na planilha de referência (categoria econômica e agregação cruzando esferas, respectivamente) que não foi feita ainda.
-- **RD ESFERA** — depende de transferências constitucionais; o bloco Estados→Municípios segue sem fonte (decisão 5).
+- **RD ESFERA** — depende de transferências constitucionais. A API já identificada (decisão 5) cobre FPM, FPE, FUNDEB, royalties de transferência e outras modalidades, mas a planilha de referência mostra pelo menos duas transferências sem código correspondente no catálogo da API (Salário-Educação, Seguro-Receita ICMS), além do bloco Estados→Municípios (cota-parte do ICMS/IPVA), que segue sem fonte.
 - **FGTS e Sistema S** — fontes manuais, nenhum CSV coletado ainda.

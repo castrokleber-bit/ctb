@@ -13,7 +13,8 @@ from pathlib import Path
 
 from pipeline.dominio.agregacao import calcular_ano
 from pipeline.dominio.quadros import (
-    ROTULO_ESFERA, bases_incidencia, bygov_detalhado, total_por_esfera,
+    ROTULO_ESFERA, ad_esfera, bases_incidencia, bygov_detalhado, principais_tributos,
+    total_por_esfera,
 )
 from pipeline.fontes.diagnostico import br
 from pipeline.fontes.http import RAIZ
@@ -25,6 +26,22 @@ from pipeline.fontes.sidra import pib_corrente, populacao_brasil
 # (linhas "FGTS" e "Sistema S" do bloco União em `byGOVDetalhado`), citados aqui só
 # para dimensionar o gap conhecido — nunca somados ao cálculo.
 GAP_MANUAL_2024_BI = {"FGTS": 191.995, "Sistema S": 29.320}
+
+# Valores publicados em 2024 (CTB2024.xlsx) para as linhas que cruzam esferas — só para
+# a comparação informativa no relatório. Não usados em nenhum cálculo. A diferença é
+# esperada: opção B (decisão 1) redistribuiu os acessórios de volta às rubricas de
+# origem, então essas linhas sobem frente ao valor antigo (que era só o principal).
+COMPARACAO_PRINCIPAIS_TRIBUTOS_2024_BI = {
+    "Imposto de Renda (Global)": 894.479,
+    "Previdência Social Ampliada": 673.083,
+}
+COMPARACAO_AD_ESFERA_2024_BI = {
+    ("U", "Impostos"): 994.879,
+    ("U", "Contribuições Sociais"): 710.864,  # inclui Sistema S, ainda não ingerido
+    ("U", "Demais"): 225.833,  # incluía Multas e Dívida Ativa, que não existe mais
+    ("E", "Demais"): 211.532,
+    ("M", "Demais"): 139.529,
+}
 
 
 def _tabela_quadro(linhas, casas: int = 3, rotulo_coluna: str = "rubrica") -> str:
@@ -50,6 +67,8 @@ def executar(ano: int) -> Path:
     print("  [3/3] montando os quadros")
     quadro_bygov = bygov_detalhado(df, pib, populacao)
     quadro_bases = bases_incidencia(df, pib, populacao)
+    quadro_ad = ad_esfera(df, pib, populacao)
+    quadro_pt = principais_tributos(df, pib, populacao)
     totais = total_por_esfera(df)
     total = sum(totais.values())
 
@@ -105,9 +124,57 @@ def executar(ano: int) -> Path:
             "reduzem o total frente à metodologia antiga — ver o relatório de 2024 "
             "para a explicação completa e os valores dessa diferença."
         )
-    partes += ["", "## byGOVDetalhado", ""]
+    partes += ["", "## AD ESFERA", ""]
+    for esf in ("U", "E", "M"):
+        partes += [f"### {ROTULO_ESFERA[esf]}", "", _tabela_quadro(quadro_ad[esf]), ""]
+    if ano == 2024:
+        partes += [
+            "**Contra o valor publicado em 2024** (informativo — a diferença é "
+            "esperada: opção B redistribuiu os acessórios de volta às rubricas de "
+            "origem, e a linha *Contribuições Sociais* da União aqui não inclui "
+            "Sistema S, ainda não ingerido):",
+            "",
+            "| esfera | categoria | calculado | publicado 2024 | diferença |",
+            "|---|---|---|---|---|",
+        ]
+        for esf in ("U", "E", "M"):
+            for linha in quadro_ad[esf]:
+                antigo = COMPARACAO_AD_ESFERA_2024_BI.get((esf, linha.rotulo))
+                if antigo is None:
+                    continue
+                dif = linha.valor_bi - antigo
+                partes.append(
+                    f"| {ROTULO_ESFERA[esf]} | {linha.rotulo} | {br(linha.valor_bi, 3)} | "
+                    f"{br(antigo, 3)} | {('+' if dif >= 0 else '−') + br(abs(dif), 3)} |"
+                )
+        partes.append("")
+
+    partes += ["## byGOVDetalhado", ""]
     for esf in ("U", "E", "M"):
         partes += [f"### {ROTULO_ESFERA[esf]}", "", _tabela_quadro(quadro_bygov[esf]), ""]
+
+    partes += [
+        "## PRINCIPAIS TRIBUTOS", "",
+        _tabela_quadro(quadro_pt, rotulo_coluna="tributo"), "",
+    ]
+    if ano == 2024:
+        partes += [
+            "**Contra o valor publicado em 2024** (informativo, mesma ressalva da "
+            "opção B acima):",
+            "",
+            "| tributo | calculado | publicado 2024 | diferença |",
+            "|---|---|---|---|",
+        ]
+        for linha in quadro_pt:
+            antigo = COMPARACAO_PRINCIPAIS_TRIBUTOS_2024_BI.get(linha.rotulo)
+            if antigo is None:
+                continue
+            dif = linha.valor_bi - antigo
+            partes.append(
+                f"| {linha.rotulo} | {br(linha.valor_bi, 3)} | {br(antigo, 3)} | "
+                f"{('+' if dif >= 0 else '−') + br(abs(dif), 3)} |"
+            )
+        partes.append("")
 
     partes += [
         "## Bases de Incidência", "",
@@ -132,13 +199,14 @@ def executar(ano: int) -> Path:
 
     partes += [
         "",
-        "## O que falta nesta passada",
+        "## O que falta",
         "",
-        "- **AD ESFERA** e **PRINCIPAIS TRIBUTOS** — precisam de investigação nova na "
-        "planilha de referência (categoria econômica e agregação cruzando esferas, "
-        "respectivamente) que não foi feita ainda.",
-        "- **RD ESFERA** — depende de transferências constitucionais; o bloco "
-        "Estados→Municípios segue sem fonte (decisão 5).",
+        "- **RD ESFERA** — depende de transferências constitucionais. A API já "
+        "identificada (decisão 5) cobre FPM, FPE, FUNDEB, royalties de transferência "
+        "e outras modalidades, mas a planilha de referência mostra pelo menos duas "
+        "transferências sem código correspondente no catálogo da API "
+        "(Salário-Educação, Seguro-Receita ICMS), além do bloco Estados→Municípios "
+        "(cota-parte do ICMS/IPVA), que segue sem fonte.",
         "- **FGTS e Sistema S** — fontes manuais, nenhum CSV coletado ainda.",
     ]
 

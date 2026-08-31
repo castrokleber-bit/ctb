@@ -342,7 +342,7 @@ O ponto de atenção específico da opção B: a árvore de contas da DCA é hie
 `RO1.1.1.0.00.0.0` já contém `RO1.1.1.3.00.0.0`. Somar pai e filho conta duas vezes. O
 dicionário precisa declarar, por rubrica, qual é o nível de agregação.
 
-### Fase 2 — Ingestão e cálculo de um ano ✅ **primeira passada em 2026-08-31**
+### Fase 2 — Ingestão e cálculo de um ano ✅ **quatro dos cinco quadros, 2026-08-31**
 Módulos de fonte com cache e retry. Reconstruir 2024 **inteiramente a partir das APIs**,
 sem tocar no Excel, incluindo a imputação municipal.
 **Critério de aceite:** o total de 2024 sai coerente com a ordem de grandeza conhecida
@@ -361,14 +361,29 @@ população coberta, 0,095% da receita municipal imputada. As faixas 16 e 17 (as
 de 30 declarantes, previstas na decisão 3) mesclaram com a faixa vizinha, como
 projetado.
 
-**Escopo desta passada — dois dos cinco quadros**, deliberadamente:
-`byGOVDetalhado` e `Bases de Incidência`, que são reproduzíveis direto do dicionário já
-validado na Fase 1. Ficam para uma passada seguinte: `AD ESFERA` (precisa de uma
-categoria econômica que ainda não existe no dicionário), `PRINCIPAIS TRIBUTOS` (precisa
-de regras de agregação cruzando esferas, ex. "Imposto de Renda Global" = IR da União +
-IRRF de estados e municípios) e `RD ESFERA` (depende de transferências constitucionais;
-a fonte já foi identificada na decisão 5, mas o bloco Estados→Municípios continua sem
-fonte).
+**Segunda passada (mesmo dia):** `AD ESFERA` e `PRINCIPAIS TRIBUTOS`. A composição de
+cada um foi reverso-engenheirada do `CTB2024.xlsx` com casamento exato contra os
+valores publicados — não é mais incógnita:
+
+- `AD ESFERA` não é uma categoria econômica uniforme — é "os 2 a 4 maiores itens de
+  cada esfera, nomeados, resto em Demais". União: Impostos (IR+IPI+IOF+ITR+Comércio
+  Exterior), Contribuições Sociais (Cofins+CSLL+PIS-PASEP+CPMF+Contrib.Seg.Serv.
+  Público+Outras contrib. sociais+Salário Educação+Sistema S), Previdência Social,
+  Demais. Estados: ICMS, IPVA, Demais. Municípios: ISS, IPTU, Demais. Confirmado exato
+  contra 2024 em `pipeline/dominio/quadros.py`.
+- `PRINCIPAIS TRIBUTOS`: a maioria é uma rubrica de esfera só (confere exato). Três
+  cruzam esferas: "Imposto de Renda (Global)" = IR da União + IRRF de estados +
+  IRRF de municípios (confere exato: 894,479 na metodologia antiga); "Previdência
+  Social Ampliada" = RGPS + Previ. Estadual + Previd. Municipal (aproxima, não fecha
+  ao centavo — reportado sem forçar). Desvio deliberado: a linha "Comércio Exterior"
+  fica combinada (importação + exportação), porque o dicionário da União agrega os
+  dois numa conta só.
+
+Ambos calculados sem dado novo, a partir da mesma tabela intermediária. Fica para uma
+passada seguinte: `RD ESFERA`, que depende de transferências constitucionais — a fonte
+da decisão 5 cobre a maior parte, mas a planilha mostra duas modalidades sem código
+correspondente (Salário-Educação, Seguro-Receita ICMS), além do bloco
+Estados→Municípios, que continua sem fonte.
 
 Módulos novos: `pipeline/fontes/sidra.py` (PIB e população), `pipeline/fontes/cache.py`
 e `pipeline/fontes/planilha_referencia.py` (extraídos de `validar.py`/`diagnostico.py`
@@ -489,15 +504,16 @@ pipeline/dominio/imputacao.py        imputação municipal por faixa do FPM, com
                                       duas salvaguardas do CLAUDE.md
 pipeline/dominio/agregacao.py        monta a tabela intermediária de um ano
                                       (dados/intermediario/{ano}.parquet)
-pipeline/dominio/quadros.py          byGOVDetalhado e Bases de Incidência a partir
-                                      da tabela intermediária
+pipeline/dominio/quadros.py          4 dos 5 quadros a partir da tabela
+                                      intermediária: byGOVDetalhado, Bases de
+                                      Incidência, AD ESFERA, PRINCIPAIS TRIBUTOS
 pipeline/dominio/calcular.py         orquestra a Fase 2, escreve
                                       docs/resultado-{ano}.md
 pipeline/cli.py                      `ctb fontes testar/varrer-municipios`,
                                       `ctb dicionario validar`, `ctb calcular`; as
                                       demais fases recusam-se a rodar
 docs/viabilidade-fontes.md           entregável da Fase 0 (gerado)
-docs/resultado-2024.md               entregável da primeira passada da Fase 2 (gerado)
+docs/resultado-2024.md               entregável da Fase 2 até agora (gerado)
 docs/divergencias.md                 8 itens: 4 resolvidas, 4 abertas mas não urgentes
 docs/decisoes-pendentes.md           8 decisões, todas tomadas, com números e efeito
                                       medido
@@ -516,8 +532,7 @@ uv run ctb dicionario validar --esfera U            # idem, U/E/M
 uv run ctb calcular --anos 2024                     # gera docs/resultado-2024.md
 ```
 
-**Próximo passo:** completar os três quadros restantes (AD ESFERA, PRINCIPAIS
-TRIBUTOS, RD ESFERA — cada um precisa de investigação própria, ver Fase 2 acima) e/ou
-avançar para a Fase 3 (rodar os dez anos). O módulo de transferências constitucionais
-(fonte já identificada e testada, decisão 5) ainda não foi escrito — é pré-requisito de
-RD ESFERA.
+**Próximo passo:** `RD ESFERA` (precisa do módulo de transferências constitucionais —
+fonte identificada na decisão 5, mas ainda não escrito, mais resolver duas modalidades
+sem código na API e o bloco Estados→Municípios) e/ou avançar para a Fase 3 (rodar os
+dez anos com os quatro quadros já prontos).
