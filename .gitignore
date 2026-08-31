@@ -1,0 +1,11 @@
+# cache de downloads — sagrado em disco, mas fora do git (volumoso e reproduzível)
+dados/bruto/
+dados/intermediario/
+
+# ambiente
+.venv/
+__pycache__/
+*.pyc
+
+# Excel abre lock files ao lado das planilhas
+~$*.xlsx

@@ -1,0 +1,11 @@
+# Normaliza fim de linha: LF no repositório, nativo no working tree.
+* text=auto
+
+# Os dicionários são lidos por Python e abertos no Excel. Manter LF no repositório
+# para o diff ficar legível; o BOM UTF-8 é preservado porque não é fim de linha.
+*.csv text eol=lf
+*.py  text eol=lf
+*.md  text eol=lf
+
+# Planilhas de referência são binárias — nunca normalizar nem tentar fazer diff.
+*.xlsx binary

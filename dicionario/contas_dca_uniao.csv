@@ -1,0 +1,48 @@
+﻿cod_conta;rubrica;tributo;base_incidencia;vigencia_inicio;vigencia_fim;observacao
+RO1.1.1.1.00.0.0;Imp. sobre Comércio Exterior;II + IE;comercio_exterior;2016;;agrega 1.1.1.1.01 (importação) e .02 (exportação)
+RO1.1.1.2.00.0.0;ITR;ITR;patrimonio;2016;;na União o ramo de patrimônio contém apenas o ITR (1.1.1.2.01)
+RO1.1.1.3.00.0.0;IR;IRPF + IRPJ + IRRF;renda;2016;;agrega 1.1.1.3.01/.02/.03
+RO1.1.1.4.00.0.0;IPI;IPI;bens_servicos;2016;;na União o ramo de produção e circulação contém apenas o IPI (1.1.1.4.01)
+RO1.1.1.5.00.0.0;IOF;IOF;transacoes_financeiras;2016;;agrega IOF-ouro (.01) e demais operações (.02)
+RO1.1.1.9.00.0.0;Outros impostos;outros impostos;demais;2016;;residual do ramo de impostos, valor marginal
+RO1.1.2.0.00.0.0;Taxas;taxas federais;taxas;2016;;agrega poder de polícia (1.1.2.1) e prestação de serviços (1.1.2.2)
+RO1.2.2.0.00.0.0;Contribuições Econômicas;CIDE e demais contribuições econômicas;bens_servicos;2016;;agrega 1.2.2.1 — CIDE-combustíveis, Condecine, AFRMM, Fust/Funttel
+RO1.2.1.0.01.0.0;Cofins;Cofins;bens_servicos;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.02.0.0;CSLL;CSLL;renda;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.03.0.0;Previdência Social;RGPS;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.04.0.0;Contrib. Seg. Serv. Público;RPPS;salarios;2016;2017;plano de contas anterior a 2018 — agrega os desdobramentos .04.2 a .04.6
+RO1.2.1.0.05.0.0;Contrib. Seg. Serv. Público;custeio das pensões militares;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.06.0.0;Outras contribuições sociais;assistência médica de servidores;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.07.0.0;Outras contribuições sociais;concursos de prognósticos;demais;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.08.0.0;Outras contribuições sociais;sorteios de entidades filantrópicas;demais;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.09.0.0;PIS-PASEP;PIS/Pasep;bens_servicos;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.10.0.0;Outras contribuições sociais;cota-parte da contribuição sindical;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.11.0.0;Outras contribuições sociais;contribuições referentes ao FGTS;salarios;2016;2017;plano de contas anterior a 2018 — não é o FGTS em si, que entra por manual/
+RO1.2.1.0.12.0.0;Salário Educação;salário-educação;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.13.0.0;Outras contribuições sociais;ensino aeroviário;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.14.0.0;Outras contribuições sociais;desenvolvimento do ensino profissional;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.15.0.0;Outras contribuições sociais;arrecadação de fundos de investimento;demais;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.16.0.0;Outras contribuições sociais;contribuição industrial rural;salarios;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.17.0.0;Contribuições Econômicas;adicional à contribuição previdenciária sobre a folha (CIDE);salarios;2016;2017;classificada em 1.2.1 (sociais) até 2017 e em 1.2.2 (econômicas) a partir de 2022 — mantida como econômica para preservar a identidade do tributo na série
+RO1.2.1.0.18.0.0;CPMF;CPMF;transacoes_financeiras;2016;2017;plano de contas anterior a 2018
+RO1.2.1.0.99.0.0;Outras contribuições sociais;demais contribuições sociais;demais;2016;2017;plano de contas anterior a 2018
+RO1.2.1.1.00.0.0;Cofins;Cofins;bens_servicos;2018;;
+RO1.2.1.2.00.0.0;PIS-PASEP;PIS/Pasep;bens_servicos;2018;;
+RO1.2.1.3.00.0.0;CSLL;CSLL;renda;2018;;
+RO1.2.1.4.00.0.0;Previdência Social;RGPS;salarios;2018;;contribuição do empregador e do segurado
+RO1.2.1.5.00.0.0;Contrib. Seg. Serv. Público;RPPS;salarios;2018;;servidor civil e militar
+RO1.2.1.6.00.0.0;Outras contribuições sociais;fundos de assistência médica;salarios;2018;;
+RO1.2.1.7.00.0.0;Outras contribuições sociais;concursos de prognósticos;demais;2018;;loterias
+RO1.2.1.9.01.0.0;Outras contribuições sociais;sorteios de entidades filantrópicas;demais;2018;;
+RO1.2.1.9.02.0.0;Outras contribuições sociais;cota-parte da contribuição sindical;salarios;2018;;
+RO1.2.1.9.03.0.0;Outras contribuições sociais;contribuições referentes ao FGTS;salarios;2018;;não é o FGTS em si, que entra por manual/
+RO1.2.1.9.04.0.0;Salário Educação;salário-educação;salarios;2018;;linha própria no quadro — por isso 1.2.1.9 é mapeado filho a filho
+RO1.2.1.9.05.0.0;Outras contribuições sociais;ensino aeroviário;salarios;2018;;
+RO1.2.1.9.06.0.0;Outras contribuições sociais;desenvolvimento do ensino profissional;salarios;2018;;
+RO1.2.1.9.07.0.0;Outras contribuições sociais;arrecadação de fundos de investimento;demais;2018;;
+RO1.2.1.9.08.0.0;Outras contribuições sociais;contribuição industrial rural;salarios;2018;2022;sucede 1.2.1.0.16
+RO1.2.1.9.09.0.0;Contribuições Econômicas;adicional à contribuição previdenciária sobre a folha (CIDE);salarios;2018;2022;sucede 1.2.1.0.17 e é sucedida por 1.2.2.1.13
+RO1.2.1.9.10.0.0;CPMF;CPMF;transacoes_financeiras;2018;;resíduo de dívida ativa da CPMF (extinta em 2007) — valores negativos são normais
+RO1.2.1.9.11.0.0;Contrib. Seg. Serv. Público;custeio das pensões militares;salarios;2018;2021;sucede 1.2.1.0.05 e é sucedida por 1.2.1.5.04
+RO1.2.1.9.99.0.0;Outras contribuições sociais;demais contribuições sociais;demais;2018;;
+RO1.3.4.0.00.0.0;Royalties e Compensações Financeiras;royalties de petróleo (concessão e partilha), minerais, hídricos e florestais;patrimonio;2016;;decisão 4 (2026-08-31): linha própria. Antes ficava embutida em "Contribuições Econômicas" — 78% da linha publicada de 2024 (R$ 108,4 bi de R$ 138,966 bi) eram royalties, não CIDE. Ramo 1.3.4 "Exploração de Recursos Naturais" da DCA, usado desde 2016, sem plano de contas anterior. NÃO inclui 1.3.1 (aluguéis de imóveis), 1.3.2 (valores mobiliários), 1.3.3 (delegação de serviços), 1.3.6 (cessão de direitos, majoritariamente loterias) nem 1.3.9 (demais) — esses ramos ficam fora do escopo de arrecadação, nunca estiveram nos quadros publicados

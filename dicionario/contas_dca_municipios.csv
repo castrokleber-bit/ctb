@@ -1,0 +1,49 @@
+﻿cod_conta;rubrica;tributo;base_incidencia;bloco;vigencia_inicio;vigencia_fim;observacao
+RO1.1.1.2.01.00.00;Outros impostos;ITR de municípios conveniados;patrimonio;M;2016;2017;o município arrecada o ITR por convênio com a União, mas a competência é federal
+RO1.1.1.2.02.00.00;IPTU;IPTU;patrimonio;M;2016;2017;plano de 8 níveis usado por estados e municípios até 2017
+RO1.1.1.2.04.00.00;IRRF;IRRF;renda;M;2016;2017;até 2017 patrimônio e renda dividem o ramo 1.1.1.2
+RO1.1.1.2.05.00.00;Outros impostos;IPVA lançado por município;patrimonio;M;2016;2017;o IPVA é estadual — ocorrências aqui são erro de classificação do declarante
+RO1.1.1.2.07.00.00;Outros impostos;ITCD lançado por município;patrimonio;M;2016;2017;o ITCD é estadual — ocorrências aqui são erro de classificação do declarante
+RO1.1.1.2.08.00.00;ITBI;ITBI;patrimonio;M;2016;2017;
+RO1.1.1.3.02.00.00;Outros impostos;ICMS lançado por município;bens_servicos;M;2016;2017;o ICMS é estadual — ocorrências aqui são erro de classificação do declarante
+RO1.1.1.3.05.00.00;ISS;ISS;bens_servicos;M;2016;2017;
+RO1.1.1.1.00.00.00;Outros impostos;impostos sem competência municipal;demais;M;2016;2017;presente no plano com valor residual
+RO1.1.2.0.00.00.00;TAXAS;taxas municipais;taxas;M;2016;2017;
+RO1.1.3.0.00.00.00;Contribuições de Melhoria e Econômicas;contribuição de melhoria;demais;M;2016;2017;
+RO1.2.1.0.00.00.00;Previd. Municipal;RPPS municipal e demais contribuições sociais;salarios;M;2016;2017;
+RO1.2.2.0.00.00.00;Contribuições de Melhoria e Econômicas;contribuições econômicas;demais;M;2016;2017;
+RO1.2.3.0.00.00.00;Contribuições de Melhoria e Econômicas;COSIP;bens_servicos;M;2016;2017;até 2017 a COSIP fica em 1.2.3, a partir de 2018 vai para 1.2.4
+RO1.1.1.8.01.1.0;IPTU;IPTU;patrimonio;M;2018;2021;entre 2018 e 2021 os tributos de estados e municípios ficam no ramo 1.1.1.8
+RO1.1.1.8.01.2.0;Outros impostos;IPVA lançado por município;patrimonio;M;2018;2021;erro de classificação do declarante
+RO1.1.1.8.01.3.0;Outros impostos;ITCD lançado por município;patrimonio;M;2018;2021;erro de classificação do declarante
+RO1.1.1.8.01.4.0;ITBI;ITBI;patrimonio;M;2018;2021;
+RO1.1.1.8.02.1.0;Outros impostos;ICMS lançado por município;bens_servicos;M;2018;2021;erro de classificação do declarante
+RO1.1.1.8.02.2.0;Outros impostos;adicional do Fundo de Combate à Pobreza;bens_servicos;M;2018;2021;erro de classificação do declarante
+RO1.1.1.8.02.3.0;ISS;ISS;bens_servicos;M;2018;2021;
+RO1.1.1.8.02.4.0;ISS;adicional do Fundo Municipal de Combate à Pobreza;bens_servicos;M;2018;2021;sucedido por 1.1.1.4.51.2 a partir de 2022
+RO1.1.1.8.02.5.0;Outros impostos;imposto sobre vendas a varejo de combustíveis;bens_servicos;M;2018;2021;resíduo do IVVC, extinto em 1996
+RO1.1.1.2.50.0.0;IPTU;IPTU;patrimonio;M;2022;;
+RO1.1.1.2.51.0.0;Outros impostos;IPVA lançado por município;patrimonio;M;2022;;erro de classificação do declarante
+RO1.1.1.2.52.0.0;Outros impostos;ITCD lançado por município;patrimonio;M;2022;;erro de classificação do declarante
+RO1.1.1.2.53.0.0;ITBI;ITBI;patrimonio;M;2022;;
+RO1.1.1.4.50.0.0;Outros impostos;ICMS lançado por município;bens_servicos;M;2022;;erro de classificação do declarante
+RO1.1.1.4.51.0.0;ISS;ISS;bens_servicos;M;2022;;agrega o ISSQN (.51.1) e o adicional do Fundo Municipal de Combate à Pobreza (.51.2)
+RO1.1.1.4.52.0.0;Outros impostos;imposto sobre vendas a varejo de combustíveis;bens_servicos;M;2022;;resíduo do IVVC, extinto em 1996
+RO1.1.1.4.01.0.0;Outros impostos;IPI lançado por município;bens_servicos;M;2018;;erro de classificação do declarante
+RO1.1.1.1.00.0.0;Outros impostos;impostos sem competência municipal;demais;M;2018;;comércio exterior lançado por município
+RO1.1.1.2.01.0.0;Outros impostos;ITR de municípios conveniados;patrimonio;M;2018;;o município arrecada o ITR por convênio com a União, mas a competência é federal
+RO1.1.1.3.03.0.0;IRRF;IRRF;renda;M;2018;;
+RO1.1.1.3.01.0.0;IRRF;IRRF lançado como IRPF pelo declarante;renda;M;2018;;erro de classificação do declarante
+RO1.1.1.3.02.0.0;IRRF;IRRF lançado como IRPJ pelo declarante;renda;M;2018;;erro de classificação do declarante
+RO1.1.1.5.00.0.0;Outros impostos;IOF lançado por município;transacoes_financeiras;M;2018;;erro de classificação do declarante
+RO1.1.1.6.00.0.0;Outros impostos;ICMS lançado por município;bens_servicos;M;2020;2021;código fora do padrão usado por meia dúzia de prefeituras em 2020 e 2021 (R$ 0,024 bi em 2020)
+RO1.1.1.7.00.0.0;ITBI;ITBI lançado como transferências patrimoniais;patrimonio;M;2020;2020;código fora do padrão usado por uma prefeitura só em 2020 (R$ 0,0016 bi)
+RO1.1.1.9.00.0.0;Outros impostos;outros impostos;demais;M;2018;;
+RO1.1.2.0.00.0.0;TAXAS;taxas municipais;taxas;M;2018;;
+RO1.1.3.0.00.0.0;Contribuições de Melhoria e Econômicas;contribuição de melhoria;demais;M;2018;;
+RO1.2.1.0.00.0.0;Previd. Municipal;RPPS municipal e demais contribuições sociais;salarios;M;2018;;o rótulo publicado é "Previd. Municipal" mas o ramo inclui assistência médica e resíduos federais mal classificados
+RO1.2.2.0.00.0.0;Contribuições de Melhoria e Econômicas;contribuições econômicas;demais;M;2018;;
+RO1.2.3.0.00.0.0;Contribuições de Melhoria e Econômicas;contribuições para entidades privadas;demais;M;2018;;o Sistema S é federal e entra por manual/ — aqui o ramo aparece com valor residual
+RO1.2.4.0.00.0.0;Contribuições de Melhoria e Econômicas;COSIP;bens_servicos;M;2018;;iluminação pública
+RO1.3.4.0.00.00.00;Royalties e Compensações Financeiras;compensações financeiras (royalties);patrimonio;M;2016;2017;decisão 4 (2026-08-31): linha própria, mesmo racional da União. Plano de contas anterior a 2018 — sucedida por RO1.3.4.0.00.0.0
+RO1.3.4.0.00.0.0;Royalties e Compensações Financeiras;royalties de petróleo, minerais e recursos hídricos recebidos pelo município;patrimonio;M;2018;;decisão 4 (2026-08-31): linha própria. Ramo 1.3.4 "Exploração de Recursos Naturais" — é a parcela de royalties que o próprio município recebe como beneficiário (não duplica União nem estado: cada esfera registra só a sua cota). NÃO inclui os demais ramos patrimoniais (1.3.1, 1.3.2, 1.3.3, 1.3.6, 1.3.9), que ficam fora do escopo de arrecadação

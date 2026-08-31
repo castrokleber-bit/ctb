@@ -1,0 +1,44 @@
+﻿cod_conta;rubrica;tributo;base_incidencia;bloco;vigencia_inicio;vigencia_fim;observacao
+RO1.1.1.2.02.00.00;IPTU;IPTU;patrimonio;M;2016;2017;plano de 8 níveis usado por estados e municípios até 2017 — nesta esfera só o DF arrecada IPTU
+RO1.1.1.2.04.00.00;IRRF;IRRF;renda;E;2016;2017;até 2017 patrimônio e renda dividem o ramo 1.1.1.2
+RO1.1.1.2.05.00.00;IPVA;IPVA;patrimonio;E;2016;2017;
+RO1.1.1.2.07.00.00;ITCD;ITCD;patrimonio;E;2016;2017;
+RO1.1.1.2.08.00.00;ITBI;ITBI;patrimonio;M;2016;2017;nesta esfera só o DF arrecada ITBI
+RO1.1.1.3.02.00.00;ICMS;ICMS;bens_servicos;E;2016;2017;até 2017 o ramo 1.1.1.3 é produção e circulação
+RO1.1.1.3.05.00.00;ISS;ISS;bens_servicos;M;2016;2017;nesta esfera só o DF arrecada ISS
+RO1.1.1.1.00.00.00;Outros impostos;impostos sem competência estadual;demais;E;2016;2017;presente no plano com valor nulo
+RO1.1.2.0.00.00.00;TAXAS;taxas estaduais;taxas;E;2016;2017;
+RO1.1.3.0.00.00.00;Contribuições de Melhoria e Econômicas;contribuição de melhoria;demais;E;2016;2017;
+RO1.2.1.0.00.00.00;Previ. Estadual;RPPS estadual e demais contribuições sociais;salarios;E;2016;2017;
+RO1.2.2.0.00.00.00;Contribuições de Melhoria e Econômicas;CIDE e demais contribuições econômicas;demais;E;2016;2017;
+RO1.2.3.0.00.00.00;Contribuições de Melhoria e Econômicas;COSIP;bens_servicos;M;2016;2017;decisão 2 (2026-08-31): COSIP do DF vai para o bloco Municípios, coerente com a COSIP municipal. No plano até 2017 a COSIP fica em 1.2.3, a partir de 2018 vai para 1.2.4. Sem lançamento nesta esfera em 2016-2017 — real estado não tem competência de COSIP, e o DF só passou a declarar a partir de 2019
+RO1.1.1.8.01.1.0;IPTU;IPTU;patrimonio;M;2018;2021;entre 2018 e 2021 os tributos de estados e municípios ficam no ramo 1.1.1.8
+RO1.1.1.8.01.2.0;IPVA;IPVA;patrimonio;E;2018;2021;
+RO1.1.1.8.01.3.0;ITCD;ITCD;patrimonio;E;2018;2021;
+RO1.1.1.8.01.4.0;ITBI;ITBI;patrimonio;M;2018;2021;
+RO1.1.1.8.02.1.0;ICMS;ICMS;bens_servicos;E;2018;2021;
+RO1.1.1.8.02.2.0;ICMS;adicional do Fundo de Combate à Pobreza;bens_servicos;E;2018;2021;
+RO1.1.1.8.02.3.0;ISS;ISS;bens_servicos;M;2018;2021;
+RO1.1.1.8.02.5.0;ICMS;ICMS lançado como IVVC pelo declarante;bens_servicos;E;2018;2021;o IVVC está extinto desde 1996. O único lançamento relevante é o Ceará em 2018 (R$ 2,595 bi): o ICMS do estado cai de 11,193 em 2017 para 9,385 em 2018 e volta a 13,155 em 2019, enquanto ICMS+IVVC de 2018 dá 11,979 — dentro da tendência
+RO1.1.1.4.52.0.0;ICMS;ICMS lançado como IVVC pelo declarante;bens_servicos;E;2022;;mesma conta do IVVC no plano de 2022 em diante — sem lançamento relevante até 2025
+RO1.1.1.1.00.0.0;Outros impostos;impostos sem competência estadual;demais;E;2018;2021;comércio exterior aparece no plano unificado de 2018 com valor nulo
+RO1.1.1.4.01.0.0;Outros impostos;impostos sem competência estadual;demais;E;2018;2021;IPI aparece no plano unificado de 2018 com valor nulo
+RO1.1.1.5.00.0.0;Outros impostos;impostos sem competência estadual;demais;E;2018;2021;IOF aparece no plano unificado de 2018 com valor nulo
+RO1.2.3.0.00.0.0;Contribuições de Melhoria e Econômicas;contribuições para entidades privadas;demais;E;2018;2021;o Sistema S é federal e entra por manual/ — aqui o ramo aparece com valor nulo
+RO1.1.1.2.50.0.0;IPTU;IPTU;patrimonio;M;2022;;nesta esfera só o DF arrecada IPTU — vai para o bloco Municípios (regra do DF)
+RO1.1.1.2.51.0.0;IPVA;IPVA;patrimonio;E;2022;;
+RO1.1.1.2.52.0.0;ITCD;ITCD;patrimonio;E;2022;;
+RO1.1.1.2.53.0.0;ITBI;ITBI;patrimonio;M;2022;;nesta esfera só o DF arrecada ITBI — vai para o bloco Municípios (regra do DF)
+RO1.1.1.4.50.0.0;ICMS;ICMS;bens_servicos;E;2022;;agrega o ICMS (.50.1) e o adicional do Fundo de Combate à Pobreza (.50.2)
+RO1.1.1.4.51.0.0;ISS;ISS;bens_servicos;M;2022;;nesta esfera só o DF arrecada ISS — vai para o bloco Municípios (regra do DF)
+RO1.1.1.3.03.0.0;IRRF;IRRF;renda;E;2018;;
+RO1.1.1.3.01.0.0;IRRF;IRRF lançado como IRPF pelo declarante;renda;E;2018;;erro de classificação do declarante
+RO1.1.1.3.02.0.0;IRRF;IRRF lançado como IRPJ pelo declarante;renda;E;2018;;erro de classificação do declarante
+RO1.1.1.9.00.0.0;Outros impostos;outros impostos;demais;E;2018;;R$ 0,050 bi em 2024 — a série publicada descartava
+RO1.1.2.0.00.0.0;TAXAS;taxas estaduais;taxas;E;2018;;
+RO1.1.3.0.00.0.0;Contribuições de Melhoria e Econômicas;contribuição de melhoria;demais;E;2018;;
+RO1.2.1.0.00.0.0;Previ. Estadual;RPPS estadual e demais contribuições sociais;salarios;E;2018;;o rótulo publicado é "Previ. Estadual" mas o ramo inclui assistência médica e concursos de prognósticos
+RO1.2.2.0.00.0.0;Contribuições de Melhoria e Econômicas;CIDE e demais contribuições econômicas;demais;E;2018;;
+RO1.2.4.0.00.0.0;Contribuições de Melhoria e Econômicas;COSIP;bens_servicos;M;2018;;decisão 2 (2026-08-31): COSIP do DF vai para o bloco Municípios. Só o DF lança esta conta entre os 27 entes de esfera E/D — real estado não tem competência de COSIP (art. 149-A da CF é privativo de município e DF). Confirmado no censo de 2024: R$ 0,3225 bi, 100% Distrito Federal
+RO1.3.4.0.00.00.00;Royalties e Compensações Financeiras;compensações financeiras (royalties);patrimonio;E;2016;2017;decisão 4 (2026-08-31): linha própria, mesmo racional da União. Plano de contas anterior a 2018 — sucedida por RO1.3.4.0.00.0.0. Confirmado: RJ sozinho já lançava R$ 3,51 bi em 2016
+RO1.3.4.0.00.0.0;Royalties e Compensações Financeiras;royalties de petróleo, minerais e recursos hídricos recebidos pelo estado;patrimonio;E;2018;;decisão 4 (2026-08-31): linha própria. Ramo 1.3.4 "Exploração de Recursos Naturais" — é a parcela de royalties que o próprio estado recebe como beneficiário (não duplica a União: cada esfera registra só a sua cota). NÃO inclui os demais ramos patrimoniais (1.3.1, 1.3.2, 1.3.3, 1.3.6, 1.3.9), que ficam fora do escopo de arrecadação

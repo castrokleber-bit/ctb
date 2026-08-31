@@ -1,0 +1,14 @@
+﻿esfera;coluna;operacao;justificativa;fonte;data_definicao
+U;Receitas Brutas Realizadas;somar;base da receita;Siconfi DCA Anexo I-C;2026-08-30
+U;Outras Deduções da Receita;somar;na União a coluna já vem com sinal (restituições e ressarcimentos são negativos). Somar produz a receita líquida — verificado: reproduz o Balanço Geral da União ao centavo em 10 de 11 rubricas de 2024;Siconfi DCA Anexo I-C;2026-08-30
+E;Receitas Brutas Realizadas;somar;base da receita;Siconfi DCA Anexo I-C;2026-08-30
+E;Outras Deduções da Receita;subtrair;decisão 6 (2026-08-31): uniformizar com a União em receita líquida. Nos estados a coluna vem SEM sinal (censo completo de 2024: 0 valores negativos, soma +R$ 22,809 bi) — por isso subtrai, ao contrário da União, que soma. Efeito: −0,194 p.p. do PIB em 2024. A série publicada usava a bruta (IPVA, ITCD, IRRF e Taxas de 2024 batiam exatos com ela) — essa divergência deliberada está em docs/divergencias.md;Siconfi DCA Anexo I-C;2026-08-31
+E;Deduções - FUNDEB;ignorar;o FUNDEB é repartição de receita, não redução de arrecadação. Entra no cálculo de receita disponível (quadro RD ESFERA), nunca na arrecadação direta;Siconfi DCA Anexo I-C;2026-08-30
+E;Deduções - Transferências Constitucionais;ignorar;idem FUNDEB: é repartição, tratada no bloco de transferências;Siconfi DCA Anexo I-C;2026-08-30
+D;Receitas Brutas Realizadas;somar;o DF segue a política dos estados;Siconfi DCA Anexo I-C;2026-08-30
+D;Outras Deduções da Receita;subtrair;decisão 6 (2026-08-31), idem estados — 2024: 0 valores negativos;Siconfi DCA Anexo I-C;2026-08-31
+D;Deduções - FUNDEB;ignorar;idem estados;Siconfi DCA Anexo I-C;2026-08-30
+M;Receitas Brutas Realizadas;somar;base da receita;Siconfi DCA Anexo I-C;2026-08-30
+M;Outras Deduções da Receita;subtrair;decisão 6 (2026-08-31), idem estados. Censo completo de 2024: 0 valores negativos, soma +R$ 4,642 bi. Efeito: −0,040 p.p. do PIB;Siconfi DCA Anexo I-C;2026-08-31
+M;Deduções - FUNDEB;ignorar;idem estados;Siconfi DCA Anexo I-C;2026-08-30
+M;Deduções - Transferências Constitucionais;ignorar;idem estados;Siconfi DCA Anexo I-C;2026-08-30
