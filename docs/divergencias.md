@@ -272,3 +272,65 @@ Rotas de Acesso".
 Decisão de uso e detalhes de parâmetros em `docs/decisoes-pendentes.md` §5. O bloco
 **Estados→Municípios** (cota-parte do ICMS e do IPVA) continua sem fonte — essa API é só
 de transferências da União.
+
+---
+
+## 8. União, 2019 — Previdência Social e Outras contribuições sociais trocam ±1,7 p.p. do PIB ✅ **RESOLVIDA em 2026-09-01**
+
+**Sintoma**, achado pela Fase 4 (`uv run ctb comparar-historico`): comparando contra
+`CTB-Resumo.xlsx`, 2019 é o único ano em que *Previdência Social* despenca
+(−1,664 p.p. do PIB) e *Outras contribuições sociais* dispara (+1,771 p.p.) — nenhum
+outro ano da série tem esses dois saltos.
+
+**Causa:** a conta `RO1.2.1.9.99.2.0 - Demais Contribuições Sociais - Parcelamento`
+sozinha soma **R$ 132,875 bi** em 2019 (contra valores residuais em outros anos) —
+provavelmente um parcelamento (tipo REFIS) de dívida previdenciária. A DCA classifica
+essa conta no ramo genérico `1.2.1.9` ("Outras Contribuições Sociais"), não no ramo
+específico do RGPS (`1.2.1.4`) — o dicionário segue o código corretamente; o gap é a
+granularidade que a opção B perdeu (o 8º dígito separaria "parcelamento de dívida do
+RGPS" de "outras contribuições genuínas", mas não está disponível na DCA de 7 níveis).
+
+R$ 132,875 bi explica quase toda a diferença combinada das duas linhas nesse ano —
+não é erro de mapeamento, é um evento real de 2019 caindo numa conta genérica.
+
+---
+
+## 9. Estados e Municípios — "Demais (multas, juros e dívida ativa)" já era zero na série antiga desde 2018 ✅ **RESOLVIDA em 2026-09-01**
+
+**Sintoma**, achado pela Fase 4: a linha antiga *Demais (multas, juros e dívida ativa)*
+de Estados e Municípios tem valor em 2016-2017 (R$ 13,7 bi e R$ 13,0 bi em 2016) e depois
+é **exatamente R$ 0,00 todo ano, de 2018 a 2024** — não some gradualmente, cai a zero de
+uma vez.
+
+**Causa:** a série antiga bateu no mesmo limite que motivou a decisão 1 — o 8º dígito da
+natureza de receita (que separa principal de multas/dívida ativa) deixou de estar
+disponível na fonte que ela usava a partir de 2018, e ela zerou a linha em vez de
+estimá-la, **subestimando o total de Estados e Municípios** nesses anos (não é um efeito
+pequeno: R$ 13-16 bi/ano ao câmbio de 2016-2017, provavelmente mais em anos recentes).
+A opção B, que redistribui esse valor de volta às rubricas de origem em vez de
+descartá-lo, é mais completa para 2018 em diante — ao custo de perder comparabilidade
+direta contra 2016-2017, onde a série antiga ainda tinha o dado.
+
+---
+
+## 10. União, IR, 2020-2023 — diferença 5-9× maior que o efeito normal da opção B ⚠️ **ABERTA — causa localizada, raiz não confirmada**
+
+**Sintoma**, achado pela Fase 4: o IR diverge da série antiga em +0,175 p.p. do PIB em
+2024 (o efeito esperado da opção B, conforme a decisão 1) mas **entre +0,593 e
++1,541 p.p. em 2020-2023** — 5 a 9 vezes maior.
+
+**Causa localizada (2026-09-01):** a conta `RO1.1.1.3.02.0.0` ("Imposto sobre a Renda de
+Pessoa Jurídica - IRPJ - Líquido") tem, na coluna "Outras Deduções da Receita", valor
+**positivo** especificamente em 2020-2023 (+46,9 / +33,6 / +28,6 / +38,2 bi) — em todos
+os outros oito anos da série (2016-2019 e 2024) essa mesma coluna, para essa mesma
+conta, é **sempre negativa** (ex.: −33,8 bi em 2019, −39,5 bi em 2024), como se espera de
+uma coluna de restituições/deduções. É essa inversão de sinal isolada no IRPJ, em
+exatamente quatro anos, que a opção B (líquida = bruta + Outras Deduções) transforma em
+receita adicional em vez de dedução.
+
+**Raiz ainda não confirmada.** Hipótese mais provável: a dinâmica de estimativa mensal
+vs. ajuste anual do IRPJ (pago por estimativa ao longo do ano, ajustado depois pela ECF)
+amplificada pela recessão de 2020 e por programas de renegociação de dívida tributária do
+período (Lei 13.988/2020, transação tributária da PGFN) — mas isso não foi verificado
+conta a conta como o item 8. Fica aberta para investigação futura antes da divulgação
+pública da série revisada.

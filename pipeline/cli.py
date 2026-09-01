@@ -16,8 +16,6 @@ FASES_PENDENTES = {
                "(pipeline/fontes/http.py), não há passo de ingestão separado que "
                "valha a pena manter",
     "cobertura": "Fase 3 — depende da varredura municipal completa dos dez anos",
-    "publicar": "Fase 5 — depende da série calculada (2016-2025) e do site",
-    "comparar-historico": "Fase 4 — depende da série calculada",
 }
 
 
@@ -70,6 +68,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     calc.add_argument("--anos", type=_intervalo, required=True)
 
+    sub.add_parser(
+        "comparar-historico",
+        help="Fase 4 — compara a série calculada contra CTB-Resumo.xlsx (diagnóstico)",
+    )
+
+    pub = sub.add_parser(
+        "publicar", help="Fase 5 — escreve dados/publicado/*.json para o site"
+    )
+    pub.add_argument("--anos", type=_intervalo, default=_intervalo("2016-2025"))
+
     for nome, fase in FASES_PENDENTES.items():
         sub.add_parser(nome, help=f"[não implementado] {fase}")
 
@@ -102,6 +110,18 @@ def main(argv: list[str] | None = None) -> int:
 
         for ano in args.anos:
             executar(ano)
+        return 0
+
+    if args.comando == "comparar-historico":
+        from pipeline.dominio.comparar_historico import executar
+
+        executar()
+        return 0
+
+    if args.comando == "publicar":
+        from pipeline.dominio.publicar import executar
+
+        executar(args.anos)
         return 0
 
     parser.error(f"comando não tratado: {args.comando}")
