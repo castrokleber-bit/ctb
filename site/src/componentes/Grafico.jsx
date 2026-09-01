@@ -43,7 +43,7 @@ export default function Grafico({ linhas, unidade, titulo, nomeArquivoPng }) {
         {
           type: "bar",
           data: ordenadas.map((l) => l[config.campo]),
-          itemStyle: { color: "#1f5e9e" },
+          itemStyle: { color: "#2f6fb0" },
           label: { show: true, position: "right", formatter: (p) => config.formatar(p.value), fontSize: 11 },
         },
       ],

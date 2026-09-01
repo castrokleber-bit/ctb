@@ -3,14 +3,18 @@ import * as echarts from "echarts";
 import { UNIDADES } from "../lib/formato";
 
 const CORES = {
-  U: "#1f5e9e",
-  E: "#e07b39",
-  M: "#3c9d5f",
-  consolidado: "#8b3a9e",
+  U: "#2f6fb0",
+  E: "#b9791f",
+  M: "#2f8f6a",
 };
 
-// Linha do tempo, uma série por esfera (+ consolidado) — complemento de `Grafico.jsx`
-// (que é por rubrica, um ano só) para a visão intertemporal.
+const ESFERAS_EMPILHADAS = ["U", "E", "M"];
+const ROTULO_TOTAL = "Setor Público Consolidado";
+
+// Barras empilhadas — uma esfera por segmento, ano a ano; o total (Setor Público
+// Consolidado) não é um segmento colorido, e sim um rótulo na extremidade externa da
+// barra, calculado a partir de `serie.consolidado` — série separada da soma dos
+// segmentos por design (`consolidar_linhas()` soma por rótulo, não por posição de pilha).
 export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nomeArquivoPng }) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
@@ -31,22 +35,70 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
     const instancia = instanciaRef.current;
     if (!instancia || !serie) return;
     const config = UNIDADES[unidade];
-    const esferas = Object.keys(serie);
-    const anos = serie[esferas[0]]?.map((p) => p.ano) ?? [];
+    const anos = serie.U?.map((p) => p.ano) ?? [];
+    const totais = serie.consolidado ?? [];
+
+    const seriesEmpilhadas = ESFERAS_EMPILHADAS.map((esf) => ({
+      name: rotuloEsfera[esf] ?? esf,
+      type: "bar",
+      stack: "esferas",
+      barMaxWidth: 46,
+      data: serie[esf].map((p) => p[config.campo]),
+      itemStyle: { color: CORES[esf] },
+      label: {
+        show: true,
+        position: "inside",
+        color: "#fff",
+        fontSize: 10,
+        formatter: (p) => config.formatar(p.value),
+      },
+      labelLayout: { hideOverlap: true },
+    }));
+
+    const serieTotal = {
+      name: ROTULO_TOTAL,
+      type: "bar",
+      stack: "esferas",
+      data: anos.map(() => 0),
+      itemStyle: { color: "transparent" },
+      silent: true,
+      tooltip: { show: false },
+      label: {
+        show: true,
+        position: "top",
+        color: "#16213a",
+        fontSize: 11,
+        fontWeight: 600,
+        formatter: (p) => config.formatar(totais[p.dataIndex]?.[config.campo]),
+      },
+    };
+
     instancia.setOption({
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
       grid: { left: 70, right: 30, top: 60, bottom: 60 },
-      tooltip: { trigger: "axis", valueFormatter: (v) => config.formatar(v) },
-      legend: { top: 30, data: esferas.map((e) => rotuloEsfera[e] ?? e) },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: { type: "shadow" },
+        formatter: (params) => {
+          const visiveis = params.filter((p) => p.seriesName !== ROTULO_TOTAL);
+          if (visiveis.length === 0) return "";
+          const idx = visiveis[0].dataIndex;
+          const linhas = visiveis
+            .map((p) => `${p.marker} ${p.seriesName}: ${config.formatar(p.value)}`)
+            .join("<br/>");
+          const total = totais[idx]?.[config.campo];
+          return (
+            `<strong>${visiveis[0].axisValueLabel}</strong><br/>${linhas}` +
+            (total !== undefined
+              ? `<br/><strong>${ROTULO_TOTAL}: ${config.formatar(total)}</strong>`
+              : "")
+          );
+        },
+      },
+      legend: { top: 30, data: ESFERAS_EMPILHADAS.map((e) => rotuloEsfera[e] ?? e) },
       xAxis: { type: "category", data: anos },
       yAxis: { type: "value", name: config.rotulo, nameLocation: "middle", nameGap: 50 },
-      series: esferas.map((esf) => ({
-        name: rotuloEsfera[esf] ?? esf,
-        type: "line",
-        data: serie[esf].map((p) => p[config.campo]),
-        itemStyle: { color: CORES[esf] },
-        lineStyle: { width: esf === "consolidado" ? 3 : 2 },
-      })),
+      series: [...seriesEmpilhadas, serieTotal],
     });
   }, [serie, rotuloEsfera, unidade, titulo]);
 
@@ -68,6 +120,10 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
         </button>
       </div>
       <div ref={containerRef} className="grafico-canvas" />
+      <p className="aviso-vazio">
+        O rótulo no topo de cada barra é o {ROTULO_TOTAL} (soma de União, Estados e
+        Municípios).
+      </p>
     </div>
   );
 }

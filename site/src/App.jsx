@@ -34,8 +34,13 @@ export default function App() {
         <Conteudo />
       </main>
       <footer className="rodape">
-        Elaboração própria. Fontes: Siconfi/Tesouro Nacional (DCA), IBGE (SIDRA), Caixa
-        Econômica Federal (FGTS), Receita Federal/Cetad (Sistema S).
+        <p>
+          Elaboração própria. Fontes: Siconfi/Tesouro Nacional (DCA), IBGE (SIDRA), Caixa
+          Econômica Federal (FGTS), Receita Federal/Cetad (Sistema S).
+        </p>
+        <p className="creditos">
+          Desenvolvido por Kleber Pacheco de Castro. Metodologia: José Roberto Afonso.
+        </p>
       </footer>
     </div>
   );
