@@ -7,6 +7,7 @@ import TabelaQuadro from "../componentes/TabelaQuadro";
 import Grafico from "../componentes/Grafico";
 import NotaCobertura from "../componentes/NotaCobertura";
 import { reaisBi, percentual } from "../lib/formato";
+import { exportarBygovTudo } from "../lib/exportarCsv";
 
 const QUADROS = [
   { chave: "ad_esfera", rotulo: "AD ESFERA" },
@@ -79,14 +80,34 @@ export default function Quadros() {
       </nav>
 
       {(quadro === "ad_esfera" || quadro === "bygov_detalhado") && (
-        <QuadroPorEsfera
-          dadosPorEsfera={dadosAno.quadros[quadro]}
-          rotuloEsfera={rotuloEsfera}
-          unidade={unidade}
-          ano={ano}
-          prefixoArquivo={quadro}
-          titulo={QUADROS.find((q) => q.chave === quadro).rotulo}
-        />
+        <div>
+          {quadro === "bygov_detalhado" && (
+            <div className="tabela-acoes">
+              <button
+                type="button"
+                className="botao-secundario"
+                onClick={() =>
+                  exportarBygovTudo(
+                    dadosAno.quadros.bygov_detalhado,
+                    rotuloEsfera,
+                    ano,
+                    `bygov_detalhado_todas_esferas_${ano}.csv`
+                  )
+                }
+              >
+                Exportar tudo (todas as esferas)
+              </button>
+            </div>
+          )}
+          <QuadroPorEsfera
+            dadosPorEsfera={dadosAno.quadros[quadro]}
+            rotuloEsfera={rotuloEsfera}
+            unidade={unidade}
+            ano={ano}
+            prefixoArquivo={quadro}
+            titulo={QUADROS.find((q) => q.chave === quadro).rotulo}
+          />
+        </div>
       )}
 
       {quadro === "principais_tributos" && (

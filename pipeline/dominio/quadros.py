@@ -25,6 +25,8 @@ from dataclasses import dataclass
 import polars as pl
 
 ROTULO_ESFERA = {"U": "União", "E": "Estados", "M": "Municípios"}
+ROTULO_CONSOLIDADO = "Setor Público Consolidado"
+ESFERAS_COM_CONSOLIDADO = ("U", "E", "M", "consolidado")
 
 # --- AD ESFERA -------------------------------------------------------------------
 #
@@ -225,9 +227,46 @@ def rd_por_esfera_indicadores(
     rd_por_esfera: dict[str, float], pib: float, populacao: int
 ) -> dict[str, LinhaQuadro]:
     """RD ESFERA com os quatro indicadores de publicação, mesmo formato dos outros
-    quadros — usa `ROTULO_ESFERA[esf]` como rótulo."""
+    quadros — usa `ROTULO_ESFERA[esf]` como rótulo. Inclui "consolidado" (União +
+    Estados + Municípios, o Setor Público Consolidado) como uma quarta linha."""
     total = sum(rd_por_esfera.values())
-    return {
+    resultado = {
         esf: _linha(ROTULO_ESFERA[esf], rd_por_esfera.get(esf, 0.0), pib, populacao, total)
         for esf in ("U", "E", "M")
     }
+    resultado["consolidado"] = _linha(ROTULO_CONSOLIDADO, total, pib, populacao, total)
+    return resultado
+
+
+def ad_por_esfera_indicadores(
+    ad_por_esfera: dict[str, float], pib: float, populacao: int
+) -> dict[str, LinhaQuadro]:
+    """AD ESFERA (arrecadação direta) por esfera com os quatro indicadores — mesmo
+    formato de `rd_por_esfera_indicadores`, com "consolidado" como quarta linha."""
+    total = sum(ad_por_esfera.values())
+    resultado = {
+        esf: _linha(ROTULO_ESFERA[esf], ad_por_esfera.get(esf, 0.0), pib, populacao, total)
+        for esf in ("U", "E", "M")
+    }
+    resultado["consolidado"] = _linha(ROTULO_CONSOLIDADO, total, pib, populacao, total)
+    return resultado
+
+
+def consolidar_linhas(
+    por_esfera: dict[str, list[LinhaQuadro]], pib: float, populacao: int
+) -> list[LinhaQuadro]:
+    """Soma linhas de mesmo rótulo entre esferas — a visão "Setor Público Consolidado"
+    de um quadro aberto por esfera (AD ESFERA, byGOVDetalhado). Rótulos que só existem
+    numa esfera (ex.: ICMS, só Estados) aparecem com o valor dessa esfera; rótulos que
+    se repetem (ex.: TAXAS, Royalties e Compensações Financeiras, Outros impostos —
+    aparecem em mais de uma esfera) são somados numa linha nacional só.
+    """
+    soma_por_rotulo: dict[str, float] = {}
+    ordem: list[str] = []
+    for linhas in por_esfera.values():
+        for l in linhas:
+            if l.rotulo not in soma_por_rotulo:
+                ordem.append(l.rotulo)
+            soma_por_rotulo[l.rotulo] = soma_por_rotulo.get(l.rotulo, 0.0) + l.valor_reais
+    total = sum(soma_por_rotulo.values())
+    return [_linha(rotulo, soma_por_rotulo[rotulo], pib, populacao, total) for rotulo in ordem]

@@ -617,6 +617,30 @@ corretamente.
 verdade) e revisar o tamanho do bundle do ECharts (passa de 500 kB minificado — aceitável
 por ora, vale code-splitting antes de crescer mais).
 
+**Melhorias de apresentação, 2026-09-02** (pedido do usuário, depois da publicação
+inicial):
+
+- **Setor Público Consolidado** — quarta linha (União + Estados + Municípios) em AD
+  ESFERA, RD ESFERA e byGOVDetalhado, ao lado das três esferas. Em RD/AD ESFERA é soma
+  direta dos totais; em byGOVDetalhado (aberto por rubrica) é `consolidar_linhas()`
+  (`pipeline/dominio/quadros.py`), que soma pelo **rótulo** — rubricas que só existem
+  numa esfera (ICMS, ISS) aparecem com o valor dessa esfera; rubricas repetidas em mais
+  de uma (TAXAS, Royalties e Compensações Financeiras, Outros impostos) são somadas numa
+  linha nacional só. `ESFERAS_COM_CONSOLIDADO` centraliza a lista de chaves onde essa
+  quarta linha existe.
+- **Aba "Série Histórica"** — visualização intertemporal (2016-2025) de AD ESFERA e RD
+  ESFERA por esfera + consolidado, gráfico de linha (`GraficoSerie.jsx`). Novo
+  `dados/publicado/serie_historica.json`, montado em `_construir_serie_historica()`
+  **lendo de volta os `{ano}.json` já em disco** (mesma disciplina já usada pra
+  `anos_disponiveis` em `metadados.json` — nunca deriva do parâmetro `--anos` da chamada
+  atual, senão um `ctb publicar --anos 2025` isolado apagaria os outros nove anos da
+  série histórica também).
+- **Exportar byGOVDetalhado completo** — botão "Exportar tudo (todas as esferas)" na aba
+  byGOVDetalhado, gera um CSV único com União+Estados+Municípios (coluna `Esfera`),
+  no espírito do `CTB2024.xlsx` original. Não inclui "consolidado" no arquivo — misturar
+  a soma com as linhas por esfera no mesmo CSV duplicaria valor pra quem somar a coluna
+  toda.
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.

@@ -2,7 +2,7 @@ import { useState } from "react";
 import TabelaQuadro from "./TabelaQuadro";
 import Grafico from "./Grafico";
 
-const ESFERAS = ["U", "E", "M"];
+const ESFERAS = ["U", "E", "M", "consolidado"];
 
 export default function QuadroPorEsfera({ dadosPorEsfera, rotuloEsfera, unidade, ano, prefixoArquivo, titulo }) {
   const [esfera, setEsfera] = useState("U");

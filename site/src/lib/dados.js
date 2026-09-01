@@ -25,3 +25,7 @@ export function carregarAno(ano) {
 export function carregarMetodologia() {
   return buscarJson(`${import.meta.env.BASE_URL}dados/metodologia.json`);
 }
+
+export function carregarSerieHistorica() {
+  return buscarJson(`${import.meta.env.BASE_URL}dados/serie_historica.json`);
+}

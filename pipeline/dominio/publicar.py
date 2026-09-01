@@ -18,8 +18,9 @@ from pipeline.dominio.agregacao import calcular_ano
 from pipeline.dominio.dicionario import carregar_mapeamentos
 from pipeline.dominio.manual_uniao import ANOS_DISPONIVEIS as ANOS_FGTS_SISTEMA_S
 from pipeline.dominio.quadros import (
-    ROTULO_ESFERA, ad_esfera, bases_incidencia, bygov_detalhado, principais_tributos,
-    rd_por_esfera_indicadores, total_por_esfera,
+    ESFERAS_COM_CONSOLIDADO, ROTULO_CONSOLIDADO, ROTULO_ESFERA, ad_esfera,
+    ad_por_esfera_indicadores, bases_incidencia, bygov_detalhado, consolidar_linhas,
+    principais_tributos, rd_por_esfera_indicadores, total_por_esfera,
 )
 from pipeline.dominio.rd_esfera import ANOS_DISPONIVEIS as ANOS_RD_ESFERA
 from pipeline.dominio.rd_esfera import calcular as calcular_rd_esfera
@@ -77,6 +78,9 @@ def _publicar_ano(ano: int) -> dict:
     ad_totais = total_por_esfera(df)
     total = sum(ad_totais.values())
 
+    quadro_ad = ad_esfera(df, pib, populacao)
+    quadro_bygov = bygov_detalhado(df, pib, populacao)
+
     saida: dict = {
         "ano": ano,
         "versao_schema": VERSAO_SCHEMA,
@@ -90,12 +94,18 @@ def _publicar_ano(ano: int) -> dict:
             "pct_pib": (total / pib * 100) if pib else 0.0,
         },
         "ad_esfera": {
-            esf: {"valor_reais": ad_totais.get(esf, 0.0), "valor_bi": ad_totais.get(esf, 0.0) / 1e9}
-            for esf in ("U", "E", "M")
+            esf: asdict(l)
+            for esf, l in ad_por_esfera_indicadores(ad_totais, pib, populacao).items()
         },
         "quadros": {
-            "ad_esfera": {esf: _linhas(l) for esf, l in ad_esfera(df, pib, populacao).items()},
-            "bygov_detalhado": {esf: _linhas(l) for esf, l in bygov_detalhado(df, pib, populacao).items()},
+            "ad_esfera": {
+                **{esf: _linhas(l) for esf, l in quadro_ad.items()},
+                "consolidado": _linhas(consolidar_linhas(quadro_ad, pib, populacao)),
+            },
+            "bygov_detalhado": {
+                **{esf: _linhas(l) for esf, l in quadro_bygov.items()},
+                "consolidado": _linhas(consolidar_linhas(quadro_bygov, pib, populacao)),
+            },
             "principais_tributos": _linhas(principais_tributos(df, pib, populacao)),
             "bases_incidencia": _linhas(bases_incidencia(df, pib, populacao)),
         },
@@ -108,7 +118,7 @@ def _publicar_ano(ano: int) -> dict:
         resultado_rd = calcular_rd_esfera(ano, df, ad_totais)
         rd_indicadores = rd_por_esfera_indicadores(resultado_rd.rd_por_esfera, pib, populacao)
         saida["rd_esfera"] = {
-            "por_esfera": {esf: asdict(rd_indicadores[esf]) for esf in ("U", "E", "M")},
+            "por_esfera": {esf: asdict(rd_indicadores[esf]) for esf in ESFERAS_COM_CONSOLIDADO},
             "transferencias": {
                 "uniao_estados": _transferencias(resultado_rd, "U", "E"),
                 "uniao_municipios": _transferencias(resultado_rd, "U", "M"),
@@ -137,6 +147,42 @@ def _publicar_metodologia() -> dict:
     return saida
 
 
+def _construir_serie_historica() -> dict:
+    """Visão intertemporal (todos os anos publicados) de AD ESFERA e RD ESFERA, por
+    esfera + consolidado — lida de volta dos `{ano}.json` já em disco, nunca recalculada,
+    mesma disciplina de `executar()` para `anos_disponiveis`: reflete o que está
+    publicado, não o que foi processado na chamada atual."""
+    anos_publicados = sorted(
+        int(p.stem) for p in DIR_PUBLICADO.glob("*.json") if p.stem.isdigit()
+    )
+    ad: dict[str, list] = {esf: [] for esf in ESFERAS_COM_CONSOLIDADO}
+    rd: dict[str, list] = {esf: [] for esf in ESFERAS_COM_CONSOLIDADO}
+    for ano in anos_publicados:
+        dados_ano = json.loads((DIR_PUBLICADO / f"{ano}.json").read_text(encoding="utf-8"))
+        for esf in ESFERAS_COM_CONSOLIDADO:
+            linha_ad = dados_ano["ad_esfera"][esf]
+            ad[esf].append({
+                "ano": ano,
+                "valor_reais": linha_ad["valor_reais"],
+                "valor_bi": linha_ad["valor_bi"],
+                "pct_pib": linha_ad["pct_pib"],
+                "pct_total": linha_ad["pct_total"],
+                "per_capita": linha_ad["per_capita"],
+            })
+            rd_esfera_ano = dados_ano.get("rd_esfera")
+            if rd_esfera_ano is not None:
+                linha_rd = rd_esfera_ano["por_esfera"][esf]
+                rd[esf].append({
+                    "ano": ano,
+                    "valor_reais": linha_rd["valor_reais"],
+                    "valor_bi": linha_rd["valor_bi"],
+                    "pct_pib": linha_rd["pct_pib"],
+                    "pct_total": linha_rd["pct_total"],
+                    "per_capita": linha_rd["per_capita"],
+                })
+    return {"anos_disponiveis": anos_publicados, "ad_esfera": ad, "rd_esfera": rd}
+
+
 def executar(anos: range) -> Path:
     DIR_PUBLICADO.mkdir(parents=True, exist_ok=True)
     for ano in anos:
@@ -154,7 +200,7 @@ def executar(anos: range) -> Path:
     metadados = {
         "anos_disponiveis": anos_publicados,
         "gerado_em": datetime.now().isoformat(timespec="seconds"),
-        "rotulo_esfera": ROTULO_ESFERA,
+        "rotulo_esfera": {**ROTULO_ESFERA, "consolidado": ROTULO_CONSOLIDADO},
         "versao_schema": VERSAO_SCHEMA,
     }
     (DIR_PUBLICADO / "metadados.json").write_text(
@@ -164,6 +210,11 @@ def executar(anos: range) -> Path:
     print("  publicando metodologia...")
     (DIR_PUBLICADO / "metodologia.json").write_text(
         json.dumps(_publicar_metodologia(), ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+    print("  publicando série histórica...")
+    (DIR_PUBLICADO / "serie_historica.json").write_text(
+        json.dumps(_construir_serie_historica(), ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
     print(f"\n{len(anos_publicados)} ano(s) publicado(s) em {DIR_PUBLICADO}")
