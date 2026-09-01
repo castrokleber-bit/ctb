@@ -1,0 +1,1388 @@
+{
+  "U": [
+    {
+      "cod_conta": "RO1.1.1.1.00.0.0",
+      "rubrica": "Imp. sobre Comércio Exterior",
+      "tributo": "II + IE",
+      "base_incidencia": "comercio_exterior",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "agrega 1.1.1.1.01 (importação) e .02 (exportação)"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.00.0.0",
+      "rubrica": "ITR",
+      "tributo": "ITR",
+      "base_incidencia": "patrimonio",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "na União o ramo de patrimônio contém apenas o ITR (1.1.1.2.01)"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.00.0.0",
+      "rubrica": "IR",
+      "tributo": "IRPF + IRPJ + IRRF",
+      "base_incidencia": "renda",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "agrega 1.1.1.3.01/.02/.03"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.00.0.0",
+      "rubrica": "IPI",
+      "tributo": "IPI",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "na União o ramo de produção e circulação contém apenas o IPI (1.1.1.4.01)"
+    },
+    {
+      "cod_conta": "RO1.1.1.5.00.0.0",
+      "rubrica": "IOF",
+      "tributo": "IOF",
+      "base_incidencia": "transacoes_financeiras",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "agrega IOF-ouro (.01) e demais operações (.02)"
+    },
+    {
+      "cod_conta": "RO1.1.1.9.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "outros impostos",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "residual do ramo de impostos, valor marginal"
+    },
+    {
+      "cod_conta": "RO1.1.2.0.00.0.0",
+      "rubrica": "Taxas",
+      "tributo": "taxas federais",
+      "base_incidencia": "taxas",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "agrega poder de polícia (1.1.2.1) e prestação de serviços (1.1.2.2)"
+    },
+    {
+      "cod_conta": "RO1.2.2.0.00.0.0",
+      "rubrica": "Contribuições Econômicas",
+      "tributo": "CIDE e demais contribuições econômicas",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "agrega 1.2.2.1 — CIDE-combustíveis, Condecine, AFRMM, Fust/Funttel"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.01.0.0",
+      "rubrica": "Cofins",
+      "tributo": "Cofins",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.02.0.0",
+      "rubrica": "CSLL",
+      "tributo": "CSLL",
+      "base_incidencia": "renda",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.03.0.0",
+      "rubrica": "Previdência Social",
+      "tributo": "RGPS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.04.0.0",
+      "rubrica": "Contrib. Seg. Serv. Público",
+      "tributo": "RPPS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018 — agrega os desdobramentos .04.2 a .04.6"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.05.0.0",
+      "rubrica": "Contrib. Seg. Serv. Público",
+      "tributo": "custeio das pensões militares",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.06.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "assistência médica de servidores",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.07.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "concursos de prognósticos",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.08.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "sorteios de entidades filantrópicas",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.09.0.0",
+      "rubrica": "PIS-PASEP",
+      "tributo": "PIS/Pasep",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.10.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "cota-parte da contribuição sindical",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.11.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "contribuições referentes ao FGTS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018 — não é o FGTS em si, que entra por manual/"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.12.0.0",
+      "rubrica": "Salário Educação",
+      "tributo": "salário-educação",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.13.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "ensino aeroviário",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.14.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "desenvolvimento do ensino profissional",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.15.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "arrecadação de fundos de investimento",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.16.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "contribuição industrial rural",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.17.0.0",
+      "rubrica": "Contribuições Econômicas",
+      "tributo": "adicional à contribuição previdenciária sobre a folha (CIDE)",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "classificada em 1.2.1 (sociais) até 2017 e em 1.2.2 (econômicas) a partir de 2022 — mantida como econômica para preservar a identidade do tributo na série"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.18.0.0",
+      "rubrica": "CPMF",
+      "tributo": "CPMF",
+      "base_incidencia": "transacoes_financeiras",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.0.99.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "demais contribuições sociais",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de contas anterior a 2018"
+    },
+    {
+      "cod_conta": "RO1.2.1.1.00.0.0",
+      "rubrica": "Cofins",
+      "tributo": "Cofins",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.2.00.0.0",
+      "rubrica": "PIS-PASEP",
+      "tributo": "PIS/Pasep",
+      "base_incidencia": "bens_servicos",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.3.00.0.0",
+      "rubrica": "CSLL",
+      "tributo": "CSLL",
+      "base_incidencia": "renda",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.4.00.0.0",
+      "rubrica": "Previdência Social",
+      "tributo": "RGPS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "contribuição do empregador e do segurado"
+    },
+    {
+      "cod_conta": "RO1.2.1.5.00.0.0",
+      "rubrica": "Contrib. Seg. Serv. Público",
+      "tributo": "RPPS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "servidor civil e militar"
+    },
+    {
+      "cod_conta": "RO1.2.1.6.00.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "fundos de assistência médica",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.7.00.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "concursos de prognósticos",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "loterias"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.01.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "sorteios de entidades filantrópicas",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.9.02.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "cota-parte da contribuição sindical",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.9.03.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "contribuições referentes ao FGTS",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "não é o FGTS em si, que entra por manual/"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.04.0.0",
+      "rubrica": "Salário Educação",
+      "tributo": "salário-educação",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "linha própria no quadro — por isso 1.2.1.9 é mapeado filho a filho"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.05.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "ensino aeroviário",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.9.06.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "desenvolvimento do ensino profissional",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.9.07.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "arrecadação de fundos de investimento",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.9.08.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "contribuição industrial rural",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2022,
+      "observacao": "sucede 1.2.1.0.16"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.09.0.0",
+      "rubrica": "Contribuições Econômicas",
+      "tributo": "adicional à contribuição previdenciária sobre a folha (CIDE)",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2022,
+      "observacao": "sucede 1.2.1.0.17 e é sucedida por 1.2.2.1.13"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.10.0.0",
+      "rubrica": "CPMF",
+      "tributo": "CPMF",
+      "base_incidencia": "transacoes_financeiras",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "resíduo de dívida ativa da CPMF (extinta em 2007) — valores negativos são normais"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.11.0.0",
+      "rubrica": "Contrib. Seg. Serv. Público",
+      "tributo": "custeio das pensões militares",
+      "base_incidencia": "salarios",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "sucede 1.2.1.0.05 e é sucedida por 1.2.1.5.04"
+    },
+    {
+      "cod_conta": "RO1.2.1.9.99.0.0",
+      "rubrica": "Outras contribuições sociais",
+      "tributo": "demais contribuições sociais",
+      "base_incidencia": "demais",
+      "bloco": "U",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.3.4.0.00.0.0",
+      "rubrica": "Royalties e Compensações Financeiras",
+      "tributo": "royalties de petróleo (concessão e partilha), minerais, hídricos e florestais",
+      "base_incidencia": "patrimonio",
+      "bloco": "U",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": null,
+      "observacao": "decisão 4 (2026-08-31): linha própria. Antes ficava embutida em \"Contribuições Econômicas\" — 78% da linha publicada de 2024 (R$ 108,4 bi de R$ 138,966 bi) eram royalties, não CIDE. Ramo 1.3.4 \"Exploração de Recursos Naturais\" da DCA, usado desde 2016, sem plano de contas anterior. NÃO inclui 1.3.1 (aluguéis de imóveis), 1.3.2 (valores mobiliários), 1.3.3 (delegação de serviços), 1.3.6 (cessão de direitos, majoritariamente loterias) nem 1.3.9 (demais) — esses ramos ficam fora do escopo de arrecadação, nunca estiveram nos quadros publicados"
+    }
+  ],
+  "E": [
+    {
+      "cod_conta": "RO1.1.1.2.02.00.00",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de 8 níveis usado por estados e municípios até 2017 — nesta esfera só o DF arrecada IPTU"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.04.00.00",
+      "rubrica": "IRRF",
+      "tributo": "IRRF",
+      "base_incidencia": "renda",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "até 2017 patrimônio e renda dividem o ramo 1.1.1.2"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.05.00.00",
+      "rubrica": "IPVA",
+      "tributo": "IPVA",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.2.07.00.00",
+      "rubrica": "ITCD",
+      "tributo": "ITCD",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.2.08.00.00",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "nesta esfera só o DF arrecada ITBI"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.02.00.00",
+      "rubrica": "ICMS",
+      "tributo": "ICMS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "até 2017 o ramo 1.1.1.3 é produção e circulação"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.05.00.00",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "nesta esfera só o DF arrecada ISS"
+    },
+    {
+      "cod_conta": "RO1.1.1.1.00.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência estadual",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "presente no plano com valor nulo"
+    },
+    {
+      "cod_conta": "RO1.1.2.0.00.00.00",
+      "rubrica": "TAXAS",
+      "tributo": "taxas estaduais",
+      "base_incidencia": "taxas",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.3.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuição de melhoria",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.0.00.00.00",
+      "rubrica": "Previ. Estadual",
+      "tributo": "RPPS estadual e demais contribuições sociais",
+      "base_incidencia": "salarios",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.2.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "CIDE e demais contribuições econômicas",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.3.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "COSIP",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "decisão 2 (2026-08-31): COSIP do DF vai para o bloco Municípios, coerente com a COSIP municipal. No plano até 2017 a COSIP fica em 1.2.3, a partir de 2018 vai para 1.2.4. Sem lançamento nesta esfera em 2016-2017 — real estado não tem competência de COSIP, e o DF só passou a declarar a partir de 2019"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.1.0",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "entre 2018 e 2021 os tributos de estados e municípios ficam no ramo 1.1.1.8"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.2.0",
+      "rubrica": "IPVA",
+      "tributo": "IPVA",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.3.0",
+      "rubrica": "ITCD",
+      "tributo": "ITCD",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.4.0",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.1.0",
+      "rubrica": "ICMS",
+      "tributo": "ICMS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.2.0",
+      "rubrica": "ICMS",
+      "tributo": "adicional do Fundo de Combate à Pobreza",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.3.0",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.5.0",
+      "rubrica": "ICMS",
+      "tributo": "ICMS lançado como IVVC pelo declarante",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "o IVVC está extinto desde 1996. O único lançamento relevante é o Ceará em 2018 (R$ 2,595 bi): o ICMS do estado cai de 11,193 em 2017 para 9,385 em 2018 e volta a 13,155 em 2019, enquanto ICMS+IVVC de 2018 dá 11,979 — dentro da tendência"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.52.0.0",
+      "rubrica": "ICMS",
+      "tributo": "ICMS lançado como IVVC pelo declarante",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "mesma conta do IVVC no plano de 2022 em diante — sem lançamento relevante até 2025"
+    },
+    {
+      "cod_conta": "RO1.1.1.1.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência estadual",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "comércio exterior aparece no plano unificado de 2018 com valor nulo"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.01.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência estadual",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "IPI aparece no plano unificado de 2018 com valor nulo"
+    },
+    {
+      "cod_conta": "RO1.1.1.5.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência estadual",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "IOF aparece no plano unificado de 2018 com valor nulo"
+    },
+    {
+      "cod_conta": "RO1.2.3.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuições para entidades privadas",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "o Sistema S é federal e entra por manual/ — aqui o ramo aparece com valor nulo"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.50.0.0",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "nesta esfera só o DF arrecada IPTU — vai para o bloco Municípios (regra do DF)"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.51.0.0",
+      "rubrica": "IPVA",
+      "tributo": "IPVA",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.2.52.0.0",
+      "rubrica": "ITCD",
+      "tributo": "ITCD",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.2.53.0.0",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "nesta esfera só o DF arrecada ITBI — vai para o bloco Municípios (regra do DF)"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.50.0.0",
+      "rubrica": "ICMS",
+      "tributo": "ICMS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "E",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "agrega o ICMS (.50.1) e o adicional do Fundo de Combate à Pobreza (.50.2)"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.51.0.0",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "nesta esfera só o DF arrecada ISS — vai para o bloco Municípios (regra do DF)"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.03.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF",
+      "base_incidencia": "renda",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.3.01.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF lançado como IRPF pelo declarante",
+      "base_incidencia": "renda",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.02.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF lançado como IRPJ pelo declarante",
+      "base_incidencia": "renda",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.9.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "outros impostos",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "R$ 0,050 bi em 2024 — a série publicada descartava"
+    },
+    {
+      "cod_conta": "RO1.1.2.0.00.0.0",
+      "rubrica": "TAXAS",
+      "tributo": "taxas estaduais",
+      "base_incidencia": "taxas",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.3.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuição de melhoria",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.0.00.0.0",
+      "rubrica": "Previ. Estadual",
+      "tributo": "RPPS estadual e demais contribuições sociais",
+      "base_incidencia": "salarios",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "o rótulo publicado é \"Previ. Estadual\" mas o ramo inclui assistência médica e concursos de prognósticos"
+    },
+    {
+      "cod_conta": "RO1.2.2.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "CIDE e demais contribuições econômicas",
+      "base_incidencia": "demais",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.4.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "COSIP",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "decisão 2 (2026-08-31): COSIP do DF vai para o bloco Municípios. Só o DF lança esta conta entre os 27 entes de esfera E/D — real estado não tem competência de COSIP (art. 149-A da CF é privativo de município e DF). Confirmado no censo de 2024: R$ 0,3225 bi, 100% Distrito Federal"
+    },
+    {
+      "cod_conta": "RO1.3.4.0.00.00.00",
+      "rubrica": "Royalties e Compensações Financeiras",
+      "tributo": "compensações financeiras (royalties)",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "decisão 4 (2026-08-31): linha própria, mesmo racional da União. Plano de contas anterior a 2018 — sucedida por RO1.3.4.0.00.0.0. Confirmado: RJ sozinho já lançava R$ 3,51 bi em 2016"
+    },
+    {
+      "cod_conta": "RO1.3.4.0.00.0.0",
+      "rubrica": "Royalties e Compensações Financeiras",
+      "tributo": "royalties de petróleo, minerais e recursos hídricos recebidos pelo estado",
+      "base_incidencia": "patrimonio",
+      "bloco": "E",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "decisão 4 (2026-08-31): linha própria. Ramo 1.3.4 \"Exploração de Recursos Naturais\" — é a parcela de royalties que o próprio estado recebe como beneficiário (não duplica a União: cada esfera registra só a sua cota). NÃO inclui os demais ramos patrimoniais (1.3.1, 1.3.2, 1.3.3, 1.3.6, 1.3.9), que ficam fora do escopo de arrecadação"
+    }
+  ],
+  "M": [
+    {
+      "cod_conta": "RO1.1.1.2.01.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "ITR de municípios conveniados",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "o município arrecada o ITR por convênio com a União, mas a competência é federal"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.02.00.00",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "plano de 8 níveis usado por estados e municípios até 2017"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.04.00.00",
+      "rubrica": "IRRF",
+      "tributo": "IRRF",
+      "base_incidencia": "renda",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "até 2017 patrimônio e renda dividem o ramo 1.1.1.2"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.05.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "IPVA lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "o IPVA é estadual — ocorrências aqui são erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.07.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "ITCD lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "o ITCD é estadual — ocorrências aqui são erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.08.00.00",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.3.02.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "ICMS lançado por município",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "o ICMS é estadual — ocorrências aqui são erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.05.00.00",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.1.00.00.00",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência municipal",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "presente no plano com valor residual"
+    },
+    {
+      "cod_conta": "RO1.1.2.0.00.00.00",
+      "rubrica": "TAXAS",
+      "tributo": "taxas municipais",
+      "base_incidencia": "taxas",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.3.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuição de melhoria",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.0.00.00.00",
+      "rubrica": "Previd. Municipal",
+      "tributo": "RPPS municipal e demais contribuições sociais",
+      "base_incidencia": "salarios",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.2.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuições econômicas",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.3.0.00.00.00",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "COSIP",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "até 2017 a COSIP fica em 1.2.3, a partir de 2018 vai para 1.2.4"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.1.0",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "entre 2018 e 2021 os tributos de estados e municípios ficam no ramo 1.1.1.8"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.2.0",
+      "rubrica": "Outros impostos",
+      "tributo": "IPVA lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.3.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ITCD lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.01.4.0",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.1.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ICMS lançado por município",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.2.0",
+      "rubrica": "Outros impostos",
+      "tributo": "adicional do Fundo de Combate à Pobreza",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.3.0",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.4.0",
+      "rubrica": "ISS",
+      "tributo": "adicional do Fundo Municipal de Combate à Pobreza",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "sucedido por 1.1.1.4.51.2 a partir de 2022"
+    },
+    {
+      "cod_conta": "RO1.1.1.8.02.5.0",
+      "rubrica": "Outros impostos",
+      "tributo": "imposto sobre vendas a varejo de combustíveis",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": 2021,
+      "observacao": "resíduo do IVVC, extinto em 1996"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.50.0.0",
+      "rubrica": "IPTU",
+      "tributo": "IPTU",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.2.51.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "IPVA lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.52.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ITCD lançado por município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.53.0.0",
+      "rubrica": "ITBI",
+      "tributo": "ITBI",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.4.50.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ICMS lançado por município",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.51.0.0",
+      "rubrica": "ISS",
+      "tributo": "ISS",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "agrega o ISSQN (.51.1) e o adicional do Fundo Municipal de Combate à Pobreza (.51.2)"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.52.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "imposto sobre vendas a varejo de combustíveis",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2022,
+      "vigencia_fim": null,
+      "observacao": "resíduo do IVVC, extinto em 1996"
+    },
+    {
+      "cod_conta": "RO1.1.1.4.01.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "IPI lançado por município",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.1.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "impostos sem competência municipal",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "comércio exterior lançado por município"
+    },
+    {
+      "cod_conta": "RO1.1.1.2.01.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ITR de municípios conveniados",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "o município arrecada o ITR por convênio com a União, mas a competência é federal"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.03.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF",
+      "base_incidencia": "renda",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.1.3.01.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF lançado como IRPF pelo declarante",
+      "base_incidencia": "renda",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.3.02.0.0",
+      "rubrica": "IRRF",
+      "tributo": "IRRF lançado como IRPJ pelo declarante",
+      "base_incidencia": "renda",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.5.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "IOF lançado por município",
+      "base_incidencia": "transacoes_financeiras",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "erro de classificação do declarante"
+    },
+    {
+      "cod_conta": "RO1.1.1.6.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "ICMS lançado por município",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2020,
+      "vigencia_fim": 2021,
+      "observacao": "código fora do padrão usado por meia dúzia de prefeituras em 2020 e 2021 (R$ 0,024 bi em 2020)"
+    },
+    {
+      "cod_conta": "RO1.1.1.7.00.0.0",
+      "rubrica": "ITBI",
+      "tributo": "ITBI lançado como transferências patrimoniais",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2020,
+      "vigencia_fim": 2020,
+      "observacao": "código fora do padrão usado por uma prefeitura só em 2020 (R$ 0,0016 bi)"
+    },
+    {
+      "cod_conta": "RO1.1.1.9.00.0.0",
+      "rubrica": "Outros impostos",
+      "tributo": "outros impostos",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.2.0.00.0.0",
+      "rubrica": "TAXAS",
+      "tributo": "taxas municipais",
+      "base_incidencia": "taxas",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.1.3.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuição de melhoria",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.1.0.00.0.0",
+      "rubrica": "Previd. Municipal",
+      "tributo": "RPPS municipal e demais contribuições sociais",
+      "base_incidencia": "salarios",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "o rótulo publicado é \"Previd. Municipal\" mas o ramo inclui assistência médica e resíduos federais mal classificados"
+    },
+    {
+      "cod_conta": "RO1.2.2.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuições econômicas",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": ""
+    },
+    {
+      "cod_conta": "RO1.2.3.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "contribuições para entidades privadas",
+      "base_incidencia": "demais",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "o Sistema S é federal e entra por manual/ — aqui o ramo aparece com valor residual"
+    },
+    {
+      "cod_conta": "RO1.2.4.0.00.0.0",
+      "rubrica": "Contribuições de Melhoria e Econômicas",
+      "tributo": "COSIP",
+      "base_incidencia": "bens_servicos",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "iluminação pública"
+    },
+    {
+      "cod_conta": "RO1.3.4.0.00.00.00",
+      "rubrica": "Royalties e Compensações Financeiras",
+      "tributo": "compensações financeiras (royalties)",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2016,
+      "vigencia_fim": 2017,
+      "observacao": "decisão 4 (2026-08-31): linha própria, mesmo racional da União. Plano de contas anterior a 2018 — sucedida por RO1.3.4.0.00.0.0"
+    },
+    {
+      "cod_conta": "RO1.3.4.0.00.0.0",
+      "rubrica": "Royalties e Compensações Financeiras",
+      "tributo": "royalties de petróleo, minerais e recursos hídricos recebidos pelo município",
+      "base_incidencia": "patrimonio",
+      "bloco": "M",
+      "vigencia_inicio": 2018,
+      "vigencia_fim": null,
+      "observacao": "decisão 4 (2026-08-31): linha própria. Ramo 1.3.4 \"Exploração de Recursos Naturais\" — é a parcela de royalties que o próprio município recebe como beneficiário (não duplica União nem estado: cada esfera registra só a sua cota). NÃO inclui os demais ramos patrimoniais (1.3.1, 1.3.2, 1.3.3, 1.3.6, 1.3.9), que ficam fora do escopo de arrecadação"
+    }
+  ]
+}

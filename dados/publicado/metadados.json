@@ -1,0 +1,21 @@
+{
+  "anos_disponiveis": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "gerado_em": "2026-09-01T12:21:03",
+  "rotulo_esfera": {
+    "U": "União",
+    "E": "Estados",
+    "M": "Municípios"
+  },
+  "versao_schema": 1
+}

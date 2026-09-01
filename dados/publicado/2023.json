@@ -1,0 +1,804 @@
+{
+  "ano": 2023,
+  "versao_schema": 1,
+  "pib_reais": 10943344000000.0,
+  "pib_bi": 10943.344,
+  "data_extracao_pib": "2026-09-01",
+  "populacao": 203080756,
+  "total_geral": {
+    "valor_reais": 3842821543113.8228,
+    "valor_bi": 3842.821543113823,
+    "pct_pib": 35.115605825000316
+  },
+  "ad_esfera": {
+    "U": {
+      "valor_reais": 2548760396505.19,
+      "valor_bi": 2548.76039650519
+    },
+    "E": {
+      "valor_reais": 975558147106.75,
+      "valor_bi": 975.55814710675
+    },
+    "M": {
+      "valor_reais": 318502999501.8828,
+      "valor_bi": 318.5029995018828
+    }
+  },
+  "quadros": {
+    "ad_esfera": {
+      "U": [
+        {
+          "rotulo": "Impostos",
+          "valor_reais": 982830784853.9401,
+          "valor_bi": 982.83078485394,
+          "pct_pib": 8.98108279200526,
+          "pct_total": 25.57575921304835,
+          "per_capita": 4839.605702737979
+        },
+        {
+          "rotulo": "Contribuições Sociais",
+          "valor_reais": 904007620086.5299,
+          "valor_bi": 904.0076200865299,
+          "pct_pib": 8.260798710947311,
+          "pct_total": 23.52457978972441,
+          "per_capita": 4451.46865656995
+        },
+        {
+          "rotulo": "Previdência Social",
+          "valor_reais": 525621856706.39996,
+          "valor_bi": 525.6218567064,
+          "pct_pib": 4.803119199272178,
+          "pct_total": 13.678018893390787,
+          "per_capita": 2588.240594822288
+        },
+        {
+          "rotulo": "Demais",
+          "valor_reais": 136300134858.32,
+          "valor_bi": 136.30013485832,
+          "pct_pib": 1.2455071764016556,
+          "pct_total": 3.546876515839364,
+          "per_capita": 671.1622388205016
+        }
+      ],
+      "E": [
+        {
+          "rotulo": "ICMS",
+          "valor_reais": 702788386559.0599,
+          "valor_bi": 702.78838655906,
+          "pct_pib": 6.422062456951549,
+          "pct_total": 18.2883430488316,
+          "per_capita": 3460.635071493726
+        },
+        {
+          "rotulo": "IPVA",
+          "valor_reais": 82112051286.05,
+          "valor_bi": 82.11205128605,
+          "pct_pib": 0.7503378426745061,
+          "pct_total": 2.1367646237226765,
+          "per_capita": 404.33201502386567
+        },
+        {
+          "rotulo": "Demais",
+          "valor_reais": 190657709261.63998,
+          "valor_bi": 190.65770926163998,
+          "pct_pib": 1.7422253130454455,
+          "pct_total": 4.9613989908870675,
+          "per_capita": 938.8270608055053
+        }
+      ],
+      "M": [
+        {
+          "rotulo": "ISS",
+          "valor_reais": 123174839988.24014,
+          "valor_bi": 123.17483998824014,
+          "pct_pib": 1.1255685646749307,
+          "pct_total": 3.205322927601579,
+          "per_capita": 606.5313248501012
+        },
+        {
+          "rotulo": "IPTU",
+          "valor_reais": 71257562684.8431,
+          "valor_bi": 71.2575626848431,
+          "pct_pib": 0.6511498010557202,
+          "pct_total": 1.854303195851853,
+          "per_capita": 350.8828905720791
+        },
+        {
+          "rotulo": "Demais",
+          "valor_reais": 124070596828.79944,
+          "valor_bi": 124.07059682879944,
+          "pct_pib": 1.1337539679717592,
+          "pct_total": 3.228632801102326,
+          "per_capita": 610.9421654349142
+        }
+      ]
+    },
+    "bygov_detalhado": {
+      "U": [
+        {
+          "rotulo": "IR",
+          "valor_reais": 796492738877.9501,
+          "valor_bi": 796.49273887795,
+          "pct_pib": 7.278330452537634,
+          "pct_total": 20.72676885829456,
+          "per_capita": 3922.0493096743744
+        },
+        {
+          "rotulo": "Previdência Social",
+          "valor_reais": 525621856706.39996,
+          "valor_bi": 525.6218567064,
+          "pct_pib": 4.803119199272178,
+          "pct_total": 13.678018893390787,
+          "per_capita": 2588.240594822288
+        },
+        {
+          "rotulo": "Cofins",
+          "valor_reais": 377680460575.79,
+          "valor_bi": 377.68046057579,
+          "pct_pib": 3.4512344725322532,
+          "pct_total": 9.82820712173267,
+          "per_capita": 1859.7550453071485
+        },
+        {
+          "rotulo": "FGTS",
+          "valor_reais": 176101000000.0,
+          "valor_bi": 176.101,
+          "pct_pib": 1.6092064729026154,
+          "pct_total": 4.582596355939706,
+          "per_capita": 867.1476483965818
+        },
+        {
+          "rotulo": "CSLL",
+          "valor_reais": 164635876957.03,
+          "valor_bi": 164.63587695703,
+          "pct_pib": 1.5044384692378308,
+          "pct_total": 4.284244665278582,
+          "per_capita": 810.6916686730771
+        },
+        {
+          "rotulo": "Royalties e Compensações Financeiras",
+          "valor_reais": 108533018868.20001,
+          "valor_bi": 108.53301886820002,
+          "pct_pib": 0.9917719745280785,
+          "pct_total": 2.8243054654121713,
+          "per_capita": 534.4328089274989
+        },
+        {
+          "rotulo": "PIS-PASEP",
+          "valor_reais": 100785319823.76001,
+          "valor_bi": 100.78531982376,
+          "pct_pib": 0.9209736971053822,
+          "pct_total": 2.622690611391079,
+          "per_capita": 496.2819806705861
+        },
+        {
+          "rotulo": "IPI",
+          "valor_reais": 63832605060.329994,
+          "valor_bi": 63.832605060329996,
+          "pct_pib": 0.5833007265451036,
+          "pct_total": 1.6610868952453801,
+          "per_capita": 314.32128931177505
+        },
+        {
+          "rotulo": "IOF",
+          "valor_reais": 60487760608.100006,
+          "valor_bi": 60.487760608100004,
+          "pct_pib": 0.5527356227502307,
+          "pct_total": 1.574045526951195,
+          "per_capita": 297.85077522608793
+        },
+        {
+          "rotulo": "Imp. sobre Comércio Exterior",
+          "valor_reais": 58756341525.97,
+          "valor_bi": 58.75634152597,
+          "pct_pib": 0.5369139590784133,
+          "pct_total": 1.5289895944103609,
+          "per_capita": 289.325008845102
+        },
+        {
+          "rotulo": "Contrib. Seg. Serv. Público",
+          "valor_reais": 27000519195.170002,
+          "valor_bi": 27.000519195170003,
+          "pct_pib": 0.24673005979863197,
+          "pct_total": 0.7026222501420556,
+          "per_capita": 132.95459268021438
+        },
+        {
+          "rotulo": "Sistema S",
+          "valor_reais": 26918934551.0,
+          "valor_bi": 26.918934551,
+          "pct_pib": 0.2459845413888113,
+          "pct_total": 0.7004992099942196,
+          "per_capita": 132.5528576966692
+        },
+        {
+          "rotulo": "Salário Educação",
+          "valor_reais": 23939301268.57,
+          "valor_bi": 23.93930126857,
+          "pct_pib": 0.21875672800352433,
+          "pct_total": 0.6229615661301847,
+          "per_capita": 117.8806980045416
+        },
+        {
+          "rotulo": "Contribuições Econômicas",
+          "valor_reais": 18650084833.579998,
+          "valor_bi": 18.65008483358,
+          "pct_pib": 0.17042400233036628,
+          "pct_total": 0.4853226886634947,
+          "per_capita": 91.8358056219763
+        },
+        {
+          "rotulo": "Taxas",
+          "valor_reais": 9117031156.539999,
+          "valor_bi": 9.11703115654,
+          "pct_pib": 0.08331119954321091,
+          "pct_total": 0.23724836176369787,
+          "per_capita": 44.89362427102645
+        },
+        {
+          "rotulo": "Outras contribuições sociais",
+          "valor_reais": 6942313877.58,
+          "valor_bi": 6.94231387758,
+          "pct_pib": 0.06343868818872915,
+          "pct_total": 0.18065668154745151,
+          "per_capita": 34.184991302573245
+        },
+        {
+          "rotulo": "ITR",
+          "valor_reais": 3260251478.06,
+          "valor_bi": 3.26025147806,
+          "pct_pib": 0.029792095341789494,
+          "pct_total": 0.08484004374083506,
+          "per_capita": 16.053965635522847
+        },
+        {
+          "rotulo": "CPMF",
+          "valor_reais": 3893837.63,
+          "valor_bi": 0.00389383763,
+          "pct_pib": 3.5581789533436944e-05,
+          "pct_total": 0.00010132756846275093,
+          "per_capita": 0.01917383855908041
+        },
+        {
+          "rotulo": "Outros impostos",
+          "valor_reais": 1087303.53,
+          "valor_bi": 0.00108730353,
+          "pct_pib": 9.935752088209966e-06,
+          "pct_total": 2.8294406019150254e-05,
+          "per_capita": 0.005354045116909059
+        }
+      ],
+      "E": [
+        {
+          "rotulo": "ICMS",
+          "valor_reais": 702788386559.06,
+          "valor_bi": 702.7883865590601,
+          "pct_pib": 6.422062456951551,
+          "pct_total": 18.288343048831603,
+          "per_capita": 3460.6350714937266
+        },
+        {
+          "rotulo": "IPVA",
+          "valor_reais": 82112051286.05,
+          "valor_bi": 82.11205128605,
+          "pct_pib": 0.7503378426745061,
+          "pct_total": 2.1367646237226765,
+          "per_capita": 404.33201502386567
+        },
+        {
+          "rotulo": "IRRF",
+          "valor_reais": 73273238432.98,
+          "valor_bi": 73.27323843298,
+          "pct_pib": 0.6695689949340896,
+          "pct_total": 1.9067562105318843,
+          "per_capita": 360.8083792684916
+        },
+        {
+          "rotulo": "Previ. Estadual",
+          "valor_reais": 51914776541.68,
+          "valor_bi": 51.91477654168,
+          "pct_pib": 0.4743959117220477,
+          "pct_total": 1.3509546555631535,
+          "per_capita": 255.6361201535019
+        },
+        {
+          "rotulo": "TAXAS",
+          "valor_reais": 42834171653.26,
+          "valor_bi": 42.83417165326,
+          "pct_pib": 0.39141757449331754,
+          "pct_total": 1.1146541980336577,
+          "per_capita": 210.92186427186633
+        },
+        {
+          "rotulo": "ITCD",
+          "valor_reais": 15531615518.250002,
+          "valor_bi": 15.531615518250002,
+          "pct_pib": 0.14192750879667132,
+          "pct_total": 0.4041721777604275,
+          "per_capita": 76.47999654999316
+        },
+        {
+          "rotulo": "Contribuições de Melhoria e Econômicas",
+          "valor_reais": 6614792751.780001,
+          "valor_bi": 6.6147927517800005,
+          "pct_pib": 0.06044580844557204,
+          "pct_total": 0.17213374801735035,
+          "per_capita": 32.57222831975276
+        },
+        {
+          "rotulo": "Royalties e Compensações Financeiras",
+          "valor_reais": 441862777.84000003,
+          "valor_bi": 0.44186277784000005,
+          "pct_pib": 0.0040377308603293475,
+          "pct_total": 0.011498394418856112,
+          "per_capita": 2.1757983697874357
+        },
+        {
+          "rotulo": "Outros impostos",
+          "valor_reais": 47251585.85,
+          "valor_bi": 0.04725158585,
+          "pct_pib": 0.0004317837934181728,
+          "pct_total": 0.001229606561737765,
+          "per_capita": 0.232673872112235
+        }
+      ],
+      "M": [
+        {
+          "rotulo": "ISS",
+          "valor_reais": 123174839988.24017,
+          "valor_bi": 123.17483998824018,
+          "pct_pib": 1.125568564674931,
+          "pct_total": 3.2053229276015798,
+          "per_capita": 606.5313248501013
+        },
+        {
+          "rotulo": "IPTU",
+          "valor_reais": 71257562684.84308,
+          "valor_bi": 71.25756268484308,
+          "pct_pib": 0.6511498010557201,
+          "pct_total": 1.8543031958518523,
+          "per_capita": 350.882890572079
+        },
+        {
+          "rotulo": "IRRF",
+          "valor_reais": 41022943674.9406,
+          "valor_bi": 41.0229436749406,
+          "pct_pib": 0.3748666191517017,
+          "pct_total": 1.0675214348283235,
+          "per_capita": 202.00310695583877
+        },
+        {
+          "rotulo": "Previd. Municipal",
+          "valor_reais": 27009939222.527294,
+          "valor_bi": 27.009939222527294,
+          "pct_pib": 0.24681613976977507,
+          "pct_total": 0.7028673832363617,
+          "per_capita": 133.00097830307118
+        },
+        {
+          "rotulo": "ITBI",
+          "valor_reais": 21541289514.34321,
+          "valor_bi": 21.54128951434321,
+          "pct_pib": 0.1968437573957577,
+          "pct_total": 0.5605591951815798,
+          "per_capita": 106.07252966077795
+        },
+        {
+          "rotulo": "TAXAS",
+          "valor_reais": 17759686713.524906,
+          "valor_bi": 17.759686713524907,
+          "pct_pib": 0.162287566885633,
+          "pct_total": 0.46215226271304566,
+          "per_capita": 87.45135217797252
+        },
+        {
+          "rotulo": "Contribuições de Melhoria e Econômicas",
+          "valor_reais": 15057101451.96057,
+          "valor_bi": 15.05710145196057,
+          "pct_pib": 0.13759141129037494,
+          "pct_total": 0.391824113689127,
+          "per_capita": 74.14341835501425
+        },
+        {
+          "rotulo": "Royalties e Compensações Financeiras",
+          "valor_reais": 993293076.1466347,
+          "valor_bi": 0.9932930761466346,
+          "pct_pib": 0.009076686944563149,
+          "pct_total": 0.025848014668455654,
+          "per_capita": 4.891123589015173
+        },
+        {
+          "rotulo": "Outros impostos",
+          "valor_reais": 686343175.3562462,
+          "valor_bi": 0.6863431753562462,
+          "pct_pib": 0.006271786533953847,
+          "pct_total": 0.017860396785433476,
+          "per_capita": 3.379656393224409
+        }
+      ]
+    },
+    "principais_tributos": [
+      {
+        "rotulo": "Imposto de Renda (Global)",
+        "valor_reais": 910788920985.8707,
+        "valor_bi": 910.7889209858707,
+        "pct_pib": 8.322766066623426,
+        "pct_total": 23.701046503654766,
+        "per_capita": 4484.860795898705
+      },
+      {
+        "rotulo": "ICMS",
+        "valor_reais": 702788386559.06,
+        "valor_bi": 702.7883865590601,
+        "pct_pib": 6.422062456951551,
+        "pct_total": 18.288343048831603,
+        "per_capita": 3460.6350714937266
+      },
+      {
+        "rotulo": "Previdência Social Ampliada",
+        "valor_reais": 604546572470.6073,
+        "valor_bi": 604.5465724706073,
+        "pct_pib": 5.524331250764002,
+        "pct_total": 15.731840932190302,
+        "per_capita": 2976.8776932788614
+      },
+      {
+        "rotulo": "Cofins",
+        "valor_reais": 377680460575.79,
+        "valor_bi": 377.68046057579,
+        "pct_pib": 3.4512344725322532,
+        "pct_total": 9.82820712173267,
+        "per_capita": 1859.7550453071485
+      },
+      {
+        "rotulo": "CSLL",
+        "valor_reais": 164635876957.03,
+        "valor_bi": 164.63587695703,
+        "pct_pib": 1.5044384692378308,
+        "pct_total": 4.284244665278582,
+        "per_capita": 810.6916686730771
+      },
+      {
+        "rotulo": "ISS",
+        "valor_reais": 123174839988.24013,
+        "valor_bi": 123.17483998824012,
+        "pct_pib": 1.1255685646749305,
+        "pct_total": 3.205322927601579,
+        "per_capita": 606.5313248501011
+      },
+      {
+        "rotulo": "PIS-PASEP",
+        "valor_reais": 100785319823.76001,
+        "valor_bi": 100.78531982376,
+        "pct_pib": 0.9209736971053822,
+        "pct_total": 2.622690611391079,
+        "per_capita": 496.2819806705861
+      },
+      {
+        "rotulo": "IPVA",
+        "valor_reais": 82112051286.05,
+        "valor_bi": 82.11205128605,
+        "pct_pib": 0.7503378426745061,
+        "pct_total": 2.1367646237226765,
+        "per_capita": 404.33201502386567
+      },
+      {
+        "rotulo": "IPTU",
+        "valor_reais": 71257562684.84308,
+        "valor_bi": 71.25756268484308,
+        "pct_pib": 0.6511498010557201,
+        "pct_total": 1.8543031958518523,
+        "per_capita": 350.882890572079
+      },
+      {
+        "rotulo": "IPI",
+        "valor_reais": 63832605060.329994,
+        "valor_bi": 63.832605060329996,
+        "pct_pib": 0.5833007265451036,
+        "pct_total": 1.6610868952453801,
+        "per_capita": 314.32128931177505
+      },
+      {
+        "rotulo": "IOF",
+        "valor_reais": 60487760608.100006,
+        "valor_bi": 60.487760608100004,
+        "pct_pib": 0.5527356227502307,
+        "pct_total": 1.574045526951195,
+        "per_capita": 297.85077522608793
+      },
+      {
+        "rotulo": "Comércio Exterior (Importação + Exportação)",
+        "valor_reais": 58756341525.97,
+        "valor_bi": 58.75634152597,
+        "pct_pib": 0.5369139590784133,
+        "pct_total": 1.5289895944103609,
+        "per_capita": 289.325008845102
+      },
+      {
+        "rotulo": "ITBI",
+        "valor_reais": 21541289514.343212,
+        "valor_bi": 21.541289514343212,
+        "pct_pib": 0.19684375739575777,
+        "pct_total": 0.5605591951815799,
+        "per_capita": 106.07252966077796
+      },
+      {
+        "rotulo": "ITCD",
+        "valor_reais": 15531615518.250002,
+        "valor_bi": 15.531615518250002,
+        "pct_pib": 0.14192750879667132,
+        "pct_total": 0.4041721777604275,
+        "per_capita": 76.47999654999316
+      },
+      {
+        "rotulo": "ITR",
+        "valor_reais": 3260251478.06,
+        "valor_bi": 3.26025147806,
+        "pct_pib": 0.029792095341789494,
+        "pct_total": 0.08484004374083506,
+        "per_capita": 16.053965635522847
+      },
+      {
+        "rotulo": "CPMF",
+        "valor_reais": 3893837.63,
+        "valor_bi": 0.00389383763,
+        "pct_pib": 3.5581789533436944e-05,
+        "pct_total": 0.00010132756846275093,
+        "per_capita": 0.01917383855908041
+      },
+      {
+        "rotulo": "Demais tributos",
+        "valor_reais": 481637794239.8872,
+        "valor_bi": 481.6377942398872,
+        "pct_pib": 4.401193951683208,
+        "pct_total": 12.533441608886633,
+        "per_capita": 2371.656496294938
+      }
+    ],
+    "bases_incidencia": [
+      {
+        "rotulo": "bens_servicos",
+        "valor_reais": 1401599215861.7,
+        "valor_bi": 1401.5992158617,
+        "pct_pib": 12.807778096546174,
+        "pct_total": 36.473179931379015,
+        "per_capita": 6901.684056473081
+      },
+      {
+        "rotulo": "renda",
+        "valor_reais": 1075424797942.9001,
+        "valor_bi": 1075.4247979429,
+        "pct_pib": 9.827204535861252,
+        "pct_total": 27.985291168933337,
+        "per_capita": 5295.55246457178
+      },
+      {
+        "rotulo": "salarios",
+        "valor_reais": 861256563833.5364,
+        "valor_bi": 861.2565638335363,
+        "pct_pib": 7.870140642874211,
+        "pct_total": 22.412088466009372,
+        "per_capita": 4240.956064953473
+      },
+      {
+        "rotulo": "patrimonio",
+        "valor_reais": 303986657826.9695,
+        "valor_bi": 303.98665782696946,
+        "pct_pib": 2.7778223715435564,
+        "pct_total": 7.91050675698696,
+        "per_capita": 1496.8757444795483
+      },
+      {
+        "rotulo": "taxas",
+        "valor_reais": 69710889523.32486,
+        "valor_bi": 69.71088952332487,
+        "pct_pib": 0.6370163409221611,
+        "pct_total": 1.8140548225104,
+        "per_capita": 343.26684072086505
+      },
+      {
+        "rotulo": "transacoes_financeiras",
+        "valor_reais": 60491736879.18,
+        "valor_bi": 60.49173687918,
+        "pct_pib": 0.5527719578145401,
+        "pct_total": 1.5741489996478941,
+        "per_capita": 297.8703549792773
+      },
+      {
+        "rotulo": "comercio_exterior",
+        "valor_reais": 58756341525.97,
+        "valor_bi": 58.75634152597,
+        "pct_pib": 0.5369139590784133,
+        "pct_total": 1.5289895944103609,
+        "per_capita": 289.325008845102
+      },
+      {
+        "rotulo": "demais",
+        "valor_reais": 11595339720.239998,
+        "valor_bi": 11.595339720239998,
+        "pct_pib": 0.10595792035999231,
+        "pct_total": 0.30174026012262706,
+        "per_capita": 57.09718610777674
+      }
+    ]
+  },
+  "rd_esfera": {
+    "por_esfera": {
+      "U": {
+        "rotulo": "União",
+        "valor_reais": 2055304770697.8318,
+        "valor_bi": 2055.304770697832,
+        "pct_pib": 18.78132288172456,
+        "pct_total": 53.4842627386862,
+        "per_capita": 10120.627927433123
+      },
+      "E": {
+        "rotulo": "Estados",
+        "valor_reais": 924869443234.7451,
+        "valor_bi": 924.8694432347451,
+        "pct_pib": 8.451433521917478,
+        "pct_total": 24.06745754020436,
+        "per_capita": 4554.195392274121
+      },
+      "M": {
+        "rotulo": "Municípios",
+        "valor_reais": 862647329181.2451,
+        "valor_bi": 862.6473291812451,
+        "pct_pib": 7.882849421358272,
+        "pct_total": 22.448279721109444,
+        "per_capita": 4247.804401423664
+      }
+    },
+    "transferencias": {
+      "uniao_estados": [
+        {
+          "modalidade": "FPE",
+          "valor_reais": 129258308463.70004,
+          "valor_bi": 129.25830846370005
+        },
+        {
+          "modalidade": "Royalties e Compensações Financeiras",
+          "valor_reais": 32865947037.51,
+          "valor_bi": 32.86594703751
+        },
+        {
+          "modalidade": "FUNDEB",
+          "valor_reais": 31996696000.449997,
+          "valor_bi": 31.996696000449997
+        },
+        {
+          "modalidade": "Salário-Educação (quota estadual)",
+          "valor_reais": 15959534179.046665,
+          "valor_bi": 15.959534179046665
+        },
+        {
+          "modalidade": "LC201/2023 (Compensação ICMS)",
+          "valor_reais": 9526082620.58,
+          "valor_bi": 9.52608262058
+        },
+        {
+          "modalidade": "IPI-Exp (FPEx)",
+          "valor_reais": 4683061292.28,
+          "valor_bi": 4.68306129228
+        },
+        {
+          "modalidade": "LC176/2020 (Seguro-Receita ICMS)",
+          "valor_reais": 3000000000.0,
+          "valor_bi": 3.0
+        },
+        {
+          "modalidade": "AFM/AFE",
+          "valor_reais": 2003711517.9699998,
+          "valor_bi": 2.00371151797
+        },
+        {
+          "modalidade": "CIDE",
+          "valor_reais": 104920283.99999999,
+          "valor_bi": 0.10492028399999999
+        },
+        {
+          "modalidade": "IOF-Ouro",
+          "valor_reais": 13154239.869999997,
+          "valor_bi": 0.013154239869999997
+        },
+        {
+          "modalidade": "FEX",
+          "valor_reais": 0.0,
+          "valor_bi": 0.0
+        },
+        {
+          "modalidade": "LC87/1996 (Lei Kandir)",
+          "valor_reais": 0.0,
+          "valor_bi": 0.0
+        }
+      ],
+      "uniao_municipios": [
+        {
+          "modalidade": "FPM",
+          "valor_reais": 152043875519.99002,
+          "valor_bi": 152.04387551999002
+        },
+        {
+          "modalidade": "FUNDEB",
+          "valor_reais": 71782255496.26021,
+          "valor_bi": 71.7822554962602
+        },
+        {
+          "modalidade": "Royalties e Compensações Financeiras",
+          "valor_reais": 32714211992.970497,
+          "valor_bi": 32.7142119929705
+        },
+        {
+          "modalidade": "AFM/AFE",
+          "valor_reais": 4171170607.950002,
+          "valor_bi": 4.171170607950002
+        },
+        {
+          "modalidade": "ITR",
+          "valor_reais": 2280729989.15,
+          "valor_bi": 2.28072998915
+        },
+        {
+          "modalidade": "LC176/2020 (Seguro-Receita ICMS)",
+          "valor_reais": 986916728.3300003,
+          "valor_bi": 0.9869167283300003
+        },
+        {
+          "modalidade": "CIDE",
+          "valor_reais": 34356629.64,
+          "valor_bi": 0.034356629640000004
+        },
+        {
+          "modalidade": "IOF-Ouro",
+          "valor_reais": 30693207.659999996,
+          "valor_bi": 0.030693207659999996
+        },
+        {
+          "modalidade": "FEX",
+          "valor_reais": 0.0,
+          "valor_bi": 0.0
+        },
+        {
+          "modalidade": "LC87/1996 (Lei Kandir)",
+          "valor_reais": 0.0,
+          "valor_bi": 0.0
+        }
+      ],
+      "estados_municipios": [
+        {
+          "modalidade": "ICMS (cota-parte municipal, líq. FUNDEB)",
+          "valor_reais": 140557677311.81198,
+          "valor_bi": 140.55767731181197
+        },
+        {
+          "modalidade": "FUNDEB",
+          "valor_reais": 94934130574.35956,
+          "valor_bi": 94.93413057435956
+        },
+        {
+          "modalidade": "IPVA (cota-parte municipal)",
+          "valor_reais": 41056025643.025,
+          "valor_bi": 41.056025643025
+        },
+        {
+          "modalidade": "LC201/2023 (Compensação ICMS) (cota-parte municipal)",
+          "valor_reais": 2381520655.145,
+          "valor_bi": 2.381520655145
+        },
+        {
+          "modalidade": "IPI-Exp (FPEx) (cota-parte municipal)",
+          "valor_reais": 1170765323.07,
+          "valor_bi": 1.17076532307
+        }
+      ]
+    }
+  },
+  "gap_fgts_sistema_s": false,
+  "cobertura_imputacao": {
+    "total_municipios": 5569,
+    "declarantes": 5556,
+    "imputados": 13,
+    "pct_populacao_coberta": 99.92190140432416,
+    "pct_receita_imputada": 0.03817434358652909
+  }
+}

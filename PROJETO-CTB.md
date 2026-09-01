@@ -349,12 +349,15 @@ sem tocar no Excel, incluindo a imputação municipal.
 (~36% do PIB) e toda divergência contra a planilha tem causa identificada.
 
 `uv run ctb calcular --anos 2024` roda de ponta a ponta e escreve
-`docs/resultado-2024.md`. Total calculado: **R$ 3.981,516 bi (33,80% do PIB)**. Fecha o
-critério de aceite: somando de volta o gap conhecido de FGTS + Sistema S (fontes
-manuais, ainda não ingeridas — R$ 221,3 bi, 1,88 p.p.), o total sobe para **35,68%**,
-muito perto dos 35,950% publicados; o resíduo final (~0,27 p.p.) é o efeito deliberado
-da decisão 6 (receita líquida em estados/municípios) somado aos resíduos pequenos já
-documentados em `docs/divergencias.md`.
+`docs/resultado-2024.md`. Total calculado nesta passada (antes de FGTS/Sistema S serem
+ingeridos — ver a atualização de 2026-09-01 na Fase 4): **R$ 3.981,516 bi (33,80% do
+PIB)**. Fecha o critério de aceite: somando de volta o gap conhecido de FGTS + Sistema S
+(fontes manuais, ainda não ingeridas nesta passada — R$ 221,3 bi, 1,88 p.p.), o total
+sobe para **35,68%**, muito perto dos 35,950% publicados; o resíduo final (~0,27 p.p.) é
+o efeito deliberado da decisão 6 (receita líquida em estados/municípios) somado aos
+resíduos pequenos já documentados em `docs/divergencias.md`. **FGTS e Sistema S foram
+ingeridos de fato em 2026-09-01** (Fase 4) — o total calculado de 2024 agora já inclui
+os dois, fechando em 35,68% do PIB diretamente, sem precisar somar o gap de volta.
 
 Imputação municipal: 5.544 declarantes + 25 imputados = 5.569 municípios, 99,82% da
 população coberta, 0,095% da receita municipal imputada. As faixas 16 e 17 (as de menos
@@ -379,11 +382,28 @@ valores publicados — não é mais incógnita:
   fica combinada (importação + exportação), porque o dicionário da União agrega os
   dois numa conta só.
 
-Ambos calculados sem dado novo, a partir da mesma tabela intermediária. Fica para uma
-passada seguinte: `RD ESFERA`, que depende de transferências constitucionais — a fonte
-da decisão 5 cobre a maior parte, mas a planilha mostra duas modalidades sem código
-correspondente (Salário-Educação, Seguro-Receita ICMS), além do bloco
-Estados→Municípios, que continua sem fonte.
+Ambos calculados sem dado novo, a partir da mesma tabela intermediária.
+
+**Terceira passada (mesmo dia): `RD ESFERA`, os cinco quadros completos para 2024.** A
+fonte da decisão 5 (API de transferências constitucionais) se mostrou pouco confiável ao
+tentar realmente ingerir (filtro por transferência ignorado pelo servidor, endpoint
+municipal sempre em timeout) e foi substituída por quatro fontes: CKAN
+`transferencias-obrigatorias-da-uniao` (FPE, FPM, ITR, IPI-Exp, IOF, CIDE, LC176 — 7
+modalidades, validadas exatas contra a planilha antiga), a planilha oficial do FUNDEB da
+STN (`pipeline/fontes/fundeb.py`, arquivo `.xls` legado lido com `xlrd`), dois CSVs
+fornecidos pelo usuário em `manual/` (royalties e demais compensações financeiras) e duas
+fórmulas calculadas internamente (ICMS/IPVA cota-parte municipal, Salário-Educação quota
+estadual — regras dadas pelo usuário). Ver `pipeline/dominio/rd_esfera.py` e a seção
+`RD ESFERA` de `docs/resultado-2024.md`.
+
+De 22 linhas de transferência calculadas, 19 batem exatas ou dentro do ruído normal da
+opção B contra a planilha antiga. Uma precisou de decisão do usuário
+(`docs/decisoes-pendentes.md` §9): a cota-parte municipal do ICMS, com a fórmula
+informada aplicada flat (25% da arrecadação estadual), fechava em R$ 202,039 bi contra
+R$ 161,083 bi publicados — a mesma fórmula no IPVA batia quase exato. Decidido aplicar
+também a retenção de 20% do FUNDEB à cota do ICMS antes do repasse (25% × 80% = 20% da
+arrecadação bruta, R$ 161,631 bi, reproduz o publicado); a cota do IPVA não recebe esse
+ajuste.
 
 Módulos novos: `pipeline/fontes/sidra.py` (PIB e população), `pipeline/fontes/cache.py`
 e `pipeline/fontes/planilha_referencia.py` (extraídos de `validar.py`/`diagnostico.py`
@@ -398,43 +418,186 @@ estimativa de população na tabela do SIDRA usada; o pipeline usa o cadastro de
 Siconfi como respaldo e avisa — sem isso, o município seria excluído do universo de
 imputação em silêncio.
 
-### Fase 3 — Série 2016–2025
-Rodar os dez anos. Aqui aparecem as quebras de série: mudanças de codificação de
-natureza, alterações no Anexo I-C, Fundeb novo (2021), variação da cobertura municipal.
-**Critério de aceite:** os dez anos rodam sem erro, com relatório de cobertura e de
-participação de valores imputados por ano.
+### Fase 3 — Série 2016–2025 ✅ **cinco quadros rodando nos dez anos, 2026-09-01**
 
-O insumo pesado já está feito: o **censo municipal dos dez anos está em cache**, com a
-contagem exata de declarantes por ano.
+`uv run ctb calcular --anos 2016-2025` roda os dez anos de ponta a ponta sem erro,
+incluindo `RD ESFERA` em todos eles (estendido depois da primeira passada, que só
+cobria 2024 — ver abaixo).
 
-| ano | declarantes | % dos 5.569 |
-|---|---|---|
-| 2016 | 5.442 | 97,7% |
-| 2017 | 5.556 | 99,8% |
-| 2018 | 5.536 | 99,4% |
-| 2019 | 5.553 | 99,7% |
-| 2020 | 5.559 | 99,8% |
-| 2021 | 5.562 | 99,9% |
-| 2022 | 5.556 | 99,8% |
-| 2023 | 5.556 | 99,8% |
-| 2024 | 5.544 | 99,6% |
-| 2025 | 5.481 | 98,4% |
+**Extensão de `RD ESFERA` para 2016-2023 e 2025.** CKAN e os CSVs de `manual/` já eram
+séries longas, sem mudança. Dois achados no caminho:
 
-**A imputação é marginal em toda a série** — no pior ano faltam 127 municípios, todos
-pequenos (nenhum acima de 500 mil habitantes falta em ano nenhum). Isso reduz muito o peso
-das decisões sobre faixas populacionais e média vs. mediana.
+- **CKAN tinha um bug real:** o código só sabia dizer "modalidade extinta" (fundo que
+  parou de existir antes do ano pedido, como Lei Kandir/FEX), mas não "modalidade ainda
+  não existia" (LC176/2020, que só começa em jan/2020 — pedir 2016 batia num erro
+  estrutural falso). Corrigido em `pipeline/fontes/ckan_transferencias.py` checando os
+  dois lados do intervalo coberto pelo cabeçalho, não só o fim.
+- **FUNDEB:** o servidor que hospeda a planilha oficial da STN
+  (`thot-arquivos.tesouro.gov.br`) ficou fora do ar durante a extensão — inclusive a URL
+  de 2024, já validada antes na mesma sessão, passou a devolver 503. O usuário forneceu
+  dois CSVs brutos (`manual/fundeb_estados.csv`, `manual/fundeb_municipios.csv`, todos
+  os anos 2016-2026) com a redistribuição decomposta por modalidade de origem
+  (`FUNDEB - ICMS`, `FUNDEB - FPE`, `FUNDEB - COUN` — Complementação da União — etc.).
+  `pipeline/dominio/rd_esfera.py::_somar_fundeb_manual` reclassifica isso em origem
+  União (tudo, por eliminação) e origem Estados (`ICMS`+`IPVA`+`ITCMD`, os únicos
+  tributos próprios que alimentam o pool) — validado contra a planilha oficial de 2024:
+  a mesma soma no CSV de municípios bate quase exato (R$ 109,830 bi contra R$ 109,833 bi
+  publicado). **2024 continua vindo da planilha oficial** (já cacheada, sem depender do
+  servidor), preservando os números de `docs/decisoes-pendentes.md` §9; os outros nove
+  anos usam os CSVs do usuário.
 
-### Fase 4 — Diagnóstico da revisão
-Comparar a nova série contra `CTB-Resumo.xlsx` ano a ano e linha a linha. **Isto não é
-um teste que precisa passar** — é o material que vai sustentar a comunicação da revisão.
-**Entregável:** `docs/revisao-metodologica.md`, com a tabela de diferenças em pontos
-percentuais do PIB e a explicação de cada uma. Para uma publicação institucional, ter
-esse documento pronto antes de divulgar vale mais que a própria automação.
+A série de `RD ESFERA` (receita disponível por esfera, % do PIB) ficou coerente, sem
+saltos:
 
-### Fase 5 — Site
-Os cinco quadros + gráficos, com seletor de ano e de unidade (R$ bi / % PIB / % total /
-per capita), exportação CSV por tabela e PNG por gráfico. Nota de cobertura municipal
-visível. Página de metodologia gerada a partir do próprio dicionário.
+| ano | União | Estados | Municípios |
+|---|---|---|---|
+| 2016 | 15,784% | 8,042% | 6,561% |
+| 2017 | 15,871% | 8,152% | 6,514% |
+| 2018 | 16,607% | 8,504% | 6,914% |
+| 2019 | 16,927% | 8,621% | 7,282% |
+| 2020 | 15,222% | 8,897% | 7,529% |
+| 2021 | 17,073% | 8,895% | 7,576% |
+| 2022 | 17,939% | 8,939% | 7,926% |
+| 2023 | 16,926% | 8,451% | 7,883% |
+| 2024 | 16,607% | 8,857% | 8,337% |
+| 2025 | 16,724% | 8,800% | 8,452% |
+
+A participação de Municípios em RD % PIB sobe de forma constante ao longo da década
+(6,6% → 8,5%), consistente com o peso crescente das transferências constitucionais —
+sem quebra visível na transição para o Novo Fundeb (2021).
+
+**Achado real durante a construção, não estimado nem contornado:** o SIDRA (tabela 6579,
+"População residente estimada") não tem nenhuma linha para 2022 nem para 2023 — pula
+direto de 2021 para 2024. Não é buraco de coleta: 2022 foi ano de Censo (o IBGE não
+publica estimativa intercensitária no próprio ano do censo), e o resultado do Censo 2022
+só saiu no Diário Oficial em 30/08/2023 — tarde demais para gerar uma estimativa 2023
+nova, então o Censo 2022 seguiu sendo a referência oficial também em 2023 (mesma
+população nos dois anos; confirmado por fonte externa, não é aproximação nossa).
+`pipeline/fontes/sidra.py` cai para a tabela 4709 ("População Residente, Variação
+absoluta...", variável 93, período único 2022) nesses dois anos especificamente, com
+aviso explícito no log — nos outros oito anos usa a 6579 normalmente.
+
+Série completa (`docs/resultado-{ano}.md`, já com FGTS/Sistema S — ver a atualização de
+2026-09-01 na Fase 4; 2025 ainda sem os dois, ver abaixo):
+
+| ano | total (R$ bi) | % do PIB | declarantes | % população coberta | imputados | % receita municipal imputada |
+|---|---|---|---|---|---|---|
+| 2016 | 2.040,055 | 32,543% | 5.442 | 98,65% | 127 | 0,659% |
+| 2017 | 2.151,019 | 32,824% | 5.556 | 99,93% | 13 | 0,025% |
+| 2018 | 2.380,757 | 34,553% | 5.536 | 99,77% | 33 | 0,098% |
+| 2019 | 2.572,402 | 34,809% | 5.553 | 99,90% | 16 | 0,049% |
+| 2020 | 2.551,494 | 33,529% | 5.559 | 99,90% | 10 | 0,050% |
+| 2021 | 3.180,329 | 35,290% | 5.562 | 99,96% | 7 | 0,014% |
+| 2022 | 3.688,283 | 36,591% | 5.556 | 99,95% | 13 | 0,021% |
+| 2023 | 3.842,822 | 35,120% | 5.556 | 99,92% | 13 | 0,038% |
+| 2024 | 4.203,383 | 35,685% | 5.544 | 99,82% | 25 | 0,095% |
+| 2025 | 4.328,086 | 33,976% | 5.481 | 98,86% | 88 | 0,943% (sem FGTS/Sistema S) |
+
+**A imputação é marginal em toda a série** — no pior ano (2016) faltam 127 municípios,
+todos pequenos (nenhum acima de 500 mil habitantes falta em ano nenhum, confirmado nos
+dez anos, não só na amostra da Fase 0). Isso reduz muito o peso das decisões sobre faixas
+populacionais e média vs. mediana.
+
+**Nenhuma quebra de dicionário apareceu ao rodar os dez anos** — `uv run ctb dicionario
+validar --anos 2016-2025` já tinha validado as três esferas antes desta passada (nenhuma
+conta órfã, nenhuma rubrica zera no meio da série); calcular os quatro quadros não expôs
+nenhum caso novo. O gap de população (acima) foi a única quebra real encontrada, e é do
+lado do IBGE, não da DCA.
+
+**Não verificado ainda nesta passada:** se as "quebras de série" mencionadas no parágrafo
+original desta fase (Fundeb novo em 2021, variação de cobertura) aparecem de forma
+relevante nos números — a série de totais acima é suave, sem saltos que sugiram uma
+quebra não tratada, mas isso é observação, não uma verificação linha a linha como a
+Fase 4 vai fazer.
+
+### Fase 4 — Diagnóstico da revisão ✅ **2026-09-01**
+
+`uv run ctb comparar-historico` gera `docs/revisao-metodologica.md`: total geral, AD e RD
+por esfera, e `byGOVDetalhado` linha a linha (rubrica × ano, Δ p.p. do PIB), comparando
+`dados/intermediario/{ano}.parquet` contra `CTB-Resumo.xlsx` para 2016-2024 (a planilha
+não tem 2025). Implementado em `pipeline/dominio/comparar_historico.py` +
+`pipeline/fontes/planilha_resumo.py` (leitor genérico do layout ano-em-blocos-de-4-
+colunas da planilha, reaproveitável por qualquer aba).
+
+**Atualização (2026-09-01): FGTS e Sistema S passaram a ser ingeridos** — o maior gap
+conhecido do total geral (CLAUDE.md §Fontes: "FGTS (CEF) e Sistema S (RFB) só em
+`manual/`") fica fechado para 2016-2024. Fonte de cada valor, ano a ano, em
+`manual/README.md`:
+
+- **Sistema S**: arquivo fornecido pelo usuário (`manual/Sistema S.xlsx`), fonte
+  declarada no próprio arquivo como Cetad/RFB, com dado completo até 2024.
+- **FGTS**: o arquivo fornecido pelo usuário (`manual/FGTS.xlsx`) tinha valores
+  claramente errados para 2017-2019 (ordem de grandeza ~1000× menor que o esperado) —
+  não usado. Em vez disso, 2016-2023 vêm do PDF mensal oficial da Caixa (Arrecadação
+  Bruta do FGTS, série 2000-2024/jan, soma dos 12 meses de cada ano) e 2023-2024 vêm das
+  Demonstrações Financeiras auditadas do FGTS (fgts.gov.br), que é a fonte mais
+  autoritativa e prevalece onde os dois se sobrepõem (2023: R$ 176,101 bi auditado
+  contra R$ 175,433 bi somado dos meses — 0,4% de diferença, reconhecimento contábil, não
+  erro). 2025 continua sem fonte.
+
+Com isso, o total geral de 2024 subiu de 33,80% para **35,68% do PIB** — a **0,265 p.p.**
+dos 35,950% publicados (era −2,15 p.p. antes). O que resta do gap é ruído normal da
+opção B (< 0,3 p.p. na maioria das rubricas) e os mecanismos já documentados (decisões
+1, 4, 6, 7). Três achados saíram desse padrão e foram investigados até a causa raiz (ou
+até o limite razoável desta passada) — ver a seção "Achados que pedem atenção" do
+relatório:
+
+1. **União 2019** — Previdência Social/Outras contribuições sociais trocam ±1,7 p.p.
+   entre si. Causa: R$ 132,875 bi na conta `RO1.2.1.9.99.2.0` ("Demais Contribuições
+   Sociais - Parcelamento", provavelmente um REFIS previdenciário) que a própria DCA
+   classifica no ramo genérico, não no ramo do RGPS — o dicionário segue o código
+   corretamente; o que falta é a granularidade que a opção B perdeu.
+2. **Estados e Municípios, 2018+** — a série antiga já publicava R$ 0,00 para "Demais
+   (multas, juros e dívida ativa)" a partir de 2018 (a série antiga bateu no mesmo limite
+   de 8º dígito que motivou a decisão 1, e zerou em vez de estimar).
+3. **União, IR, 2020-2023** — diferença 5-9× maior que o efeito normal da opção B. Causa
+   localizada: a conta `RO1.1.1.3.02.0.0` (IRPJ líquido) tem "Outras Deduções da Receita"
+   **positiva** especificamente nesses quatro anos (nos outros seis anos da série é
+   sempre negativa, como se espera de restituições). A raiz dessa inversão de sinal (por
+   que a STN reporta assim nesses anos) não foi confirmada — hipótese mais provável é a
+   dinâmica de estimativa mensal vs. ajuste anual do IRPJ, amplificada pela recessão de
+   2020 e por programas de renegociação de dívida tributária do período. Registrado para
+   investigação futura, não corrigido nesta passada.
+
+**Nada disso foi ajustado para diminuir o diff** (CLAUDE.md) — o documento é
+deliberadamente um raio-x, não um teste que precisa passar.
+
+### Fase 5 — Site 🚧 **em andamento, 2026-09-01**
+
+`uv run ctb publicar --anos 2016-2025` escreve `dados/publicado/{ano}.json` (os cinco
+quadros com os quatro indicadores de cada linha, RD ESFERA com o detalhe de
+transferências, cobertura da imputação municipal) + `metadados.json` (anos disponíveis)
++ `metodologia.json` (o dicionário inteiro, as três esferas, gerado direto de
+`carregar_mapeamentos()` — nunca um texto solto). Implementado em
+`pipeline/dominio/publicar.py`.
+
+**Achado ao construir:** a primeira versão derivava a cobertura municipal direto do
+parquet (contando `id_ente` distintos em esfera M) — contava o DF como se fosse
+município (ele declara ISS/IPTU/ITBI no bloco Municípios pela regra do DF, decisão 2),
+dando 5.546 declarantes em vez dos 5.544 corretos. Corrigido reaproveitando a
+`RelatorioImputacao` que `imputacao.py` já calcula certo, em vez de reimplementar a
+contagem.
+
+`site/` — Vite + React + ECharts, conforme a recomendação da seção 3. Scaffolded e
+buildando sem erro (`npm run build`), com os cinco quadros, seletor de ano/unidade,
+exportação CSV (tabela) e PNG (gráfico, nativo do ECharts), nota de cobertura municipal,
+e uma página de metodologia que lê `metodologia.json`. `npm run predev`/`prebuild`
+sincronizam `dados/publicado/*.json` para `site/public/dados/` automaticamente.
+
+**Ambiente:** esta máquina não tinha Node.js (nem winget conseguia instalar — o
+instalador MSI pede elevação UAC, que não passa por um terminal não interativo). Usado o
+Node portátil (.zip, sem instalador) extraído em `C:\Users\kebec\tools\`, com o PATH do
+usuário atualizado para achá-lo entre sessões.
+
+**Não verificado ainda:** a ferramenta de navegador desta sessão não conseguiu alcançar
+`localhost`/`127.0.0.1` do servidor Vite (parece rodar num contexto de rede separado do
+terminal, possivelmente por causa do acesso remoto) — o site nunca foi visto rodando de
+fato num navegador. `npm run build` compila sem erro e os JSON servem corretamente
+(conferido via HTTP direto), mas isso não substitui checar a UI. **Falta**: identidade
+visual institucional (hoje é um estilo neutro, sem marca — decisão 8 exige aprovação
+editorial antes de publicar de verdade), verificação visual num navegador de verdade,
+paginação/performance do gráfico (o bundle do ECharts sozinho passa de 500 kB
+minificado — aceitável para uso interno, vale revisar antes de publicar externamente).
 
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
@@ -455,7 +618,7 @@ Publicação só após aprovação.
 | DCA 2025 ainda incompleta | É o ano com maior peso de imputação; tratar como preliminar e sinalizar na página |
 | A nova série divergir da publicada anteriormente | Fase 4 produz a documentação da revisão antes da divulgação |
 
-**Decisões metodológicas.** Todas as oito estão tomadas — histórico completo, com os
+**Decisões metodológicas.** Todas as nove estão tomadas — histórico completo, com os
 números dos dois lados e o efeito medido depois de implementada, em
 `docs/decisoes-pendentes.md`:
 
@@ -466,31 +629,42 @@ números dos dois lados e o efeito medido depois de implementada, em
    um corte arbitrário.
 4. ✅ Royalties → linha própria, *Royalties e Compensações Financeiras*, nas três
    esferas.
-5. ✅ Fonte das transferências constitucionais → API do Tesouro,
-   `apiapex.tesouro.gov.br/aria/v1/transferencias_constitucionais/custom/<endpoint>`.
-   O bloco Estados→Municípios (cota-parte do ICMS/IPVA) continua sem fonte — não é
-   coberto por essa API.
+5. ⚠️ Fonte das transferências constitucionais → **substituída** ao construir
+   `RD ESFERA` (a API do Tesouro se mostrou pouco confiável); ver `docs/decisoes-
+   pendentes.md` §5 para as quatro fontes que a substituíram.
 6. ✅ Receita bruta ou líquida em estados e municípios → **líquida**, uniforme com a
    União.
 7. ✅ IRPF/IRPJ lançados por município → mantida a reclassificação para IRRF.
 8. ✅ Site público ou interno → **público**.
-
-O que ainda não tem decisão: o que entra em "receita disponível" no quadro `RD ESFERA`,
-e a fonte do bloco Estados→Municípios das transferências (item 5 acima).
+9. ✅ Cota-parte municipal do ICMS → **líquida da retenção do FUNDEB** (25% × 80% = 20%
+   da arrecadação bruta, R$ 161,631 bi) em vez de 25% flat (R$ 202,039 bi, 0,349 p.p.
+   do PIB acima do publicado) — a cota do IPVA não recebe esse ajuste.
 
 ---
 
 ## 9. Estado atual do repositório
 
-Fases 0 e 1 concluídas; Fase 2 com a primeira passada feita (2024, dois dos cinco
-quadros). O que existe:
+Fases 0, 1, 2, 3 e 4 concluídas. Os cinco quadros rodam para os dez anos (2016-2025) e a
+comparação contra a série histórica está documentada em `docs/revisao-metodologica.md`.
+Todas as nove decisões metodológicas estão tomadas (`docs/decisoes-pendentes.md`).
+**Fase 5 em andamento**: `ctb publicar` funciona, o site (Vite+React+ECharts) builda sem
+erro mas ainda não foi verificado num navegador de verdade nesta sessão — ver a nota na
+Fase 5. O que existe:
 
 ```
 pipeline/fontes/http.py              cache em disco + retry; nunca refaz download
-                                      sem --force
+                                      sem --force. obter_json (JSON) e obter_binario
+                                      (CSV/XLS) — ambos com o mesmo cache
 pipeline/fontes/cache.py             leitura do cache DCA já baixado (esferas dos
                                       entes, itens por esfera/ano)
 pipeline/fontes/sidra.py             PIB corrente e população — SIDRA/IBGE
+pipeline/fontes/ckan_transferencias.py  FPE/FPM/ITR/IPI-Exp/IOF/CIDE/LC176 — CKAN
+                                      "transferencias-obrigatorias-da-uniao"
+pipeline/fontes/fundeb.py            totais anuais do FUNDEB (Estados/Municípios, por
+                                      origem União/Estados) — planilha .xls da STN, só
+                                      2024 (os outros nove anos usam manual/fundeb_*.csv,
+                                      lidos em rd_esfera.py — servidor da STN caiu no
+                                      meio da extensão)
 pipeline/fontes/planilha_referencia.py  leitura da aba byGOVDetalhado do CTB2024.xlsx,
                                       só para comparação
 pipeline/fontes/diagnostico.py       Fase 0, reexecutável
@@ -507,22 +681,48 @@ pipeline/dominio/agregacao.py        monta a tabela intermediária de um ano
 pipeline/dominio/quadros.py          4 dos 5 quadros a partir da tabela
                                       intermediária: byGOVDetalhado, Bases de
                                       Incidência, AD ESFERA, PRINCIPAIS TRIBUTOS
+pipeline/dominio/rd_esfera.py        5º quadro — transferências entre esferas e RD por
+                                      esfera, 2016-2025
+pipeline/dominio/manual_uniao.py     FGTS e Sistema S (rubricas da União sem conta na
+                                      DCA), 2016-2024 — lê manual/fgts_sistema_s.csv
 pipeline/dominio/calcular.py         orquestra a Fase 2, escreve
                                       docs/resultado-{ano}.md
 pipeline/cli.py                      `ctb fontes testar/varrer-municipios`,
-                                      `ctb dicionario validar`, `ctb calcular`; as
-                                      demais fases recusam-se a rodar
+                                      `ctb dicionario validar`, `ctb calcular`,
+                                      `ctb comparar-historico`; as demais fases
+                                      recusam-se a rodar
 docs/viabilidade-fontes.md           entregável da Fase 0 (gerado)
-docs/resultado-2024.md               entregável da Fase 2 até agora (gerado)
-docs/divergencias.md                 8 itens: 4 resolvidas, 4 abertas mas não urgentes
-docs/decisoes-pendentes.md           8 decisões, todas tomadas, com números e efeito
-                                      medido
+docs/resultado-{ano}.md              entregável das Fases 2 e 3, 2016-2025 (gerado;
+                                      2025 não tem FGTS/Sistema S ainda)
+docs/divergencias.md                 10 itens: 6 resolvidas, 3 abertas mas não
+                                      urgentes, 1 aberta (item 10 — IR 2020-2023,
+                                      achado pela Fase 4)
+docs/decisoes-pendentes.md           9 decisões, todas tomadas
+docs/revisao-metodologica.md         entregável da Fase 4 (gerado) — total geral, AD e
+                                      RD por esfera, byGOVDetalhado linha a linha,
+                                      2016-2024, contra CTB-Resumo.xlsx
+pipeline/fontes/planilha_resumo.py   leitor genérico do layout ano-em-blocos de
+                                      CTB-Resumo.xlsx (qualquer aba)
+pipeline/dominio/comparar_historico.py  Fase 4 — monta a comparação e o relatório
 dicionario/                          6 CSVs — contas das 3 esferas, política de
                                       colunas, bases de incidência, faixas
                                       populacionais (FPM)
-dados/bruto/                         cache do Siconfi + SIDRA, fora do git
+manual/                              CSVs/planilhas/PDFs fornecidos pelo usuário ou
+                                      baixados, fonte e data declaradas em
+                                      manual/README.md — royalties e demais
+                                      compensações financeiras (Estados e Municípios),
+                                      FUNDEB 2016-2023/2025 (decomposto por modalidade
+                                      de origem), e FGTS/Sistema S 2016-2024
+dados/bruto/                         cache do Siconfi + SIDRA + CKAN + FUNDEB, fora
+                                      do git
 dados/intermediario/                 parquet por ano, fora do git (reproduzível do
                                       cache)
+dados/publicado/                     JSON que o site lê — {ano}.json, metadados.json,
+                                      metodologia.json. Versionado (é o produto final)
+pipeline/dominio/publicar.py         Fase 5 — escreve dados/publicado/*.json
+site/                                Vite + React + ECharts, front-end estático. Lê
+                                      dados/publicado/ via site/public/dados/ (copiado
+                                      por `npm run predev`/`prebuild`, nunca commitado)
 ```
 
 ```bash
@@ -530,9 +730,13 @@ uv sync
 uv run ctb fontes testar --anos 2016-2025           # regenera o relatório a partir do cache
 uv run ctb dicionario validar --esfera U            # idem, U/E/M
 uv run ctb calcular --anos 2024                     # gera docs/resultado-2024.md
+uv run ctb comparar-historico                       # gera docs/revisao-metodologica.md
 ```
 
-**Próximo passo:** `RD ESFERA` (precisa do módulo de transferências constitucionais —
-fonte identificada na decisão 5, mas ainda não escrito, mais resolver duas modalidades
-sem código na API e o bloco Estados→Municípios) e/ou avançar para a Fase 3 (rodar os
-dez anos com os quatro quadros já prontos).
+**Próximo passo:** verificar o site num navegador de verdade (não foi possível nesta
+sessão — ver a nota da Fase 5) e decidir identidade visual antes de considerar a Fase 5
+pronta. Itens secundários, não bloqueantes: investigar o achado aberto da Fase 4
+(item 10 de `docs/divergencias.md` — IRPJ 2020-2023); achar fonte de FGTS e Sistema S
+para 2025; se o servidor `thot-arquivos.tesouro.gov.br` voltar, rebaixar as planilhas
+oficiais do FUNDEB dos outros nove anos (URLs já mapeadas em
+`pipeline/fontes/fundeb.py`) e comparar contra os CSVs do usuário usados hoje.
