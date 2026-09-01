@@ -37,8 +37,9 @@ ROTULO_ESFERA = {"U": "União", "E": "Estados", "M": "Municípios"}
 #            139,529, bate exato.
 #   União: "Impostos" = IR+IPI+IOF+ITR+Comércio Exterior = 994,879, bate exato.
 #          "Contribuições Sociais" = Cofins+CSLL+PIS-PASEP+CPMF+Contrib.Seg.Serv.
-#          Público+Outras contrib. sociais+Salário Educação+Sistema S = 710,864 (a
-#          versão calculada aqui não tem Sistema S, ainda não ingerido — manual/).
+#          Público+Outras contrib. sociais+Salário Educação+FGTS+Sistema S = 710,864
+#          (2026-09-01: FGTS e Sistema S passaram a vir de manual/, ver
+#          pipeline/dominio/manual_uniao.py — antes ficavam de fora).
 #          "Demais" antigo = Taxas+Contribuições Econômicas+Multas e Dívida Ativa =
 #          225,833; sob a opção B não há mais Multas e Dívida Ativa (redistribuída
 #          nas rubricas de origem), então "Demais" aqui é Taxas+Contribuições
@@ -51,6 +52,8 @@ CATEGORIA_AD_ESFERA_UNIAO = {
     "Contrib. Seg. Serv. Público": "Contribuições Sociais",
     "Outras contribuições sociais": "Contribuições Sociais",
     "Salário Educação": "Contribuições Sociais",
+    "FGTS": "Contribuições Sociais",
+    "Sistema S": "Contribuições Sociais",
     "Previdência Social": "Previdência Social",
     "Taxas": "Demais", "Contribuições Econômicas": "Demais",
     "Royalties e Compensações Financeiras": "Demais",
@@ -216,3 +219,15 @@ def total_geral(df: pl.DataFrame) -> float:
 def total_por_esfera(df: pl.DataFrame) -> dict[str, float]:
     agrupado = df.group_by("esfera").agg(pl.col("valor_reais").sum())
     return {esfera: valor for esfera, valor in agrupado.iter_rows()}
+
+
+def rd_por_esfera_indicadores(
+    rd_por_esfera: dict[str, float], pib: float, populacao: int
+) -> dict[str, LinhaQuadro]:
+    """RD ESFERA com os quatro indicadores de publicação, mesmo formato dos outros
+    quadros — usa `ROTULO_ESFERA[esf]` como rótulo."""
+    total = sum(rd_por_esfera.values())
+    return {
+        esf: _linha(ROTULO_ESFERA[esf], rd_por_esfera.get(esf, 0.0), pib, populacao, total)
+        for esf in ("U", "E", "M")
+    }

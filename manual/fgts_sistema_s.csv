@@ -1,0 +1,19 @@
+ano;rubrica;valor_reais;fonte;data_extracao
+2016;FGTS;119089000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2017;FGTS;123535000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2018;FGTS;120658000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2019;FGTS;128710000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2020;FGTS;127274000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2021;FGTS;137161000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2022;FGTS;156298000000;Caixa - Arrecadação Bruta do FGTS, Histórico Mensal (soma dos 12 meses);2026-09-01
+2023;FGTS;176101000000;FGTS - Demonstrações Financeiras 2024 (fgts.gov.br), linha "Arrecadação Recebida em depósitos vinculados do FGTS", coluna 2023 (auditada);2026-09-01
+2024;FGTS;192547000000;FGTS - Demonstrações Financeiras 2024 (fgts.gov.br), linha "Arrecadação Recebida em depósitos vinculados do FGTS", coluna 2024 (auditada);2026-09-01
+2016;Sistema S;15895638885;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2017;Sistema S;16471161694;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2018;Sistema S;17082723697;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2019;Sistema S;17791306115;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2020;Sistema S;15935361879;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2021;Sistema S;20106946531;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2022;Sistema S;23814896662;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2023;Sistema S;26918934551;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
+2024;Sistema S;29319758714;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx, detalhe por entidade SEBRAE/SENAC/SENAI/SENAR/SENAT/SESC/SESCOOP/SESI/SEST);2026-09-01

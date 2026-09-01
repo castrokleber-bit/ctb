@@ -22,6 +22,7 @@ from pipeline.dominio.dicionario import (
     ErroDicionario, carregar_mapeamentos, carregar_politica_colunas, classificar,
 )
 from pipeline.dominio.imputacao import RelatorioImputacao, imputar_municipios
+from pipeline.dominio import manual_uniao
 from pipeline.fontes.cache import DIR_ENTES, esferas_por_ente, itens_dca
 from pipeline.fontes.http import RAIZ
 from pipeline.fontes.sidra import populacao_municipios
@@ -34,6 +35,7 @@ VERSAO_DICIONARIO = "2026-08-31"
 
 FONTE_DCA = "Siconfi DCA"
 FONTE_IMPUTADO = "imputado"
+FONTE_MANUAL = "manual"
 METODO_IMPUTACAO = "per_capita_faixa_fpm"
 
 DIR_INTERMEDIARIO = RAIZ / "dados" / "intermediario"
@@ -134,6 +136,16 @@ def calcular_ano(ano: int, *, forcar_sidra: bool = False) -> tuple[pl.DataFrame,
         valores, orfas = classificar(itens, "U", ano, mapas_u, politica, por_bloco=True, com_base=True)
         _falhar_se_orfas(orfas, "U", cod, ano)
         linhas += _linhas_de_ente(ano, cod, nomes.get(cod, cod), valores)
+
+    # FGTS e Sistema S — sem conta na DCA, vêm de manual/ (ver manual_uniao.py e
+    # manual/README.md para fonte e data de cada valor).
+    for rubrica, valor in manual_uniao.carregar(ano).items():
+        linhas.append(dict(
+            ano=ano, esfera="U", id_ente="1", nome_ente=nomes.get("1", "União"),
+            rubrica=rubrica, base_incidencia=manual_uniao.BASE_INCIDENCIA,
+            valor_reais=valor, imputado=False, metodo_imputacao=None,
+            fonte=FONTE_MANUAL, versao_dicionario=VERSAO_DICIONARIO,
+        ))
 
     # Estados + DF — cada ente com seu literal esfera (E ou D) para a política de
     # colunas, mas sempre com o dicionário de estados; o bloco de publicação sai do
