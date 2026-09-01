@@ -233,6 +233,27 @@ h1, h2, h3 {
   height: 480px;
 }
 
+.grafico-fluxo {
+  height: 460px;
+}
+
+.fluxo-transferencias {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 6px 0 14px;
+  padding: 10px 16px;
+  background: var(--fundo);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.fluxo-transferencias strong {
+  color: var(--tinta);
+}
+
 .tabela-acoes {
   display: flex;
   justify-content: flex-end;

@@ -14,6 +14,10 @@ const ESFERAS = ["U", "E", "M"];
 //   Municípios: retido = AD(M) inteiro (não repassa a mais ninguém)
 // `pipeline/dominio/rd_esfera.py::calcular` já garante que RD ESFERA conserva o total de
 // AD ESFERA (a soma dos seis fluxos abaixo bate exato com a soma de AD e de RD).
+function somar(lista) {
+  return (lista ?? []).reduce((s, t) => s + t.valor_bi, 0);
+}
+
 export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, ano }) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
@@ -30,14 +34,14 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
     };
   }, []);
 
+  const tUE = somar(transferencias?.uniao_estados);
+  const tUM = somar(transferencias?.uniao_municipios);
+  const tEM = somar(transferencias?.estados_municipios);
+
   useEffect(() => {
     const instancia = instanciaRef.current;
     if (!instancia || !adEsfera || !transferencias) return;
 
-    const somar = (lista) => (lista ?? []).reduce((s, t) => s + t.valor_bi, 0);
-    const tUE = somar(transferencias.uniao_estados);
-    const tUM = somar(transferencias.uniao_municipios);
-    const tEM = somar(transferencias.estados_municipios);
     const ad = Object.fromEntries(ESFERAS.map((e) => [e, adEsfera[e].valor_bi]));
 
     const nomeAd = (esf) => `${rotuloEsfera[esf]} (AD)`;
@@ -61,6 +65,7 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
       title: {
         text: `Arrecadação Direta → Receita Disponível (${ano})`,
         left: "center",
+        top: 8,
         textStyle: { fontSize: 14 },
       },
       tooltip: {
@@ -74,13 +79,19 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
       series: [
         {
           type: "sankey",
+          top: 56,
+          bottom: 24,
           data: nodes,
           links,
-          nodeGap: 20,
+          nodeGap: 26,
           nodeWidth: 16,
           emphasis: { focus: "adjacency" },
           lineStyle: { color: "source", opacity: 0.35, curveness: 0.45 },
-          label: { fontSize: 11, color: "#33414f" },
+          label: {
+            fontSize: 11,
+            color: "#33414f",
+            formatter: (p) => `${p.name}\nR$ ${numero(p.value, 2)} bi`,
+          },
         },
       ],
     });
@@ -103,11 +114,22 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
           Exportar PNG
         </button>
       </div>
-      <div ref={containerRef} className="grafico-canvas" />
+      <div ref={containerRef} className="grafico-canvas grafico-fluxo" />
+      <div className="fluxo-transferencias">
+        <span>
+          {rotuloEsfera.U} → {rotuloEsfera.E}: <strong>R$ {numero(tUE, 2)} bi</strong>
+        </span>
+        <span>
+          {rotuloEsfera.U} → {rotuloEsfera.M}: <strong>R$ {numero(tUM, 2)} bi</strong>
+        </span>
+        <span>
+          {rotuloEsfera.E} → {rotuloEsfera.M}: <strong>R$ {numero(tEM, 2)} bi</strong>
+        </span>
+      </div>
       <p className="aviso-vazio">
         À esquerda, arrecadação direta (AD) por esfera; à direita, receita disponível
-        (RD), depois das transferências constitucionais. Valores em R$ bilhões,
-        independente da unidade selecionada acima.
+        (RD), depois das transferências constitucionais. Rótulos e valores acima em R$
+        bilhões, independente da unidade selecionada.
       </p>
     </div>
   );
