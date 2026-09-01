@@ -1,17 +1,19 @@
 :root {
-  --tinta: #16213a;
-  --texto: #2a2f38;
-  --texto-suave: #667080;
-  --azul: #2f6fb0;
-  --azul-escuro: #17395a;
-  --ambar: #b9791f;
-  --verde: #2f8f6a;
-  --borda: #e3e7eb;
-  --fundo: #ffffff;
-  --fundo-sutil: #f7f8fa;
-  --fundo-alerta: #fdf6e7;
-  --borda-alerta: #ecd9a3;
-  --erro: #ac2b23;
+  --tinta: #22303f;
+  --texto: #33414f;
+  --texto-suave: #6b7684;
+  --azul: #2e7cb8;
+  --azul-escuro: #1c5787;
+  --ambar: #d99e2b;
+  --verde: #21a69a;
+  --roxo: #7c4da8;
+  --alerta: #d9622e;
+  --borda: #e2dfd3;
+  --fundo: #f7f5ef;
+  --superficie: #ffffff;
+  --fundo-alerta: #fdf1e9;
+  --borda-alerta: #f0cbaf;
+  --erro: #b23a2e;
   color-scheme: light;
 }
 
@@ -32,17 +34,17 @@ body {
   line-height: 1.55;
   color: var(--texto);
   background: var(--fundo);
-  font-feature-settings: "tnum" 0;
 }
 
 h1, h2, h3 {
+  font-family: "Poppins", "Inter", sans-serif;
   color: var(--tinta);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .app {
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 0 24px 72px;
 }
@@ -54,7 +56,7 @@ h1, h2, h3 {
 
 .cabecalho h1 {
   margin: 0 0 24px;
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 700;
 }
 
@@ -68,9 +70,9 @@ h1, h2, h3 {
   border: none;
   background: transparent;
   padding: 10px 4px;
-  margin-right: 20px;
-  font-family: inherit;
-  font-size: 0.92rem;
+  margin-right: 22px;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 0.9rem;
   color: var(--texto-suave);
   cursor: pointer;
   border-bottom: 2px solid transparent;
@@ -100,9 +102,10 @@ h1, h2, h3 {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
+  font-family: "Poppins", "Inter", sans-serif;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--texto-suave);
 }
@@ -110,11 +113,11 @@ h1, h2, h3 {
 .seletor select {
   padding: 7px 10px;
   border: 1px solid var(--borda);
-  border-radius: 6px;
-  font-family: inherit;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
   font-size: 0.92rem;
   color: var(--texto);
-  background: var(--fundo);
+  background: var(--superficie);
   min-width: 170px;
 }
 
@@ -139,7 +142,7 @@ h1, h2, h3 {
   font-size: 0.85rem;
   color: var(--texto-suave);
   background: var(--fundo-alerta);
-  border-left: 3px solid var(--ambar);
+  border-left: 3px solid var(--alerta);
   border-radius: 4px;
   padding: 10px 16px;
   margin: 16px 0 24px;
@@ -162,9 +165,9 @@ h1, h2, h3 {
   background: transparent;
   padding: 10px 16px 10px 2px;
   margin-right: 14px;
-  font-family: inherit;
+  font-family: "Poppins", "Inter", sans-serif;
   cursor: pointer;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--texto-suave);
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -190,13 +193,13 @@ h1, h2, h3 {
 
 .aba, .aba-ativa {
   border: 1px solid var(--borda);
-  background: var(--fundo);
+  background: var(--superficie);
   color: var(--texto-suave);
   padding: 6px 14px;
   border-radius: 999px;
-  font-family: inherit;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 0.84rem;
   cursor: pointer;
-  font-size: 0.85rem;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -212,17 +215,18 @@ h1, h2, h3 {
   font-weight: 500;
 }
 
-.grafico-wrap {
+.painel, .grafico-wrap, .tabela-wrap {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 20px 24px 24px;
   margin-bottom: 24px;
+  box-shadow: 0 1px 2px rgba(30, 26, 10, 0.04), 0 10px 24px -16px rgba(30, 26, 10, 0.14);
 }
 
 .grafico-canvas {
   width: 100%;
   height: 420px;
-}
-
-.tabela-wrap {
-  margin-bottom: 24px;
 }
 
 .tabela-acoes {
@@ -234,11 +238,11 @@ h1, h2, h3 {
 .botao-secundario {
   border: 1px solid var(--borda);
   color: var(--texto-suave);
-  background: var(--fundo);
-  font-family: inherit;
+  background: var(--superficie);
+  font-family: "Poppins", "Inter", sans-serif;
   padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.82rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease;
@@ -273,11 +277,12 @@ h1, h2, h3 {
 }
 
 .tabela-quadro thead th {
-  background: var(--fundo);
+  background: var(--superficie);
   border-bottom: 1px solid var(--tinta);
   position: sticky;
   top: 0;
-  font-size: 0.72rem;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -305,7 +310,8 @@ h1, h2, h3 {
 
 .bloco-transferencia {
   border: 1px solid var(--borda);
-  border-radius: 8px;
+  background: var(--superficie);
+  border-radius: 10px;
   padding: 4px 16px;
   margin-bottom: 10px;
 }
@@ -351,7 +357,7 @@ h1, h2, h3 {
 .conceito-carga .citacao {
   margin: 0;
   padding-left: 20px;
-  border-left: 3px solid var(--borda);
+  border-left: 3px solid var(--roxo);
   font-size: 0.95rem;
 }
 

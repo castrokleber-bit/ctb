@@ -1,10 +1,16 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { UNIDADES } from "../lib/formato";
+import { COR_PADRAO } from "../lib/cores";
 
 // Barras horizontais — rótulos de rubrica costumam ser longos ("Contrib. Seg. Serv.
-// Público"), barra horizontal evita truncar ou girar o texto.
-export default function Grafico({ linhas, unidade, titulo, nomeArquivoPng }) {
+// Público"), barra horizontal evita truncar ou girar o texto. `cor` deixa o chamador
+// tingir a barra pela esfera em foco (QuadroPorEsfera) — sem esfera, usa o azul padrão.
+// `coresPorRotulo` tinge cada barra individualmente (RD ESFERA, onde cada linha já é
+// uma esfera diferente) e tem prioridade sobre `cor` quando o rótulo bate.
+export default function Grafico({
+  linhas, unidade, titulo, nomeArquivoPng, cor = COR_PADRAO, coresPorRotulo,
+}) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
 
@@ -42,13 +48,16 @@ export default function Grafico({ linhas, unidade, titulo, nomeArquivoPng }) {
       series: [
         {
           type: "bar",
-          data: ordenadas.map((l) => l[config.campo]),
-          itemStyle: { color: "#2f6fb0" },
+          data: ordenadas.map((l) => ({
+            value: l[config.campo],
+            itemStyle: coresPorRotulo?.[l.rotulo] ? { color: coresPorRotulo[l.rotulo] } : undefined,
+          })),
+          itemStyle: { color: cor },
           label: { show: true, position: "right", formatter: (p) => config.formatar(p.value), fontSize: 11 },
         },
       ],
     });
-  }, [linhas, unidade, titulo]);
+  }, [linhas, unidade, titulo, cor, coresPorRotulo]);
 
   function exportarPng() {
     const instancia = instanciaRef.current;

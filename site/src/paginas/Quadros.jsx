@@ -145,7 +145,13 @@ export default function Quadros() {
       )}
 
       {quadro === "rd_esfera" && (
-        <QuadroRdEsfera rdEsfera={dadosAno.rd_esfera} unidade={unidade} ano={ano} />
+        <QuadroRdEsfera
+          rdEsfera={dadosAno.rd_esfera}
+          adEsfera={dadosAno.ad_esfera}
+          rotuloEsfera={rotuloEsfera}
+          unidade={unidade}
+          ano={ano}
+        />
       )}
     </div>
   );
