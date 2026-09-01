@@ -23,8 +23,8 @@ export function exportarBygovTudo(dadosPorEsfera, rotuloEsfera, ano, nomeArquivo
     (dadosPorEsfera[esf] ?? []).map((l) => [
       rotuloEsfera[esf],
       l.rotulo,
-      numero(l.valor_bi, 3),
-      numero(l.pct_pib, 3),
+      numero(l.valor_bi, 2),
+      numero(l.pct_pib, 2),
       numero(l.pct_total, 2),
       numero(l.per_capita, 2),
     ])

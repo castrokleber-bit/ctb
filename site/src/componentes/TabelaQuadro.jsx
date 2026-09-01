@@ -7,8 +7,8 @@ function exportarCsv(linhas, rotuloColuna, nomeArquivo) {
   const cabecalho = [rotuloColuna, "R$ bilhões", "% do PIB", "% do total", "Per capita (R$)"];
   const corpo = linhas.map((l) => [
     l.rotulo,
-    numero(l.valor_bi, 3),
-    numero(l.pct_pib, 3),
+    numero(l.valor_bi, 2),
+    numero(l.pct_pib, 2),
     numero(l.pct_total, 2),
     numero(l.per_capita, 2),
   ]);

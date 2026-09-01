@@ -57,7 +57,7 @@ export default function Quadros() {
       <div className="resumo-ano">
         <span>
           <strong>Total geral {ano}:</strong> {reaisBi(dadosAno.total_geral.valor_bi)} (
-          {percentual(dadosAno.total_geral.pct_pib, 3)} do PIB)
+          {percentual(dadosAno.total_geral.pct_pib, 2)} do PIB)
         </span>
         <span>
           PIB corrente: {reaisBi(dadosAno.pib_bi)} (extraído em {dadosAno.data_extracao_pib})

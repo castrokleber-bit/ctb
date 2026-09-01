@@ -7,7 +7,7 @@ export function numero(valor, casas = 0) {
   return fmtNumero(casas).format(valor);
 }
 
-export function reaisBi(valorBi, casas = 3) {
+export function reaisBi(valorBi, casas = 2) {
   return `R$ ${numero(valorBi, casas)} bi`;
 }
 
@@ -18,8 +18,8 @@ export function percentual(valor, casas = 2) {
 // Unidade selecionada -> como extrair e formatar o valor de uma LinhaQuadro
 // ({rotulo, valor_reais, valor_bi, pct_pib, pct_total, per_capita}).
 export const UNIDADES = {
-  bi: { rotulo: "R$ bilhões", campo: "valor_bi", formatar: (v) => numero(v, 3) },
-  pct_pib: { rotulo: "% do PIB", campo: "pct_pib", formatar: (v) => numero(v, 3) },
+  bi: { rotulo: "R$ bilhões", campo: "valor_bi", formatar: (v) => numero(v, 2) },
+  pct_pib: { rotulo: "% do PIB", campo: "pct_pib", formatar: (v) => numero(v, 2) },
   pct_total: { rotulo: "% do total", campo: "pct_total", formatar: (v) => numero(v, 2) },
   per_capita: { rotulo: "Per capita (R$)", campo: "per_capita", formatar: (v) => numero(v, 2) },
 };

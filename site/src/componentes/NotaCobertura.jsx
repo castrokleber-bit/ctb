@@ -8,7 +8,7 @@ export default function NotaCobertura({ cobertura, gapFgtsSistemaS }) {
       {numero(cobertura.declarantes)} de {numero(cobertura.total_municipios)} municípios
       declararam ({percentual(cobertura.pct_populacao_coberta)} da população coberta) —{" "}
       {numero(cobertura.imputados)} municípios imputados por média per capita da faixa
-      populacional ({percentual(cobertura.pct_receita_imputada, 3)} da receita municipal).
+      populacional ({percentual(cobertura.pct_receita_imputada, 2)} da receita municipal).
       {gapFgtsSistemaS && (
         <>
           {" "}
