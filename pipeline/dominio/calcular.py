@@ -16,16 +16,12 @@ from pipeline.dominio.quadros import (
     ROTULO_ESFERA, ad_esfera, bases_incidencia, bygov_detalhado, principais_tributos,
     total_por_esfera,
 )
+from pipeline.dominio.manual_uniao import ANOS_DISPONIVEIS as ANOS_FGTS_SISTEMA_S
+from pipeline.dominio.rd_esfera import ANOS_DISPONIVEIS as ANOS_RD_ESFERA
+from pipeline.dominio.rd_esfera import calcular as calcular_rd_esfera
 from pipeline.fontes.diagnostico import br
 from pipeline.fontes.http import RAIZ
 from pipeline.fontes.sidra import pib_corrente, populacao_brasil
-
-# FGTS e Sistema S são fontes manuais (CLAUDE.md §Fontes) e ainda não foram ingeridas —
-# nenhum CSV existe em `manual/` até agora. O total desta passada fica abaixo da
-# planilha por causa disso, não por erro. Valores de 2024 vêm da própria planilha
-# (linhas "FGTS" e "Sistema S" do bloco União em `byGOVDetalhado`), citados aqui só
-# para dimensionar o gap conhecido — nunca somados ao cálculo.
-GAP_MANUAL_2024_BI = {"FGTS": 191.995, "Sistema S": 29.320}
 
 # Valores publicados em 2024 (CTB2024.xlsx) para as linhas que cruzam esferas — só para
 # a comparação informativa no relatório. Não usados em nenhum cálculo. A diferença é
@@ -37,10 +33,37 @@ COMPARACAO_PRINCIPAIS_TRIBUTOS_2024_BI = {
 }
 COMPARACAO_AD_ESFERA_2024_BI = {
     ("U", "Impostos"): 994.879,
-    ("U", "Contribuições Sociais"): 710.864,  # inclui Sistema S, ainda não ingerido
+    ("U", "Contribuições Sociais"): 710.864,
     ("U", "Demais"): 225.833,  # incluía Multas e Dívida Ativa, que não existe mais
     ("E", "Demais"): 211.532,
     ("M", "Demais"): 139.529,
+}
+
+# RD ESFERA — aba "RD ESFERA" do CTB2024.xlsx, lida diretamente (2026-08-31). Só para a
+# comparação informativa no relatório; nunca usada em nenhum cálculo.
+COMPARACAO_RD_TRANSFERENCIAS_2024_BI = {
+    ("U", "E", "FPE"): 149.831128016,
+    ("U", "E", "IPI-Exp (FPEx)"): 6.765493569,
+    ("U", "E", "IOF-Ouro"): 0.003691963,
+    ("U", "E", "LC176/2020 (Seguro-Receita ICMS)"): 3.0,
+    ("U", "E", "FUNDEB"): 36.66770413964999,
+    ("U", "E", "Salário-Educação (quota estadual)"): 21.413814335006677,
+    ("U", "E", "CIDE"): 0.73765313,
+    ("U", "E", "LC201/2023 (Compensação ICMS)"): 0.67448,
+    ("U", "E", "Royalties e Compensações Financeiras"): 33.409992069,
+    ("U", "M", "FPM"): 177.03413749,
+    ("U", "M", "ITR"): 2.517599069,
+    ("U", "M", "IOF-Ouro"): 0.008614569,
+    ("U", "M", "LC176/2020 (Seguro-Receita ICMS)"): 0.985563376,
+    ("U", "M", "FUNDEB"): 89.85504737703,
+    ("U", "M", "CIDE"): 0.241551492,
+    ("U", "M", "AFM/AFE"): 0.3139165,
+    ("U", "M", "Royalties e Compensações Financeiras"): 35.180576528,
+    ("E", "M", "ICMS (cota-parte municipal, líq. FUNDEB)"): 161.082859068015,
+    ("E", "M", "IPVA (cota-parte municipal)"): 43.766560836305,
+    ("E", "M", "IPI-Exp (FPEx) (cota-parte municipal)"): 1.69137339225,
+    ("E", "M", "FUNDEB"): 109.83306035795,
+    ("E", "M", "LC201/2023 (Compensação ICMS) (cota-parte municipal)"): 0.16862,
 }
 
 
@@ -95,35 +118,17 @@ def executar(ano: int) -> Path:
         v = totais.get(esf, 0.0)
         partes.append(f"| {ROTULO_ESFERA[esf]} | {br(v / 1e9, 3)} | {br(v / total * 100, 2)}% |")
 
-    partes += ["", "### Por que não fecha em ~36% do PIB direto", ""]
-    if ano == 2024:
-        gap_manual_bi = sum(GAP_MANUAL_2024_BI.values())
-        gap_manual_pp = gap_manual_bi / (pib / 1e9) * 100
-        total_ajustado_pct = (total / 1e9 + gap_manual_bi) / (pib / 1e9) * 100
-        partes += [
-            f"O total acima fecha em {br(total / pib * 100, 2)}% do PIB, abaixo dos "
-            "35,950% da série publicada de 2024. A diferença tem duas causas "
-            "conhecidas, nenhuma delas erro de cálculo:",
-            "",
-            f"1. **FGTS e Sistema S não estão nesta passada** (R$ {br(gap_manual_bi, 1)} "
-            f"bi em 2024, {br(gap_manual_pp, 2)} p.p. do PIB) — são fontes manuais "
-            "(`manual/`, CLAUDE.md §Fontes) e nenhum CSV foi coletado ainda. Somando "
-            f"esse gap de volta: {br(total_ajustado_pct, 3)}%, muito perto dos "
-            "35,950% publicados.",
-            "2. **Decisão 6** (2026-08-31) uniformizou estados e municípios em receita "
-            "líquida — reduz o total em cerca de R$ 29 bi contra a metodologia antiga "
-            "(bruta). É mudança deliberada, não resíduo.",
-            "",
-            "O restante é resíduo pequeno e já documentado — ver `docs/divergencias.md` "
-            "e `docs/decisoes-pendentes.md` (Contribuições Econômicas da União, IPTU e "
-            "IRRF municipais).",
-        ]
-    else:
-        partes.append(
-            "FGTS, Sistema S e a receita líquida de estados/municípios (decisão 6) "
-            "reduzem o total frente à metodologia antiga — ver o relatório de 2024 "
-            "para a explicação completa e os valores dessa diferença."
-        )
+    partes += ["", "### Por que não fecha exatamente o valor publicado", ""]
+    partes.append(
+        "FGTS e Sistema S (`manual/`, CLAUDE.md §Fontes) estão incluídos desde "
+        "2026-09-01 para 2016-2024 — 2025 ainda não tem fonte (ver \"O que falta\"). "
+        "O que resta de diferença contra a série antiga vem da decisão 6 (receita "
+        "líquida em estados e municípios, deliberada, reduz o total frente à "
+        "metodologia antiga) e de resíduos pequenos já documentados em "
+        "`docs/divergencias.md`. `docs/revisao-metodologica.md` "
+        "(`uv run ctb comparar-historico`) tem a comparação ano a ano, linha a "
+        "linha, com os valores exatos."
+    )
     partes += ["", "## AD ESFERA", ""]
     for esf in ("U", "E", "M"):
         partes += [f"### {ROTULO_ESFERA[esf]}", "", _tabela_quadro(quadro_ad[esf]), ""]
@@ -131,8 +136,7 @@ def executar(ano: int) -> Path:
         partes += [
             "**Contra o valor publicado em 2024** (informativo — a diferença é "
             "esperada: opção B redistribuiu os acessórios de volta às rubricas de "
-            "origem, e a linha *Contribuições Sociais* da União aqui não inclui "
-            "Sistema S, ainda não ingerido):",
+            "origem):",
             "",
             "| esfera | categoria | calculado | publicado 2024 | diferença |",
             "|---|---|---|---|---|",
@@ -181,6 +185,72 @@ def executar(ano: int) -> Path:
         _tabela_quadro(quadro_bases, rotulo_coluna="base de incidência"), "",
     ]
 
+    if ano in ANOS_RD_ESFERA:
+        resultado_rd = calcular_rd_esfera(ano, df, totais)
+        partes += ["## RD ESFERA", ""]
+        partes += [
+            "Ajusta AD ESFERA pelas transferências constitucionais entre entes — o "
+            "total geral não muda (é redistribuição, não dinheiro novo).",
+            "",
+            "| esfera | AD (R$ bi) | RD (R$ bi) | RD % PIB | RD % total |",
+            "|---|---|---|---|---|",
+        ]
+        rd_total = sum(resultado_rd.rd_por_esfera.values())
+        for esf in ("U", "E", "M"):
+            ad_v = totais.get(esf, 0.0)
+            rd_v = resultado_rd.rd_por_esfera.get(esf, 0.0)
+            partes.append(
+                f"| {ROTULO_ESFERA[esf]} | {br(ad_v / 1e9, 3)} | {br(rd_v / 1e9, 3)} | "
+                f"{br(rd_v / pib * 100, 3)} | {br(rd_v / rd_total * 100, 2)}% |"
+            )
+        partes.append("")
+
+        col_comparacao = "publicado 2024" if ano == 2024 else None
+        blocos = [("U", "E", " União para Estados"), ("U", "M", " União para Municípios"),
+                   ("E", "M", " Estados para Municípios")]
+        for origem, destino, titulo in blocos:
+            linhas_bloco = sorted(
+                (t for t in resultado_rd.transferencias if t.bloco_origem == origem and t.bloco_destino == destino),
+                key=lambda t: -t.valor_reais,
+            )
+            if col_comparacao:
+                partes += [f"###{titulo}", "", f"| modalidade | R$ bi | {col_comparacao} | diferença |", "|---|---|---|---|"]
+            else:
+                partes += [f"###{titulo}", "", "| modalidade | R$ bi |", "|---|---|"]
+            soma_bloco = 0.0
+            for t in linhas_bloco:
+                soma_bloco += t.valor_reais
+                antigo = COMPARACAO_RD_TRANSFERENCIAS_2024_BI.get((origem, destino, t.modalidade)) if col_comparacao else None
+                if antigo is None:
+                    if col_comparacao:
+                        partes.append(f"| {t.modalidade} | {br(t.valor_reais / 1e9, 3)} | — | — |")
+                    else:
+                        partes.append(f"| {t.modalidade} | {br(t.valor_reais / 1e9, 3)} |")
+                else:
+                    dif = t.valor_reais / 1e9 - antigo
+                    partes.append(
+                        f"| {t.modalidade} | {br(t.valor_reais / 1e9, 3)} | {br(antigo, 3)} | "
+                        f"{('+' if dif >= 0 else '−') + br(abs(dif), 3)} |"
+                    )
+            partes.append(f"| **Total** | **{br(soma_bloco / 1e9, 3)}** |" + (" | |" if col_comparacao else ""))
+            partes.append("")
+        partes.append(
+            "**Sobre a linha ICMS (cota-parte municipal, líq. FUNDEB):** 25% da "
+            "arrecadação estadual de ICMS, com a retenção de 20% do FUNDEB (art. 212-A "
+            "CF) aplicada antes do repasse — 25% × 80% = 20% da arrecadação bruta "
+            "(decisão do usuário em 2026-08-31, `docs/decisoes-pendentes.md` §9 — em "
+            "2024 isso reproduz quase exato o valor publicado, R$ 161,631 bi calculado "
+            "contra R$ 161,083 bi). A cota do IPVA não tem essa retenção (50% flat)."
+        )
+        partes.append("")
+    else:
+        partes += [
+            "## RD ESFERA", "",
+            f"Não calculado para {ano} — fora do intervalo coberto por "
+            "`pipeline/dominio/rd_esfera.py` (`ANOS_DISPONIVEIS`, hoje 2016-2025).",
+            "",
+        ]
+
     partes += [
         "## Cobertura da imputação municipal",
         "",
@@ -201,14 +271,12 @@ def executar(ano: int) -> Path:
         "",
         "## O que falta",
         "",
-        "- **RD ESFERA** — depende de transferências constitucionais. A API já "
-        "identificada (decisão 5) cobre FPM, FPE, FUNDEB, royalties de transferência "
-        "e outras modalidades, mas a planilha de referência mostra pelo menos duas "
-        "transferências sem código correspondente no catálogo da API "
-        "(Salário-Educação, Seguro-Receita ICMS), além do bloco Estados→Municípios "
-        "(cota-parte do ICMS/IPVA), que segue sem fonte.",
-        "- **FGTS e Sistema S** — fontes manuais, nenhum CSV coletado ainda.",
     ]
+    if ano not in ANOS_RD_ESFERA:
+        partes.append(f"- **RD ESFERA** — não calculado para {ano}, fora do intervalo coberto.")
+    if ano not in ANOS_FGTS_SISTEMA_S:
+        partes.append(f"- **FGTS e Sistema S** — não calculado para {ano}, sem fonte ainda "
+                       "(ver `manual/README.md`).")
 
     destino = RAIZ / "docs" / f"resultado-{ano}.md"
     destino.parent.mkdir(parents=True, exist_ok=True)

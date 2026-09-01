@@ -3,11 +3,16 @@
 Itens que o `CLAUDE.md` reserva explicitamente para decisão humana: escolhas
 metodológicas que mudam número publicado. Cada um traz os números dos dois lados.
 
-Status em 2026-08-31: **todas as oito decisões foram tomadas.** As decisões 2, 4, 6 e 7
-já estão implementadas nos dicionários e validadas contra o censo completo de 2024
-(`uv run ctb dicionario validar`). A decisão 5 tem fonte identificada e testada, mas a
-ingestão em si é trabalho de Fase 2. A decisão 3 mudou de tabela (FPM em vez das faixas
-originais propostas). A decisão 8 fixa o escopo de identidade visual da Fase 5.
+Status em 2026-08-31: **todas as nove decisões foram tomadas.** As decisões 2, 4, 6 e
+7 já estão implementadas nos dicionários e validadas contra o censo completo de 2024
+(`uv run ctb dicionario validar`). A decisão 3 mudou de tabela (FPM em vez das faixas
+originais propostas). A decisão 8 fixa o escopo de identidade visual da Fase 5. A decisão
+5 foi **substituída** ao construir `RD ESFERA` (Fase 2): a API de transferências
+constitucionais mostrou-se pouco confiável (filtro por transferência ignorado pelo
+servidor, endpoint municipal sempre em timeout) e foi trocada por CKAN + FUNDEB da STN +
+CSV do usuário + duas fórmulas internas — ver a nota no início da seção 5. Essa
+construção revelou a decisão 9 (cota do ICMS × retenção do FUNDEB), decidida no mesmo
+dia.
 
 Denominador usado em todas as contas abaixo: PIB de 2024 = R$ 11.744,709 bi, o mesmo
 da planilha `CTB2024.xlsx`.
@@ -255,9 +260,23 @@ não é urgente (0,05% do PIB), mas é genuíno e fica para a Fase 2.
 
 ---
 
-## 5. Fonte das transferências constitucionais — ✅ **DECIDIDA em 2026-08-31: API do Tesouro**
+## 5. Fonte das transferências constitucionais — ⚠️ **SUBSTITUÍDA em 2026-08-31 ao construir RD ESFERA**
 
-> **Decisão:** usar a API de Transferências Constitucionais do Tesouro Nacional
+> **Atualização (Fase 2, construção de `RD ESFERA`):** a API abaixo tem dois problemas
+> que só apareceram ao tentar realmente ingerir os dados — o parâmetro `transferencia`
+> é ignorado pelo servidor (sempre devolve as 54.576 linhas inteiras) e o endpoint
+> municipal (`por_estado_municipio`) estoura o timeout do próprio gateway do Tesouro
+> (60s) mesmo sem filtro nenhum. `RD ESFERA` de 2024 foi construído sem essa API, usando:
+> o CKAN `transferencias-obrigatorias-da-uniao` (FPE, FPM, ITR, IPI-Exp, IOF, CIDE,
+> LC176 — 7 modalidades, validadas exatas contra a planilha antiga); a planilha oficial
+> do FUNDEB da STN (`pipeline/fontes/fundeb.py`); dois CSVs fornecidos pelo usuário em
+> `manual/` (royalties e demais compensações); e duas fórmulas calculadas internamente
+> (ICMS/IPVA cota-parte municipal, Salário-Educação quota estadual). Ver
+> `pipeline/dominio/rd_esfera.py` e a seção `RD ESFERA` de `docs/resultado-2024.md`. O
+> registro abaixo (API de transferências constitucionais) fica preservado como histórico
+> de investigação — não é mais a fonte usada.
+
+> **Decisão original:** usar a API de Transferências Constitucionais do Tesouro Nacional
 > (dataset CKAN `api-de-transferencias-constitucionais`), em vez do CSV mensal do CKAN
 > mapeado na Fase 0.
 
@@ -408,3 +427,45 @@ Pergunta 1 da seção 10 do `PROJETO-CTB.md`: a página é pública (site CNI) o
 > institucional adequada a publicação externa e aprovação editorial correspondente —
 > não é mais um protótipo interno. Isso não muda nada do pipeline de dados nem das
 > decisões 1 a 7; afeta só o escopo e os requisitos da Fase 5.
+
+---
+
+## 9. Cota-parte municipal do ICMS: bruta (25% flat) ou líquida do FUNDEB? — ✅ **DECIDIDA em 2026-08-31: líquida do FUNDEB**
+
+Ao construir `RD ESFERA` (Fase 2), o usuário informou a regra: "ICMS transferido a
+municípios = arrecadação estadual de ICMS × 25%" (art. 158, IV, CF). Aplicando isso à
+arrecadação estadual de ICMS já calculada (R$ 808,157 bi, opção B), o resultado não bate
+com o valor publicado em 2024:
+
+| | fórmula (25% flat) | publicado 2024 | diferença | diferença em p.p. do PIB |
+|---|---|---|---|---|
+| ICMS (cota-parte municipal) | R$ 202,039 bi | R$ 161,083 bi | +R$ 40,956 bi | **+0,349 p.p.** |
+
+Acima do limiar de 0,3 p.p. do `CLAUDE.md` — por isso fica registrado aqui em vez de
+decidido sozinho.
+
+**A mesma fórmula aplicada ao IPVA bate quase exato** (diferença de apenas R$ 0,240 bi,
+−0,55%, dentro do ruído normal da opção B visto em outras rubricas — Salário-Educação
+tem diferença parecida, +2,98%). Isso é o que torna o caso do ICMS interessante: não é
+um erro de fórmula, é um comportamento diferente entre as duas cotas-partes.
+
+**Hipótese testável:** a cota-parte do ICMS é uma das receitas sujeitas à retenção de
+20% para o FUNDEB (art. 212-A, CF) — a União, ao repassar FPEx e Seguro-Receita ICMS aos
+estados, não sofre essa retenção porque quem retém é quem recebe a parcela municipal
+(o próprio município, ao receber sua cota do estado). Testando: R$ 808,157 bi × 25% ×
+80% = **R$ 161,631 bi** — a R$ 0,548 bi (0,34%) do valor publicado, dentro do ruído
+normal da opção B. O IPVA, por outro lado, não está na lista do art. 212-A sujeita a essa
+retenção específica — o que explicaria por que ele bate flat.
+
+**Duas outras linhas do bloco Estados→Municípios usam a mesma cota de 25% sem esse
+ajuste e batem exatas:** FPEx (R$ 6,765 bi × 25% = R$ 1,691 bi, bate) e LC201/2023
+(R$ 0,674 bi × 25% = R$ 0,169 bi, bate) — nenhuma das duas é, na prática, uma cota
+"ICMS" per se para fins do art. 212-A, o que é consistente com a hipótese (a retenção
+FUNDEB incidiria especificamente sobre a cota do ICMS, não sobre compensações tratadas
+por analogia à mesma regra de repasse de 25%).
+
+> **Decisão:** aplicar a retenção de 20% do FUNDEB à cota do ICMS antes do repasse —
+> `25% × 80% = 20%` da arrecadação bruta, R$ 161,631 bi, que reproduz o valor publicado
+> quase exato. Implementado em `pipeline/dominio/rd_esfera.py`
+> (`RETENCAO_FUNDEB_ICMS_MUNICIPAL`); a linha aparece como "ICMS (cota-parte municipal,
+> líq. FUNDEB)" em `docs/resultado-2024.md`. A cota do IPVA não recebe esse ajuste.

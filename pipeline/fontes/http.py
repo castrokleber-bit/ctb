@@ -85,3 +85,44 @@ def obter_json(
             time.sleep(2**tentativa)
 
     raise ErroFonte(f"falha em {completa} após {tentativas} tentativa(s): {ultimo!r}")
+
+
+def obter_binario(
+    url: str,
+    *,
+    fonte: str,
+    ano: int | str,
+    chave: str,
+    forcar: bool = False,
+    tentativas: int = 4,
+    timeout: int = 180,
+) -> Path:
+    """Baixa um arquivo binário (CSV, XLS) com cache em disco. Devolve o caminho do
+    arquivo em cache — quem chama decide como parsear (texto, planilha etc.).
+    """
+    seguro = "".join(c if c.isalnum() or c in "-_." else "_" for c in chave)
+    if len(seguro) > 80:
+        seguro = seguro[:60] + "-" + hashlib.sha1(chave.encode()).hexdigest()[:12]
+    destino = DIR_BRUTO / fonte / str(ano) / seguro
+    if destino.exists() and not forcar:
+        return destino
+
+    ultimo: Exception | None = None
+    for tentativa in range(tentativas):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": _UA})
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                bruto = resp.read()
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            destino.write_bytes(bruto)
+            return destino
+        except urllib.error.HTTPError as e:
+            ultimo = e
+            if e.code in (400, 404):
+                break
+            time.sleep(2**tentativa)
+        except Exception as e:
+            ultimo = e
+            time.sleep(2**tentativa)
+
+    raise ErroFonte(f"falha em {url} após {tentativas} tentativa(s): {ultimo!r}")
