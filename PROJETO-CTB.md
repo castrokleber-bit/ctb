@@ -562,7 +562,7 @@ relatório:
 **Nada disso foi ajustado para diminuir o diff** (CLAUDE.md) — o documento é
 deliberadamente um raio-x, não um teste que precisa passar.
 
-### Fase 5 — Site 🚧 **em andamento, 2026-09-01**
+### Fase 5 — Site ✅ **publicado, 2026-09-01**
 
 `uv run ctb publicar --anos 2016-2025` escreve `dados/publicado/{ano}.json` (os cinco
 quadros com os quatro indicadores de cada linha, RD ESFERA com o detalhe de
@@ -589,15 +589,27 @@ instalador MSI pede elevação UAC, que não passa por um terminal não interati
 Node portátil (.zip, sem instalador) extraído em `C:\Users\kebec\tools\`, com o PATH do
 usuário atualizado para achá-lo entre sessões.
 
-**Não verificado ainda:** a ferramenta de navegador desta sessão não conseguiu alcançar
-`localhost`/`127.0.0.1` do servidor Vite (parece rodar num contexto de rede separado do
-terminal, possivelmente por causa do acesso remoto) — o site nunca foi visto rodando de
-fato num navegador. `npm run build` compila sem erro e os JSON servem corretamente
-(conferido via HTTP direto), mas isso não substitui checar a UI. **Falta**: identidade
-visual institucional (hoje é um estilo neutro, sem marca — decisão 8 exige aprovação
-editorial antes de publicar de verdade), verificação visual num navegador de verdade,
-paginação/performance do gráfico (o bundle do ECharts sozinho passa de 500 kB
-minificado — aceitável para uso interno, vale revisar antes de publicar externamente).
+**Publicado no GitHub Pages:** https://castrokleber-bit.github.io/ctb/. A ferramenta de
+navegador desta sessão não conseguia alcançar `localhost`/`127.0.0.1` do servidor Vite
+local (contexto de rede separado do terminal, por causa do acesso remoto) — resolvido
+publicando de verdade em vez de insistir no preview local. `.github/workflows/
+deploy-site.yml` builda `site/` a cada push (checkout, `npm ci`, `npm run build` —
+o `prebuild` já sincroniza `dados/publicado/*.json` — upload do artefato, deploy). Pages
+habilitado via API (`gh api repos/.../pages -X POST -f build_type=workflow`) porque o
+token do `gh` também precisou do escopo `workflow` liberado (`gh auth refresh -s
+workflow`) antes de aceitar o push do arquivo em `.github/workflows/`.
+
+**Verificado de fato no navegador, 2026-09-01** (já na URL pública, não local): os cinco
+quadros renderizam com dado real, troca de ano recalcula tudo corretamente (2024 mostra
+R$ 4.203,383 bi / 35,685% do PIB, batendo exato com o já validado), a nota de cobertura
+mostra o aviso de FGTS/Sistema S só em 2025 (que não tem essas duas fontes), os gráficos
+ECharts renderizam, o accordion de transferências do RD ESFERA expande, e a página de
+Metodologia lê o dicionário corretamente.
+
+**Falta:** identidade visual institucional (hoje é um estilo neutro, sem marca — decisão
+8 exige aprovação editorial antes de considerar isso pronto pra divulgação externa de
+verdade) e revisar o tamanho do bundle do ECharts (passa de 500 kB minificado — aceitável
+por ora, vale code-splitting antes de crescer mais).
 
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
@@ -647,9 +659,9 @@ números dos dois lados e o efeito medido depois de implementada, em
 Fases 0, 1, 2, 3 e 4 concluídas. Os cinco quadros rodam para os dez anos (2016-2025) e a
 comparação contra a série histórica está documentada em `docs/revisao-metodologica.md`.
 Todas as nove decisões metodológicas estão tomadas (`docs/decisoes-pendentes.md`).
-**Fase 5 em andamento**: `ctb publicar` funciona, o site (Vite+React+ECharts) builda sem
-erro mas ainda não foi verificado num navegador de verdade nesta sessão — ver a nota na
-Fase 5. O que existe:
+**Fase 5 publicada**: https://castrokleber-bit.github.io/ctb/, verificada no navegador —
+ver a nota na Fase 5 para o que ainda falta (identidade visual institucional). O que
+existe:
 
 ```
 pipeline/fontes/http.py              cache em disco + retry; nunca refaz download
@@ -733,10 +745,11 @@ uv run ctb calcular --anos 2024                     # gera docs/resultado-2024.m
 uv run ctb comparar-historico                       # gera docs/revisao-metodologica.md
 ```
 
-**Próximo passo:** verificar o site num navegador de verdade (não foi possível nesta
-sessão — ver a nota da Fase 5) e decidir identidade visual antes de considerar a Fase 5
-pronta. Itens secundários, não bloqueantes: investigar o achado aberto da Fase 4
-(item 10 de `docs/divergencias.md` — IRPJ 2020-2023); achar fonte de FGTS e Sistema S
-para 2025; se o servidor `thot-arquivos.tesouro.gov.br` voltar, rebaixar as planilhas
-oficiais do FUNDEB dos outros nove anos (URLs já mapeadas em
-`pipeline/fontes/fundeb.py`) e comparar contra os CSVs do usuário usados hoje.
+**Próximo passo:** Fase 6 (automação — GitHub Action mensal que roda o pipeline e abre
+PR se algum número mudar) e/ou decidir identidade visual institucional antes de tratar o
+site como pronto pra divulgação externa (decisão 8). Itens secundários, não bloqueantes:
+investigar o achado aberto da Fase 4 (item 10 de `docs/divergencias.md` — IRPJ
+2020-2023); achar fonte de FGTS e Sistema S para 2025; se o servidor
+`thot-arquivos.tesouro.gov.br` voltar, rebaixar as planilhas oficiais do FUNDEB dos
+outros nove anos (URLs já mapeadas em `pipeline/fontes/fundeb.py`) e comparar contra os
+CSVs do usuário usados hoje.
