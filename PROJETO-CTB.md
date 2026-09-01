@@ -641,6 +641,28 @@ inicial):
   a soma com as linhas por esfera no mesmo CSV duplicaria valor pra quem somar a coluna
   toda.
 
+**Segunda passada de apresentação, 2026-09-01** (pedido do usuário, depois de ver a
+primeira versão no ar):
+
+- **Série Histórica em barras empilhadas** — `GraficoSerie.jsx` trocou linha por barra
+  empilhada (União/Estados/Municípios como segmentos, valor de cada esfera dentro do
+  segmento). O Setor Público Consolidado deixou de ser uma série colorida própria: agora
+  é um rótulo na extremidade externa da barra, vindo de uma série "fantasma" de altura
+  zero empilhada no topo (interação/tooltip desligados nela), lendo o valor de
+  `serie.consolidado` — já calculado no backend, nunca recomputado no front.
+- **Conceito de carga tributária na Metodologia** — citação de KHAIR, ARAUJO e AFONSO
+  (2005, p.27, nepp.unicamp.br) no topo da página, antes do dicionário: o que significa
+  carga subir/cair, por que independe de inflação isoladamente (depende da proporção
+  arrecadação/PIB), e por que o indicador não muda muito com revisão de dados.
+- **Créditos no rodapé**: "Desenvolvido por Kleber Pacheco de Castro. Metodologia: José
+  Roberto Afonso."
+- **Redesign minimalista** — fonte trocada para Inter (Google Fonts) + IBM Plex Mono nos
+  códigos de conta; paleta menos saturada; abas do menu principal e dos quadros viraram
+  underline em vez de pílula preenchida; cabeçalho de tabela discreto (uppercase, sem
+  fundo cinza); nota de cobertura virou callout com borda lateral em vez de caixa
+  fechada. Referência: painéis de dataviz como Datawrapper e Our World in Data. Nenhuma
+  mudança de dado ou metodologia de cálculo — só apresentação.
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.
