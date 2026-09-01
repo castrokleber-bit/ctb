@@ -662,6 +662,39 @@ primeira versão no ar):
   fundo cinza); nota de cobertura virou callout com borda lateral em vez de caixa
   fechada. Referência: painéis de dataviz como Datawrapper e Our World in Data. Nenhuma
   mudança de dado ou metodologia de cálculo — só apresentação.
+- **Casas decimais reduzidas para 2** em toda a apresentação (gráficos, tabelas, resumo
+  do ano, exportação CSV) — antes R$ bi e % do PIB saíam com 3.
+
+**Terceira passada de apresentação, 2026-09-01** (pedido do usuário, com uma referência
+visual de infográfico flat anexada):
+
+- **Nova identidade visual** — fundo creme (`--fundo: #f7f5ef`) com cada gráfico/tabela
+  num painel branco em cartão (sombra suave, cantos arredondados; regra CSS única em
+  `.painel, .grafico-wrap, .tabela-wrap`, sem precisar tocar em JSX). Fonte de
+  títulos/abas/botões trocada para Poppins (mais "desenhada"); Inter continua no corpo e
+  nas tabelas densas de número. Paleta categórica por esfera centralizada em
+  `site/src/lib/cores.js` (`CORES_ESFERA`: União azul, Estados âmbar, Municípios
+  verde-água, Setor Público Consolidado roxo) e aplicada em todo gráfico do site —
+  inclusive `Grafico.jsx`, que antes era sempre azul não importava a esfera selecionada.
+  Cor de alerta da nota de cobertura (`--alerta`, terracota) separada da cor de Estados
+  pra não confundir as duas leituras.
+- **Gráficos da aba Quadros viraram rosca (pizza)** — `Grafico.jsx` deixou de ser barra
+  horizontal. Sem esfera de referência (Principais Tributos, Bases de Incidência), cicla
+  `PALETA_CATEGORICA`; com uma esfera em foco (AD ESFERA/byGOVDetalhado, via
+  `QuadroPorEsfera`), usa `matizes()` — tons derivados por HSL da cor da própria esfera,
+  do mais escuro ao mais claro, mantendo a identidade de cor em vez de virar
+  multicolorido sem relação com o resto do site. RD ESFERA continua com cor fixa por
+  fatia (`coresPorRotulo`), e exclui "Setor Público Consolidado" da pizza (é a soma das
+  outras três — incluir dobraria o total pra 200%), mantendo-o só na tabela.
+- **Diagrama aluvial (Sankey) na aba RD ESFERA** — novo `DiagramaFluxo.jsx`, mostra como
+  a arrecadação direta (AD) de cada esfera vira receita disponível (RD) depois das
+  transferências constitucionais (União → Estados, União → Municípios, Estados →
+  Municípios). Os seis fluxos são recombinação pura de números já publicados (AD ESFERA
+  + os três blocos de transferência do RD ESFERA) — nenhum valor novo calculado no
+  front: `retido(União) = AD(U) − (U→E) − (U→M)`, `retido(Estados) = AD(E) − (E→M)`,
+  `retido(Municípios) = AD(M)` inteiro. A conservação com RD ESFERA já é garantida por
+  `pipeline/dominio/rd_esfera.py::calcular` (checagem `ErroRdEsfera` se não bater), não
+  precisou ser reverificada no front.
 
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
