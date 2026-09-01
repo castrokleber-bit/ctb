@@ -491,7 +491,7 @@ Série completa (`docs/resultado-{ano}.md`, já com FGTS/Sistema S — ver a atu
 | 2022 | 3.688,283 | 36,591% | 5.556 | 99,95% | 13 | 0,021% |
 | 2023 | 3.842,822 | 35,120% | 5.556 | 99,92% | 13 | 0,038% |
 | 2024 | 4.203,383 | 35,685% | 5.544 | 99,82% | 25 | 0,095% |
-| 2025 | 4.328,086 | 33,976% | 5.481 | 98,86% | 88 | 0,943% (sem FGTS/Sistema S) |
+| 2025 | 4.573,066 | 35,899% | 5.481 | 98,86% | 88 | 0,943% |
 
 **A imputação é marginal em toda a série** — no pior ano (2016) faltam 127 municípios,
 todos pequenos (nenhum acima de 500 mil habitantes falta em ano nenhum, confirmado nos
@@ -519,24 +519,29 @@ não tem 2025). Implementado em `pipeline/dominio/comparar_historico.py` +
 `pipeline/fontes/planilha_resumo.py` (leitor genérico do layout ano-em-blocos-de-4-
 colunas da planilha, reaproveitável por qualquer aba).
 
-**Atualização (2026-09-01): FGTS e Sistema S passaram a ser ingeridos** — o maior gap
-conhecido do total geral (CLAUDE.md §Fontes: "FGTS (CEF) e Sistema S (RFB) só em
-`manual/`") fica fechado para 2016-2024. Fonte de cada valor, ano a ano, em
-`manual/README.md`:
+**Atualização (2026-09-01/02): FGTS e Sistema S passaram a ser ingeridos, 2016-2025
+completo** — o maior gap conhecido do total geral (CLAUDE.md §Fontes: "FGTS (CEF) e
+Sistema S (RFB) só em `manual/`") está fechado pra série inteira. Fonte de cada valor,
+ano a ano, em `manual/README.md`:
 
-- **Sistema S**: arquivo fornecido pelo usuário (`manual/Sistema S.xlsx`), fonte
-  declarada no próprio arquivo como Cetad/RFB, com dado completo até 2024.
+- **Sistema S**: 2016-2024 do arquivo fornecido pelo usuário (`manual/Sistema S.xlsx`),
+  fonte declarada no próprio arquivo como Cetad/RFB. 2025 (R$ 32,385 bi) veio do dataset
+  RFB "Repasses da Arrecadação Federal" (dados.gov.br) que o usuário forneceu como CSV —
+  a soma das 9 entidades do Sistema S nesse CSV reproduz exatamente 2022-2024 já usados,
+  confirmando que é a mesma fonte primária.
 - **FGTS**: o arquivo fornecido pelo usuário (`manual/FGTS.xlsx`) tinha valores
   claramente errados para 2017-2019 (ordem de grandeza ~1000× menor que o esperado) —
-  não usado. Em vez disso, 2016-2023 vêm do PDF mensal oficial da Caixa (Arrecadação
-  Bruta do FGTS, série 2000-2024/jan, soma dos 12 meses de cada ano) e 2023-2024 vêm das
+  não usado. Em vez disso, 2016-2022 vêm do PDF mensal oficial da Caixa (Arrecadação
+  Bruta do FGTS, série 2000-2024/jan, soma dos 12 meses de cada ano) e 2023-2025 vêm das
   Demonstrações Financeiras auditadas do FGTS (fgts.gov.br), que é a fonte mais
   autoritativa e prevalece onde os dois se sobrepõem (2023: R$ 176,101 bi auditado
   contra R$ 175,433 bi somado dos meses — 0,4% de diferença, reconhecimento contábil, não
-  erro). 2025 continua sem fonte.
+  erro). 2025 = R$ 212,594 bi, batendo com a notícia do próprio fgts.gov.br
+  ("arrecadação bruta recorde de R$ 212,6 bilhões, +10,4%").
 
 Com isso, o total geral de 2024 subiu de 33,80% para **35,68% do PIB** — a **0,265 p.p.**
-dos 35,950% publicados (era −2,15 p.p. antes). O que resta do gap é ruído normal da
+dos 35,950% publicados (era −2,15 p.p. antes), e o de 2025 subiu de 33,98% para
+**35,90% do PIB**. O que resta do gap de 2024 é ruído normal da
 opção B (< 0,3 p.p. na maioria das rubricas) e os mecanismos já documentados (decisões
 1, 4, 6, 7). Três achados saíram desse padrão e foram investigados até a causa raiz (ou
 até o limite razoável desta passada) — ver a seção "Achados que pedem atenção" do
@@ -602,9 +607,10 @@ workflow`) antes de aceitar o push do arquivo em `.github/workflows/`.
 **Verificado de fato no navegador, 2026-09-01** (já na URL pública, não local): os cinco
 quadros renderizam com dado real, troca de ano recalcula tudo corretamente (2024 mostra
 R$ 4.203,383 bi / 35,685% do PIB, batendo exato com o já validado), a nota de cobertura
-mostra o aviso de FGTS/Sistema S só em 2025 (que não tem essas duas fontes), os gráficos
-ECharts renderizam, o accordion de transferências do RD ESFERA expande, e a página de
-Metodologia lê o dicionário corretamente.
+mostrava o aviso de FGTS/Sistema S em 2025 (única lacuna na época) — fechada em
+2026-09-02, ver a atualização na Fase 4 — os gráficos ECharts renderizam, o accordion de
+transferências do RD ESFERA expande, e a página de Metodologia lê o dicionário
+corretamente.
 
 **Falta:** identidade visual institucional (hoje é um estilo neutro, sem marca — decisão
 8 exige aprovação editorial antes de considerar isso pronto pra divulgação externa de
@@ -749,7 +755,6 @@ uv run ctb comparar-historico                       # gera docs/revisao-metodolo
 PR se algum número mudar) e/ou decidir identidade visual institucional antes de tratar o
 site como pronto pra divulgação externa (decisão 8). Itens secundários, não bloqueantes:
 investigar o achado aberto da Fase 4 (item 10 de `docs/divergencias.md` — IRPJ
-2020-2023); achar fonte de FGTS e Sistema S para 2025; se o servidor
-`thot-arquivos.tesouro.gov.br` voltar, rebaixar as planilhas oficiais do FUNDEB dos
-outros nove anos (URLs já mapeadas em `pipeline/fontes/fundeb.py`) e comparar contra os
-CSVs do usuário usados hoje.
+2020-2023); se o servidor `thot-arquivos.tesouro.gov.br` voltar, rebaixar as planilhas
+oficiais do FUNDEB dos outros nove anos (URLs já mapeadas em `pipeline/fontes/fundeb.py`)
+e comparar contra os CSVs do usuário usados hoje.

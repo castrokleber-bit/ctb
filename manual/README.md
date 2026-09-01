@@ -82,5 +82,23 @@ para conferência.
   mensal** — é a fonte auditada, mais autoritativa que a soma mensal (que dá R$ 175,433
   bi para 2023, 0,4% abaixo do valor auditado — diferença de reconhecimento contábil,
   não erro).
-- **2025 não tem fonte ainda** — nem FGTS nem Sistema S. `manual_uniao.py` não inclui
-  esse ano; o relatório de 2025 mostra o gap explicitamente em "O que falta".
+- **`Demonstracoes_Financeiras_FGTS_2025.pdf`** — baixado de
+  https://www.fgts.gov.br/Paginas/downloads/relatorios/demonstracoes_financeiras/Demonstracao_Financeira_FGTS_2025.pdf
+  em 2026-09-01 (achado navegando fgts.gov.br → Transparência e Prestação de Contas →
+  Demonstrações Financeiras — a URL do documento de 2024 tinha um typo,
+  "Demosntracores", que o de 2025 corrigiu para "Demonstracao", não é um padrão
+  previsível). Mesma linha "Arrecadação Recebida em depósitos vinculados do FGTS" dá
+  2025 = R$ 212,594 bi (auditado) — bate com a notícia do próprio site do FGTS
+  ("arrecadação bruta do Fundo atingiu o recorde de R$ 212,6 bilhões, crescimento de
+  10,4%"). Usado para 2025.
+- **`repasses_arrecadacao_federal_outras_entidades.csv`** — fornecido pelo usuário em
+  2026-09-02. Fonte: RFB, dataset "Repasses da Arrecadação Federal"
+  (https://dados.gov.br/dados/conjuntos-dados/repasses-da-arrecadacao-federal), recurso
+  "Repasse da arrecadação destinada a outras entidades e fundos". Série mensal desde
+  jan/2015, por entidade (inclui as 9 do Sistema S — SEBRAE, SENAC, SENAI, SENAR,
+  SENAT, SESC, SESCOOP, SESI, SEST — e outras não relacionadas ao Sistema S: FNDE,
+  INCRA, EMBRATUR, DPC, ANAC, SDR, APEX-BR, ABDI, que não entram na soma). Somando as 9
+  entidades do Sistema S para 2022-2024 reproduz exatamente os valores já usados
+  (23,815 / 26,919 / 29,320 bi, vindos do `Sistema S.xlsx`) — mesma fonte primária,
+  cruzamento perfeito. Usado para 2025 (R$ 32,385 bi), ano que `Sistema S.xlsx` não
+  cobria.

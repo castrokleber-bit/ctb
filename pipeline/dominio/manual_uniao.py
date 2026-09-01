@@ -3,7 +3,7 @@
 Fecha o maior gap conhecido do projeto (CLAUDE.md §Fontes: "FGTS (CEF) e Sistema S (RFB)
 só em manual/"). Fonte, data e método de cada valor estão declarados em
 `manual/README.md` e em cada linha de `manual/fgts_sistema_s.csv` (regra 1 do
-CLAUDE.md). Cobre 2016-2024 — 2025 ainda não tem fonte, não incluído aqui.
+CLAUDE.md). Cobre 2016-2025.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pipeline.fontes.http import RAIZ
 
 ARQUIVO = RAIZ / "manual" / "fgts_sistema_s.csv"
 BASE_INCIDENCIA = "salarios"
-ANOS_DISPONIVEIS = range(2016, 2025)  # 2025 ainda não tem fonte — ver manual/README.md
+ANOS_DISPONIVEIS = range(2016, 2026)
 
 
 class ErroManualUniao(RuntimeError):

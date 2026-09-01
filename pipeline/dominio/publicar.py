@@ -139,14 +139,18 @@ def _publicar_metodologia() -> dict:
 
 def executar(anos: range) -> Path:
     DIR_PUBLICADO.mkdir(parents=True, exist_ok=True)
-    anos_publicados = []
     for ano in anos:
         print(f"  publicando {ano}...")
         dados_ano = _publicar_ano(ano)
         destino = DIR_PUBLICADO / f"{ano}.json"
         destino.write_text(json.dumps(dados_ano, ensure_ascii=False, indent=2), encoding="utf-8")
-        anos_publicados.append(ano)
 
+    # anos_disponiveis reflete todo {ano}.json já em disco, não só os processados nesta
+    # chamada — republicar um ano isolado (ex.: --anos 2025) nunca pode apagar os outros
+    # da lista que o site usa pro seletor de ano.
+    anos_publicados = sorted(
+        int(p.stem) for p in DIR_PUBLICADO.glob("*.json") if p.stem.isdigit()
+    )
     metadados = {
         "anos_disponiveis": anos_publicados,
         "gerado_em": datetime.now().isoformat(timespec="seconds"),

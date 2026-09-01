@@ -17,3 +17,5 @@ ano;rubrica;valor_reais;fonte;data_extracao
 2022;Sistema S;23814896662;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
 2023;Sistema S;26918934551;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx);2026-09-01
 2024;Sistema S;29319758714;RFB/Cetad, arquivo fornecido pelo usuário (Sistema S.xlsx, detalhe por entidade SEBRAE/SENAC/SENAI/SENAR/SENAT/SESC/SESCOOP/SESI/SEST);2026-09-01
+2025;FGTS;212594313000;FGTS - Demonstrações Financeiras 2025 (fgts.gov.br), linha "Arrecadação Recebida em depósitos vinculados do FGTS", coluna 2025 (auditada);2026-09-01
+2025;Sistema S;32385489441.31;RFB (repasses-da-arrecadacao-federal, dados.gov.br), arquivo fornecido pelo usuário (repasses_arrecadacao_federal_outras_entidades.csv), soma dos 12 meses das 9 entidades SEBRAE/SENAC/SENAI/SENAR/SENAT/SESC/SESCOOP/SESI/SEST;2026-09-01
