@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { UNIDADES } from "../lib/formato";
-import { COR_PADRAO } from "../lib/cores";
+import { PALETA_CATEGORICA, matizes } from "../lib/cores";
 
-// Barras horizontais — rótulos de rubrica costumam ser longos ("Contrib. Seg. Serv.
-// Público"), barra horizontal evita truncar ou girar o texto. `cor` deixa o chamador
-// tingir a barra pela esfera em foco (QuadroPorEsfera) — sem esfera, usa o azul padrão.
-// `coresPorRotulo` tinge cada barra individualmente (RD ESFERA, onde cada linha já é
-// uma esfera diferente) e tem prioridade sobre `cor` quando o rótulo bate.
+// Rosca (pizza com furo) — cada fatia é uma linha do quadro. `cor` deixa o chamador
+// tingir todas as fatias em tons de uma única cor (QuadroPorEsfera: identidade da
+// esfera em foco); sem `cor`, cicla a paleta categórica padrão (quadros sem esfera
+// única, como Principais Tributos). `coresPorRotulo` tinge cada fatia individualmente
+// e tem prioridade sobre as duas — usado em RD ESFERA, onde cada fatia já é uma esfera.
 export default function Grafico({
-  linhas, unidade, titulo, nomeArquivoPng, cor = COR_PADRAO, coresPorRotulo,
+  linhas, unidade, titulo, nomeArquivoPng, cor, coresPorRotulo,
 }) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
@@ -30,30 +30,37 @@ export default function Grafico({
     const instancia = instanciaRef.current;
     if (!instancia || !linhas) return;
     const config = UNIDADES[unidade];
-    const ordenadas = [...linhas].sort((a, b) => a[config.campo] - b[config.campo]);
+    const ordenadas = [...linhas].sort((a, b) => b[config.campo] - a[config.campo]);
+    const tons = cor ? matizes(cor, ordenadas.length) : null;
+
     instancia.setOption({
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
-      grid: { left: 180, right: 40, top: 50, bottom: 30 },
       tooltip: {
-        trigger: "axis",
-        axisPointer: { type: "shadow" },
-        valueFormatter: (v) => config.formatar(v),
-      },
-      xAxis: { type: "value", name: config.rotulo, nameLocation: "middle", nameGap: 30 },
-      yAxis: {
-        type: "category",
-        data: ordenadas.map((l) => l.rotulo),
-        axisLabel: { fontSize: 11, width: 170, overflow: "truncate" },
+        trigger: "item",
+        formatter: (p) => `${p.marker} ${p.name}: ${config.formatar(p.value)} (${p.percent}%)`,
       },
       series: [
         {
-          type: "bar",
-          data: ordenadas.map((l) => ({
+          type: "pie",
+          radius: ["36%", "70%"],
+          center: ["50%", "54%"],
+          avoidLabelOverlap: true,
+          minShowLabelAngle: 3,
+          itemStyle: { borderColor: "#fff", borderWidth: 2 },
+          label: {
+            formatter: (p) => `${p.name}\n${config.formatar(p.value)}`,
+            fontSize: 11,
+            color: "#6b7684",
+          },
+          labelLine: { length: 10, length2: 8 },
+          data: ordenadas.map((l, i) => ({
+            name: l.rotulo,
             value: l[config.campo],
-            itemStyle: coresPorRotulo?.[l.rotulo] ? { color: coresPorRotulo[l.rotulo] } : undefined,
+            itemStyle: {
+              color:
+                coresPorRotulo?.[l.rotulo] ?? tons?.[i] ?? PALETA_CATEGORICA[i % PALETA_CATEGORICA.length],
+            },
           })),
-          itemStyle: { color: cor },
-          label: { show: true, position: "right", formatter: (p) => config.formatar(p.value), fontSize: 11 },
         },
       ],
     });
@@ -76,7 +83,7 @@ export default function Grafico({
           Exportar PNG
         </button>
       </div>
-      <div ref={containerRef} className="grafico-canvas" />
+      <div ref={containerRef} className="grafico-canvas grafico-pizza" />
     </div>
   );
 }

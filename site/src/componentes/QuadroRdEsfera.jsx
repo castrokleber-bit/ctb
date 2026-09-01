@@ -20,6 +20,9 @@ export default function QuadroRdEsfera({ rdEsfera, adEsfera, rotuloEsfera, unida
     );
   }
   const linhasPorEsfera = Object.values(rdEsfera.por_esfera);
+  // O gráfico de pizza mostra só União/Estados/Municípios: "Setor Público Consolidado"
+  // é a soma das três, incluí-lo como fatia dobraria o total (200% em vez de 100%).
+  const linhasPizza = linhasPorEsfera.filter((l) => l.rotulo !== rotuloEsfera.consolidado);
   const coresPorRotulo = Object.fromEntries(
     Object.keys(rdEsfera.por_esfera).map((esf) => [rotuloEsfera[esf], CORES_ESFERA[esf]])
   );
@@ -36,7 +39,7 @@ export default function QuadroRdEsfera({ rdEsfera, adEsfera, rotuloEsfera, unida
 
       <h3 className="subtitulo">Receita disponível por esfera</h3>
       <Grafico
-        linhas={linhasPorEsfera}
+        linhas={linhasPizza}
         unidade={unidade}
         titulo={`Receita Disponível por Esfera (${ano})`}
         nomeArquivoPng={`rd_esfera_${ano}.png`}
