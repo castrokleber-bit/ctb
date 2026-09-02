@@ -746,6 +746,27 @@ projeto):
   comparado — inclusive fora de ordem cronológica, sem validação forçada, só um aviso se
   os dois anos forem iguais.
 
+**Quinta passada de apresentação, 2026-09-02:**
+
+- **Rótulos de Bases de Incidência corrigidos** — `quadros.py::bases_incidencia()`
+  publicava o identificador snake_case cru da coluna `base_incidencia`
+  (`bens_servicos`, `patrimonio`) como rótulo; `dicionario/bases_incidencia.csv` já
+  tinha uma coluna `rotulo` pra isso, criada junto com o CSV (2026-08-30), mas nunca
+  usada na publicação — só servia pra validação em `carregar_mapeamentos`. Nova
+  `dicionario.carregar_rotulos_base_incidencia()` fecha essa lacuna; acesso direto ao
+  dict (`rotulos[base]`, não `.get(base, base)`) porque todo valor já foi validado
+  contra esse mesmo CSV antes de chegar aqui — um `KeyError` seria dicionário e
+  validação dessincronizados, não dado inesperado, e não deve ser mascarado com um
+  fallback silencioso pro identificador cru. Rótulos do CSV também reescritos de CAIXA
+  ALTA pra Title Case com acentuação — e "Patrimônio" no lugar de "Patrimoniais" (nome
+  herdado do `CTB2024.xlsx`), por pedido explícito do usuário.
+- **Dropdown de Série Histórica renomeado** — "AD ESFERA (carga direta)" / "RD ESFERA
+  (receita disponível)" viram "Arrecadação Direta" / "Receita Disponível", mesmos nomes
+  já usados no resto do site depois da segunda passada.
+- **Segunda citação na Metodologia** — logo após KHAIR/ARAUJO/AFONSO: AFONSO, SOARES e
+  CASTRO (2013, p.74, IADB) sobre o conceito de receita disponível como resultado dos
+  fluxos de recursos entre esferas de governo.
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.
