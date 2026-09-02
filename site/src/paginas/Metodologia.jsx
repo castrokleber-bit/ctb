@@ -90,6 +90,27 @@ export default function Metodologia() {
             </a>
           </p>
         </blockquote>
+
+        <blockquote className="citacao">
+          <p>
+            ... o sistema federativo brasileiro se caracteriza pelos substanciais fluxos
+            de recursos entre as esferas de governo, o que, consequentemente, altera
+            seus orçamentos. Damos o nome de “receita disponível” ao volume de recursos
+            auferido por cada esfera de governo após a arrecadação direta e as
+            transferências intergovernamentais.
+          </p>
+          <p className="citacao-fonte">
+            AFONSO, SOARES e CASTRO, 2013, p. 74 —{" "}
+            <a
+              href="https://publications.iadb.org/pt/avaliacao-da-estrutura-e-do-desempenho-do-sistema-tributario-brasileiro-livro-branco-da-tributacao"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              publications.iadb.org
+            </a>
+          </p>
+        </blockquote>
+
         <p className="nota-fonte">
           A fonte básica utilizada para apuração da carga (DCA) tem origem contábil,
           seguindo as melhores práticas internacionais.

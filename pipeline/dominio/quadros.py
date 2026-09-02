@@ -24,6 +24,8 @@ from dataclasses import dataclass
 
 import polars as pl
 
+from pipeline.dominio.dicionario import carregar_rotulos_base_incidencia
+
 ROTULO_ESFERA = {"U": "União", "E": "Estados", "M": "Municípios"}
 ROTULO_CONSOLIDADO = "Setor Público Consolidado"
 ESFERAS_COM_CONSOLIDADO = ("U", "E", "M", "consolidado")
@@ -153,15 +155,23 @@ def bygov_detalhado(
 
 
 def bases_incidencia(df: pl.DataFrame, pib: float, populacao: int) -> list[LinhaQuadro]:
-    """Agregado por base de incidência, cruzando as três esferas."""
+    """Agregado por base de incidência, cruzando as três esferas.
+
+    `base_incidencia` na tabela intermediária é o identificador snake_case do dicionário
+    (`bens_servicos`, `patrimonio`) — nunca publicado cru; `carregar_rotulos_base_incidencia`
+    troca pelo rótulo de `bases_incidencia.csv` (acesso direto ao dict, não `.get(...)`:
+    todo valor aqui já foi validado contra esse mesmo CSV em `carregar_mapeamentos`, um
+    `KeyError` significaria dicionário e validação dessincronizados, não dado inesperado).
+    """
     total_geral = float(df["valor_reais"].sum())
+    rotulos = carregar_rotulos_base_incidencia()
     agrupado = (
         df.group_by("base_incidencia")
         .agg(pl.col("valor_reais").sum())
         .sort("valor_reais", descending=True)
     )
     return [
-        _linha(base, valor, pib, populacao, total_geral)
+        _linha(rotulos[base], valor, pib, populacao, total_geral)
         for base, valor in agrupado.iter_rows()
     ]
 

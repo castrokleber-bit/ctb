@@ -4,8 +4,8 @@ import { SeletorUnidade } from "../componentes/Seletores";
 import GraficoSerie from "../componentes/GraficoSerie";
 
 const TIPOS = [
-  { chave: "ad_esfera", rotulo: "AD ESFERA (carga direta)" },
-  { chave: "rd_esfera", rotulo: "RD ESFERA (receita disponível)" },
+  { chave: "ad_esfera", rotulo: "Arrecadação Direta" },
+  { chave: "rd_esfera", rotulo: "Receita Disponível" },
 ];
 
 export default function SerieHistorica() {

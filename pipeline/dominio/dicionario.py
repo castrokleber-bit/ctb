@@ -152,6 +152,16 @@ def carregar_mapeamentos(esfera: str) -> list[Mapeamento]:
     return mapas
 
 
+def carregar_rotulos_base_incidencia() -> dict[str, str]:
+    """Identificador snake_case (`bens_servicos`) -> rótulo de publicação (`Bens e
+    Serviços`), de `bases_incidencia.csv` — usado por `quadros.py::bases_incidencia`
+    pra não publicar o identificador cru como se fosse o rótulo."""
+    return {
+        r["base_incidencia"].strip(): r["rotulo"].strip()
+        for r in _ler_csv(DIR_DICIONARIO / "bases_incidencia.csv")
+    }
+
+
 OPERACOES_VALIDAS = ("somar", "subtrair", "ignorar")
 
 
