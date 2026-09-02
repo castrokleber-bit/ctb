@@ -696,6 +696,28 @@ visual de infográfico flat anexada):
   `pipeline/dominio/rd_esfera.py::calcular` (checagem `ErroRdEsfera` se não bater), não
   precisou ser reverificada no front.
 
+**Quarta passada de apresentação, 2026-09-02** (pedido do usuário, ao retomar o
+projeto):
+
+- **Nova aba "Variação da Carga"** (`Variacao.jsx`) — dois cartões com a variação da
+  carga total **em pontos do PIB** (nunca em %, que mediria variação relativa, não a
+  diferença de nível que "pontos do PIB" pede): último ano publicado vs ano anterior, e
+  último ano vs primeiro ano da série. Os três anos de referência vêm de
+  `metadados.anos_disponiveis` (não hardcoded 2025/2024/2016) — a página continua
+  correta conforme a série cresce.
+- **Ranking dos tributos que mais explicam cada variação** — `GraficoVariacao.jsx`,
+  barra horizontal divergente (verde = alta, terracota = queda) mais tabela exportável
+  em CSV. Compara os rótulos de `byGOVDetalhado.consolidado` dos dois anos — o rótulo é
+  o canônico do dicionário de classificação, estável entre as três eras do plano de
+  contas (CLAUDE.md §Regras de classificação), por isso 2016 e 2025 são comparáveis
+  direto sem remapeamento no front. Nenhum número novo: é a diferença de `pct_pib` já
+  publicado por rubrica.
+- **Data/hora de atualização no rodapé** — `metadados.json::gerado_em` já existia
+  (usado só para ordenar `anos_disponiveis`) mas não estava exposto no site; agora
+  aparece formatado em pt-BR ("Dados atualizados em 01/09/2026 às 15:56").
+- **Aviso de citação no rodapé** — depois dos créditos, pedindo que reprodução dos
+  dados/análises da página cite os autores como fonte.
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.
