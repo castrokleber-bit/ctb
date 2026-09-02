@@ -725,6 +725,26 @@ projeto):
   aparece formatado em pt-BR ("Dados atualizados em 01/09/2026 às 15:56").
 - **Aviso de citação no rodapé** — depois dos créditos, pedindo que reprodução dos
   dados/análises da página cite os autores como fonte.
+- **Rótulos na extremidade interna das barras** (`GraficoVariacao.jsx`) — pedido do
+  usuário depois de ver o gráfico: em vez de `position: "right"/"left"` (ponta externa),
+  `insideLeft`/`insideRight` (perto do zero), texto branco com contorno escuro
+  (`textBorderColor`) pra ficar legível em cima de barra colorida ou do fundo, mesmo em
+  barras finas. Altura do ranking de tributos passou a ser dinâmica
+  (`Math.max(320, linhas.length * 26 + 110)`) em vez de fixa — barras mais largas pra
+  caber o rótulo dentro, acompanhando o nº de linhas de qualquer ano.
+- **Aba "AD ESFERA" removida de Quadros; "byGOVDetalhado" → "Arrecadação Direta",
+  "RD ESFERA" → "Receita Disponível"** — a categorização em 2-4 itens nomeados (Impostos/
+  Contribuições Sociais/.../Demais) ficou redundante com o detalhamento completo por
+  rubrica que já existe em byGOVDetalhado; os dois nomes técnicos da DCA (que só faziam
+  sentido pra quem já conhece o `CTB2024.xlsx`) viraram os nomes que o resto do site
+  (Variação da Carga, Série Histórica) já usava. `dadosAno.quadros.ad_esfera` continua
+  publicado (não removido do backend) — só não tem mais aba própria na UI.
+- **Variação da Carga: anos livres, não mais fixos** — os dois seletores "Ano inicial" /
+  "Ano final" (reaproveitando `SeletorAno`, que ganhou um prop `rotulo` opcional)
+  substituem o dropdown fixo "último vs anterior / último vs primeiro". Default é
+  último ano vs anterior (2025 vs 2024), mas qualquer par de anos publicados pode ser
+  comparado — inclusive fora de ordem cronológica, sem validação forçada, só um aviso se
+  os dois anos forem iguais.
 
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
