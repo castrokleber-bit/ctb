@@ -134,7 +134,7 @@ export default function Variacao() {
       <div className="duas-colunas">
         <GraficoVariacao
           linhas={atual.porEsferaAd}
-          titulo={`AD ESFERA — ${anoUltimo} vs ${atual.anoBase}`}
+          titulo={`Arrecadação Direta — ${anoUltimo} vs ${atual.anoBase}`}
           nomeArquivoPng={`variacao_ad_esfera_${atual.anoBase}_${anoUltimo}.png`}
           altura="220px"
           margemEsquerda={110}
@@ -142,7 +142,7 @@ export default function Variacao() {
         {atual.porEsferaRd ? (
           <GraficoVariacao
             linhas={atual.porEsferaRd}
-            titulo={`RD ESFERA — ${anoUltimo} vs ${atual.anoBase}`}
+            titulo={`Receita Disponível — ${anoUltimo} vs ${atual.anoBase}`}
             nomeArquivoPng={`variacao_rd_esfera_${atual.anoBase}_${anoUltimo}.png`}
             altura="220px"
             margemEsquerda={110}

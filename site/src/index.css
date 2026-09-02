@@ -239,10 +239,6 @@ h1, h2, h3 {
   height: 460px;
 }
 
-.grafico-variacao {
-  height: 560px;
-}
-
 .duas-colunas {
   display: flex;
   gap: 20px;

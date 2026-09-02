@@ -9,6 +9,9 @@ import { COR_ALTA, COR_QUEDA } from "../lib/cores";
 export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng, altura, margemEsquerda = 190 }) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
+  // Sem `altura` explícita (ranking de tributos), a altura acompanha o nº de linhas —
+  // barras largas o bastante pra caber o rótulo dentro, não um canvas fixo apertado.
+  const alturaFinal = altura ?? `${Math.max(320, (linhas?.length ?? 0) * 26 + 110)}px`;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -44,19 +47,25 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng, altura
       series: [
         {
           type: "bar",
+          barCategoryGap: "12%",
           data: ordenadas.map((l) => ({
             value: l.delta,
             itemStyle: { color: l.delta >= 0 ? COR_ALTA : COR_QUEDA },
-            label: { position: l.delta >= 0 ? "right" : "left" },
+            // Extremidade interna: perto do zero, não na ponta externa da barra.
+            label: { position: l.delta >= 0 ? "insideLeft" : "insideRight" },
           })),
           label: {
             show: true,
             formatter: (p) => pontosPib(p.value, 2),
             fontSize: 10,
+            color: "#fff",
+            textBorderColor: "rgba(20, 24, 18, 0.45)",
+            textBorderWidth: 2.5,
           },
         },
       ],
     });
+    instancia.resize();
   }, [linhas, titulo, margemEsquerda]);
 
   function exportarPng() {
@@ -79,7 +88,7 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng, altura
       <div
         ref={containerRef}
         className="grafico-canvas grafico-variacao"
-        style={altura ? { height: altura } : undefined}
+        style={{ height: alturaFinal }}
       />
     </div>
   );
