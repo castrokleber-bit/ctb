@@ -45,6 +45,10 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
         position: "inside",
         color: "#fff",
         fontSize: 10,
+        // União tem o segmento com mais dígitos ("24,52") — com 26 anos no eixo, a
+        // barra fica estreita demais pra caber o número na horizontal sem sobrar
+        // pra fora; giradas na vertical cabem na largura da barra tranquilo.
+        rotate: esf === "U" ? 90 : 0,
         formatter: (p) => config.formatar(p.value),
       },
       labelLayout: { hideOverlap: true },
@@ -86,7 +90,7 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
 
     instancia.setOption({
       title: { text: titulo, left: "center", top: 8, textStyle: { fontSize: 14 } },
-      grid: { left: 70, right: 30, top: 56, bottom: 76 },
+      grid: { left: 70, right: 30, top: 56, bottom: 92 },
       tooltip: {
         ...TOOLTIP_TEMA,
         trigger: "axis",
@@ -108,7 +112,11 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
         },
       },
       legend: { bottom: 4, data: ESFERAS_EMPILHADAS.map((e) => rotuloEsfera[e] ?? e) },
-      xAxis: { type: "category", data: anos },
+      xAxis: {
+        type: "category",
+        data: anos,
+        axisLabel: { interval: 0, rotate: 45 },
+      },
       yAxis: { type: "value", name: config.rotulo, nameLocation: "middle", nameGap: 50 },
       series: [...seriesEmpilhadas, serieTotal],
     });
