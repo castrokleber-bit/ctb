@@ -767,6 +767,35 @@ projeto):
   CASTRO (2013, p.74, IADB) sobre o conceito de receita disponível como resultado dos
   fluxos de recursos entre esferas de governo.
 
+**Sexta passada de apresentação, 2026-09-02** (usuário trouxe uma imagem de referência —
+um dashboard SaaS dark-mode — e pediu uma proposta de identidade visual baseada nela;
+decisão explícita: só extrair o "vibe" em modo claro, sem tema escuro completo, pra não
+fugir do tom sóbrio que a decisão 8 exige):
+
+- **Cor de marca separada da cor de dado** — nova `--marca` (índigo `#4f46e5`) pra
+  navegação/botões/links/foco; `--azul` (o azul de União) fica só pra contexto de dado,
+  resolvendo a ambiguidade de antes (a mesma cor significando "União" num gráfico e
+  "isto é clicável" na navegação).
+- **Abas viram pílulas preenchidas** (fundo tintado + texto na cor de marca) em vez de
+  sublinhado fino, no menu principal e nas abas de Quadros.
+- **Cartões de KPI genéricos** — `.cartao-variacao` virou `.cartao-kpi` (reaproveitado
+  em Quadros.jsx pro "Total geral"/"PIB corrente", que eram uma linha de texto simples,
+  e no cartão de Variação da Carga, que ganhou uma etiqueta pílula "▲ Alta"/"▼ Queda" ao
+  lado do rótulo).
+- **Bordas mais sutis, sombra mais funda** — `--borda-sutil` (rgba translúcido) nos
+  cartões/painéis em vez da borda sólida original — menos "caixa", mais elevação.
+- **Tooltip escuro arredondado nos gráficos** — `TOOLTIP_TEMA` (`lib/cores.js`),
+  compartilhado por `Grafico`/`GraficoSerie`/`GraficoVariacao`/`DiagramaFluxo`: fundo
+  escuro, cantos arredondados, sombra suave, flutuando sobre o site claro — o oposto do
+  fundo do site, de propósito, pro contraste.
+- **Gradiente vertical sutil nas barras da Série Histórica** — `gradienteVertical()`
+  (`lib/cores.js`), dois tons da própria cor da esfera (não um gradiente multicolorido).
+- Limitação registrada durante o trabalho: a ferramenta de navegador desta sessão não
+  alcança nem `file://` (bloqueado pela extensão) nem `localhost` (isolamento de rede do
+  acesso remoto) — sem como gerar preview visual antes de publicar. Decisão do usuário:
+  publicar direto e revisar ao vivo, já que o site está em estado de rascunho
+  pré-aprovação editorial de qualquer forma (decisão 8).
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.
