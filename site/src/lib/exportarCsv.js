@@ -1,4 +1,4 @@
-import { numero } from "./formato";
+import { numero, pontosPib } from "./formato";
 
 function baixarCsv(cabecalho, corpo, nomeArquivo) {
   const csv = [cabecalho, ...corpo]
@@ -29,5 +29,13 @@ export function exportarBygovTudo(dadosPorEsfera, rotuloEsfera, ano, nomeArquivo
       numero(l.per_capita, 2),
     ])
   );
+  baixarCsv(cabecalho, corpo, nomeArquivo);
+}
+
+// Ranking de variação de carga por tributo (Variação da Carga) — % do PIB nos dois
+// anos comparados e a diferença em pontos do PIB.
+export function exportarVariacaoCsv(linhas, rotuloBase, rotuloUltimo, nomeArquivo) {
+  const cabecalho = ["Rubrica", `% do PIB (${rotuloBase})`, `% do PIB (${rotuloUltimo})`, "Variação (p.p. do PIB)"];
+  const corpo = linhas.map((l) => [l.rotulo, numero(l.pctBase, 2), numero(l.pctUltimo, 2), pontosPib(l.delta, 2)]);
   baixarCsv(cabecalho, corpo, nomeArquivo);
 }

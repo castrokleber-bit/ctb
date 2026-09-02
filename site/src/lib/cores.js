@@ -9,6 +9,10 @@ export const CORES_ESFERA = {
   consolidado: "#7C4DA8",
 };
 
+// Alta (verde) e queda (terracota) — ranking de variação de carga por tributo.
+export const COR_ALTA = "#2F8F57";
+export const COR_QUEDA = "#C0503F";
+
 // Paleta categórica default — usada quando o gráfico não tem uma esfera única de
 // referência (Principais Tributos, Bases de Incidência): ciclo de tons "planos" que
 // combinam com o resto da identidade, em vez de cores arbitrárias do ECharts.

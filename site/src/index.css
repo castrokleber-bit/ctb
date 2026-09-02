@@ -8,6 +8,8 @@
   --verde: #21a69a;
   --roxo: #7c4da8;
   --alerta: #d9622e;
+  --positivo: #2f8f57;
+  --negativo: #c0503f;
   --borda: #e2dfd3;
   --fundo: #f7f5ef;
   --superficie: #ffffff;
@@ -237,6 +239,53 @@ h1, h2, h3 {
   height: 460px;
 }
 
+.grafico-variacao {
+  height: 560px;
+}
+
+.cartoes-variacao {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.cartao-variacao {
+  flex: 1 1 240px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 1px 2px rgba(30, 26, 10, 0.04), 0 10px 24px -16px rgba(30, 26, 10, 0.14);
+}
+
+.cartao-variacao .rotulo {
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+.cartao-variacao .valor {
+  display: block;
+  margin-top: 6px;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.cartao-variacao .valor.alta { color: var(--positivo); }
+.cartao-variacao .valor.queda { color: var(--negativo); }
+
+.cartao-variacao .contexto {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+}
+
 .fluxo-transferencias {
   display: flex;
   gap: 24px;
@@ -403,5 +452,11 @@ h1, h2, h3 {
 }
 
 .rodape .creditos {
+  color: var(--texto-suave);
+}
+
+.rodape .aviso-reproducao {
+  margin-top: 10px;
+  font-style: italic;
   color: var(--texto-suave);
 }
