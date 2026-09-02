@@ -712,6 +712,14 @@ projeto):
   contas (CLAUDE.md §Regras de classificação), por isso 2016 e 2025 são comparáveis
   direto sem remapeamento no front. Nenhum número novo: é a diferença de `pct_pib` já
   publicado por rubrica.
+- **Variação por esfera de governo (AD e RD)** — pedido em seguida pelo usuário: dois
+  `GraficoVariacao.jsx` compactos lado a lado (`altura="220px"`, componente reaproveitado
+  do ranking de tributos), União/Estados/Municípios, um pra AD ESFERA
+  (`dadosAno.ad_esfera`) e outro pra RD ESFERA (`dadosAno.rd_esfera.por_esfera`) — mesma
+  diferença de `pct_pib` entre os dois anos, já calculada na publicação. Mostra o efeito
+  da redistribuição constitucional lado a lado com a arrecadação direta (ex.: 2025 vs
+  2016, União cresce +1,70 p.p. em AD mas só +0,71 p.p. em RD — o resto vira transferência
+  pra Estados e Municípios).
 - **Data/hora de atualização no rodapé** — `metadados.json::gerado_em` já existia
   (usado só para ordenar `anos_disponiveis`) mas não estava exposto no site; agora
   aparece formatado em pt-BR ("Dados atualizados em 01/09/2026 às 15:56").
