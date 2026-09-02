@@ -1,9 +1,9 @@
 import { UNIDADES } from "../lib/formato";
 
-export function SeletorAno({ anos, anoSelecionado, aoMudar }) {
+export function SeletorAno({ anos, anoSelecionado, aoMudar, rotulo = "Ano" }) {
   return (
     <label className="seletor">
-      <span>Ano</span>
+      <span>{rotulo}</span>
       <select value={anoSelecionado} onChange={(e) => aoMudar(Number(e.target.value))}>
         {anos.map((ano) => (
           <option key={ano} value={ano}>

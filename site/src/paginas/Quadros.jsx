@@ -10,11 +10,10 @@ import { reaisBi, percentual } from "../lib/formato";
 import { exportarBygovTudo } from "../lib/exportarCsv";
 
 const QUADROS = [
-  { chave: "ad_esfera", rotulo: "AD ESFERA" },
-  { chave: "bygov_detalhado", rotulo: "byGOVDetalhado" },
+  { chave: "bygov_detalhado", rotulo: "Arrecadação Direta" },
   { chave: "principais_tributos", rotulo: "Principais Tributos" },
   { chave: "bases_incidencia", rotulo: "Bases de Incidência" },
-  { chave: "rd_esfera", rotulo: "RD ESFERA" },
+  { chave: "rd_esfera", rotulo: "Receita Disponível" },
 ];
 
 export default function Quadros() {
@@ -22,7 +21,7 @@ export default function Quadros() {
   const [ano, setAno] = useState(null);
   const [dadosAno, setDadosAno] = useState(null);
   const [unidade, setUnidade] = useState("bi");
-  const [quadro, setQuadro] = useState("ad_esfera");
+  const [quadro, setQuadro] = useState("bygov_detalhado");
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
@@ -79,33 +78,31 @@ export default function Quadros() {
         ))}
       </nav>
 
-      {(quadro === "ad_esfera" || quadro === "bygov_detalhado") && (
+      {quadro === "bygov_detalhado" && (
         <div>
-          {quadro === "bygov_detalhado" && (
-            <div className="tabela-acoes">
-              <button
-                type="button"
-                className="botao-secundario"
-                onClick={() =>
-                  exportarBygovTudo(
-                    dadosAno.quadros.bygov_detalhado,
-                    rotuloEsfera,
-                    ano,
-                    `bygov_detalhado_todas_esferas_${ano}.csv`
-                  )
-                }
-              >
-                Exportar tudo (todas as esferas)
-              </button>
-            </div>
-          )}
+          <div className="tabela-acoes">
+            <button
+              type="button"
+              className="botao-secundario"
+              onClick={() =>
+                exportarBygovTudo(
+                  dadosAno.quadros.bygov_detalhado,
+                  rotuloEsfera,
+                  ano,
+                  `bygov_detalhado_todas_esferas_${ano}.csv`
+                )
+              }
+            >
+              Exportar tudo (todas as esferas)
+            </button>
+          </div>
           <QuadroPorEsfera
-            dadosPorEsfera={dadosAno.quadros[quadro]}
+            dadosPorEsfera={dadosAno.quadros.bygov_detalhado}
             rotuloEsfera={rotuloEsfera}
             unidade={unidade}
             ano={ano}
-            prefixoArquivo={quadro}
-            titulo={QUADROS.find((q) => q.chave === quadro).rotulo}
+            prefixoArquivo="bygov_detalhado"
+            titulo={QUADROS.find((q) => q.chave === "bygov_detalhado").rotulo}
           />
         </div>
       )}
