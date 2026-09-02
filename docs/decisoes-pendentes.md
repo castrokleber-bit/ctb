@@ -507,3 +507,31 @@ Pedido do usuário para estender a série publicada pra trás de 2016 — o site
 > em 2016 — não é queda de arrecadação, é a mudança de metodologia da decisão 1
 > (o valor passa a ser redistribuído nas rubricas de origem a partir de 2016). Uma
 > comparação em "Variação da Carga" que atravesse essa fronteira mostra esse degrau.
+
+**Retomada em 2026-09-02, mesmo dia:** o usuário pediu pra investigar se dava pra
+"retroceder" a fronteira de 2016, recalculando mais alguns anos pela metodologia
+automatizada em vez de aceitar CTB-Resumo até 2015. Investigação (não implementação):
+
+- **A API do Siconfi (Anexo I-C) só responde de 2014 em diante** — testado ano a ano
+  pra União (`id_ente=1`), um estado (SP, `cod_ibge=35`) e um município (SP capital,
+  `cod_ibge=3550308`); 2013 e anos anteriores vêm vazios pros três, não é falha de
+  parâmetro. Um ano a mais do que a expectativa do usuário (2013), não muito mais.
+- **2014-2015 usam uma terceira era de plano de contas**, ainda não coberta pelo
+  dicionário: código de 8 níveis com padding duplo (`RO1.1.1.1.00.00.00`), diferente
+  tanto do "2016-2017" quanto do "2018+" já documentados. Estados/Municípios já usavam
+  esse formato de 8 níveis nessa época (extensão seria mais simples); a União usa **7**
+  níveis a partir de 2016 e precisaria de mapeamento novo específico pra 2014-2015.
+- **RD ESFERA não fecha pra 2014-2015 de jeito nenhum, mesmo com o dicionário
+  estendido**: as fontes de transferência de FUNDEB e royalties (`manual/fundeb_*.csv`,
+  `manual/transferencias_royalties_*.csv`) só cobrem 2016 em diante — são arquivos
+  fornecidos pelo usuário, não algo recalculável. O bloco Estados→Municípios é **87%
+  FUNDEB** (R$131 de R$151 bi em 2016); sem esse dado pra 2014-2015, a receita
+  disponível de Municípios sairia artificialmente baixa e a de Estados artificialmente
+  alta — erro grande, não resíduo aceitável.
+
+> **Decisão (2026-09-02): não estender.** Apresentado o trade-off (ganho de só 2 anos,
+> terceiro mapeamento de dicionário pra construir, e RD ESFERA ficaria incompleta pra
+> esses 2 anos de qualquer forma), o usuário decidiu que não vale o risco de erro pra um
+> ganho tão pequeno. **2000-2015 continua inteiro no `CTB-Resumo.xlsx`** (decisão acima,
+> sem alteração). Registrado aqui pra não reabrir essa investigação numa sessão futura
+> sem antes ler isto.
