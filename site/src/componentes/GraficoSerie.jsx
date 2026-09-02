@@ -54,8 +54,8 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
     // CTB-Resumo.xlsx, sem passar pela metodologia automatizada — ver
     // manual/README.md §ctb_resumo_*.csv. Marca a virada em vez de deixar o degrau
     // (ex.: "Multas e Dívida Ativa" some) sem contexto.
-    const primeiroAnoNovo = anos.find((a) => a >= 2016);
-    const temFronteira = primeiroAnoNovo !== undefined && anos.some((a) => a < 2016);
+    const indiceFronteira = anos.findIndex((a) => a >= 2016);
+    const temFronteira = indiceFronteira > 0;
 
     const serieTotal = {
       name: ROTULO_TOTAL,
@@ -79,7 +79,7 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
             symbol: "none",
             lineStyle: { type: "dashed", color: "#9aa3ad" },
             label: { formatter: "metodologia nova →", color: "#6b7684", fontSize: 10 },
-            data: [{ xAxis: primeiroAnoNovo }],
+            data: [{ xAxis: indiceFronteira - 0.5 }],
           }
         : undefined,
     };
