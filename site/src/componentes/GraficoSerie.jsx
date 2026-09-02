@@ -69,8 +69,8 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
     };
 
     instancia.setOption({
-      title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
-      grid: { left: 70, right: 30, top: 60, bottom: 60 },
+      title: { text: titulo, left: "center", top: 8, textStyle: { fontSize: 14 } },
+      grid: { left: 70, right: 30, top: 56, bottom: 76 },
       tooltip: {
         ...TOOLTIP_TEMA,
         trigger: "axis",
@@ -91,7 +91,7 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
           );
         },
       },
-      legend: { top: 30, data: ESFERAS_EMPILHADAS.map((e) => rotuloEsfera[e] ?? e) },
+      legend: { bottom: 4, data: ESFERAS_EMPILHADAS.map((e) => rotuloEsfera[e] ?? e) },
       xAxis: { type: "category", data: anos },
       yAxis: { type: "value", name: config.rotulo, nameLocation: "middle", nameGap: 50 },
       series: [...seriesEmpilhadas, serieTotal],

@@ -47,9 +47,22 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
     const nomeAd = (esf) => `${rotuloEsfera[esf]} (AD)`;
     const nomeRd = (esf) => `${rotuloEsfera[esf]} (RD)`;
 
+    // Rótulo default do sankey fica à direita de todo nó, nos dois lados — os da
+    // esquerda (AD) acabavam sobre o próprio fluxo em vez de espelhar os da direita
+    // (RD) pra fora, deixando o diagrama com mais "peso" visual de um lado. Espelhando
+    // AD pra fora à esquerda, os dois lados ganham a mesma folga e o diagrama fica
+    // centralizado no card.
     const nodes = ESFERAS.flatMap((esf) => [
-      { name: nomeAd(esf), itemStyle: { color: CORES_ESFERA[esf] } },
-      { name: nomeRd(esf), itemStyle: { color: CORES_ESFERA[esf] } },
+      {
+        name: nomeAd(esf),
+        itemStyle: { color: CORES_ESFERA[esf] },
+        label: { position: "left", align: "right" },
+      },
+      {
+        name: nomeRd(esf),
+        itemStyle: { color: CORES_ESFERA[esf] },
+        label: { position: "right", align: "left" },
+      },
     ]);
 
     const links = [
@@ -82,6 +95,8 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
           type: "sankey",
           top: 56,
           bottom: 24,
+          left: 140,
+          right: 140,
           data: nodes,
           links,
           nodeGap: 26,
