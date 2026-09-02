@@ -22,6 +22,18 @@ function compararAnos(dadosBase, dadosUltimo) {
   return { deltaTotal: dadosUltimo.total_geral.pct_pib - dadosBase.total_geral.pct_pib, linhas };
 }
 
+// Variação por esfera (União/Estados/Municípios) — AD ESFERA (`dadosAno.ad_esfera`) e
+// RD ESFERA (`dadosAno.rd_esfera.por_esfera`) já têm pct_pib por esfera calculado na
+// publicação; aqui é só a diferença entre os dois anos. Ordem U/E/M — `GraficoVariacao`
+// inverte pra desenhar, então a União acaba no topo do gráfico.
+function compararPorEsfera(mapaBase, mapaUltimo, rotuloEsfera) {
+  if (!mapaBase || !mapaUltimo) return null;
+  return ["U", "E", "M"].map((esf) => ({
+    rotulo: rotuloEsfera[esf],
+    delta: mapaUltimo[esf].pct_pib - mapaBase[esf].pct_pib,
+  }));
+}
+
 export default function Variacao() {
   const [metadados, setMetadados] = useState(null);
   const [dados, setDados] = useState(null);
@@ -58,11 +70,22 @@ export default function Variacao() {
   const anoPrimeiro = anos[0];
   const temPrimeiro = anoPrimeiro !== anoAnterior;
 
+  const rotuloEsfera = metadados.rotulo_esfera;
+  const montarComparacao = (chave, anoBase) => ({
+    chave,
+    anoBase,
+    resultado: compararAnos(dados[anoBase], dados[anoUltimo]),
+    porEsferaAd: compararPorEsfera(dados[anoBase].ad_esfera, dados[anoUltimo].ad_esfera, rotuloEsfera),
+    porEsferaRd: compararPorEsfera(
+      dados[anoBase].rd_esfera?.por_esfera,
+      dados[anoUltimo].rd_esfera?.por_esfera,
+      rotuloEsfera
+    ),
+  });
+
   const comparacoes = [
-    { chave: "anterior", anoBase: anoAnterior, resultado: compararAnos(dados[anoAnterior], dados[anoUltimo]) },
-    ...(temPrimeiro
-      ? [{ chave: "primeiro", anoBase: anoPrimeiro, resultado: compararAnos(dados[anoPrimeiro], dados[anoUltimo]) }]
-      : []),
+    montarComparacao("anterior", anoAnterior),
+    ...(temPrimeiro ? [montarComparacao("primeiro", anoPrimeiro)] : []),
   ];
   const atual = comparacoes.find((c) => c.chave === comparacao) ?? comparacoes[0];
   const cAnterior = comparacoes[0];
@@ -106,6 +129,30 @@ export default function Variacao() {
           </label>
         </div>
       )}
+
+      <h3 className="subtitulo">Variação por esfera de governo</h3>
+      <div className="duas-colunas">
+        <GraficoVariacao
+          linhas={atual.porEsferaAd}
+          titulo={`AD ESFERA — ${anoUltimo} vs ${atual.anoBase}`}
+          nomeArquivoPng={`variacao_ad_esfera_${atual.anoBase}_${anoUltimo}.png`}
+          altura="220px"
+          margemEsquerda={110}
+        />
+        {atual.porEsferaRd ? (
+          <GraficoVariacao
+            linhas={atual.porEsferaRd}
+            titulo={`RD ESFERA — ${anoUltimo} vs ${atual.anoBase}`}
+            nomeArquivoPng={`variacao_rd_esfera_${atual.anoBase}_${anoUltimo}.png`}
+            altura="220px"
+            margemEsquerda={110}
+          />
+        ) : (
+          <p className="aviso-vazio">
+            RD ESFERA não calculado para {atual.anoBase} ou {anoUltimo}.
+          </p>
+        )}
+      </div>
 
       <h3 className="subtitulo">Tributos que mais explicam a variação</h3>
       <GraficoVariacao

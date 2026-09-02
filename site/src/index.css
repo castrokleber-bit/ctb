@@ -243,6 +243,18 @@ h1, h2, h3 {
   height: 560px;
 }
 
+.duas-colunas {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.duas-colunas > * {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+
 .cartoes-variacao {
   display: flex;
   gap: 20px;

@@ -3,10 +3,10 @@ import * as echarts from "echarts";
 import { pontosPib } from "../lib/formato";
 import { COR_ALTA, COR_QUEDA } from "../lib/cores";
 
-// Ranking de variação de carga por tributo — barra horizontal divergente (eixo zero
-// ao centro), ordenada da maior alta pra maior queda. `linhas` já vem ordenada pelo
-// chamador; aqui só desenha.
-export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng }) {
+// Barra horizontal divergente (eixo zero ao centro) — usada tanto pro ranking de
+// tributos (muitas linhas, `altura` maior) quanto pra variação por esfera (3 linhas,
+// `altura` menor). `linhas` já vem ordenada pelo chamador; aqui só desenha.
+export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng, altura, margemEsquerda = 190 }) {
   const containerRef = useRef(null);
   const instanciaRef = useRef(null);
 
@@ -29,7 +29,7 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng }) {
     const ordenadas = [...linhas].reverse();
     instancia.setOption({
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
-      grid: { left: 190, right: 60, top: 50, bottom: 30 },
+      grid: { left: margemEsquerda, right: 60, top: 50, bottom: 30 },
       tooltip: {
         trigger: "axis",
         axisPointer: { type: "shadow" },
@@ -57,7 +57,7 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng }) {
         },
       ],
     });
-  }, [linhas, titulo]);
+  }, [linhas, titulo, margemEsquerda]);
 
   function exportarPng() {
     const instancia = instanciaRef.current;
@@ -76,7 +76,11 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng }) {
           Exportar PNG
         </button>
       </div>
-      <div ref={containerRef} className="grafico-canvas grafico-variacao" />
+      <div
+        ref={containerRef}
+        className="grafico-canvas grafico-variacao"
+        style={altura ? { height: altura } : undefined}
+      />
     </div>
   );
 }
