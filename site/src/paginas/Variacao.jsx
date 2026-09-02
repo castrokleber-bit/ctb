@@ -112,9 +112,14 @@ function ConteudoVariacao({ anoInicial, anoFinal, dadosInicial, dadosFinal, rotu
 
   return (
     <div>
-      <div className="cartoes-variacao">
-        <div className="cartao-variacao">
-          <span className="rotulo">{anoFinal} vs {anoInicial}</span>
+      <div className="cartoes-kpi">
+        <div className="cartao-kpi">
+          <div className="cartao-kpi-cabecalho">
+            <span className="rotulo">{anoFinal} vs {anoInicial}</span>
+            <span className={`tag-variacao ${resultado.deltaTotal >= 0 ? "alta" : "queda"}`}>
+              {resultado.deltaTotal >= 0 ? "▲ Alta" : "▼ Queda"}
+            </span>
+          </div>
           <span className={`valor ${resultado.deltaTotal >= 0 ? "alta" : "queda"}`}>
             {pontosPib(resultado.deltaTotal, 2)}
           </span>

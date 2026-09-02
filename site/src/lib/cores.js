@@ -69,3 +69,30 @@ export function matizes(corBase, n) {
   const lMax = Math.min(0.82, l + 0.28);
   return Array.from({ length: n }, (_, i) => hslParaHex(h, s, lMin + (lMax - lMin) * (i / (n - 1))));
 }
+
+// Gradiente vertical sutil (mais claro no topo) pra dar um pouco de profundidade às
+// barras — mesmo espírito de painel "premium" da referência, sem exagerar: só dois
+// tons da própria cor, não um gradiente multicolorido.
+export function gradienteVertical(corBase) {
+  const { h, s, l } = hexParaHsl(corBase);
+  const claro = hslParaHex(h, s, Math.min(0.88, l + 0.16));
+  return {
+    type: "linear", x: 0, y: 0, x2: 0, y2: 1,
+    colorStops: [
+      { offset: 0, color: claro },
+      { offset: 1, color: corBase },
+    ],
+  };
+}
+
+// Tooltip escuro e arredondado, flutuando sobre o gráfico claro — usado em todo
+// gráfico ECharts do site (Grafico, GraficoSerie, GraficoVariacao, DiagramaFluxo) pra
+// dar contraste e uma sensação mais "painel de controle" sem escurecer o site inteiro.
+export const TOOLTIP_TEMA = {
+  backgroundColor: "#22303f",
+  borderWidth: 0,
+  borderRadius: 10,
+  padding: [8, 12],
+  textStyle: { color: "#f2f4f7", fontSize: 12, fontFamily: "Inter, sans-serif" },
+  extraCssText: "box-shadow: 0 12px 28px -10px rgba(20, 24, 18, 0.45);",
+};

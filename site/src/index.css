@@ -10,7 +10,11 @@
   --alerta: #d9622e;
   --positivo: #2f8f57;
   --negativo: #c0503f;
+  --marca: #4f46e5;
+  --marca-escura: #4338ca;
+  --marca-tint: rgba(79, 70, 229, 0.09);
   --borda: #e2dfd3;
+  --borda-sutil: rgba(34, 48, 63, 0.09);
   --fundo: #f7f5ef;
   --superficie: #ffffff;
   --fundo-alerta: #fdf1e9;
@@ -65,31 +69,31 @@ h1, h2, h3 {
 .nav-principal {
   display: flex;
   gap: 4px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--borda);
 }
 
 .nav-item, .nav-ativo {
   border: none;
   background: transparent;
-  padding: 10px 4px;
-  margin-right: 22px;
+  padding: 8px 16px;
+  border-radius: 999px;
   font-family: "Poppins", "Inter", sans-serif;
   font-size: 0.9rem;
   color: var(--texto-suave);
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease;
 }
 
 .nav-ativo {
-  color: var(--tinta);
+  color: var(--marca);
   font-weight: 600;
-  border-bottom-color: var(--azul);
+  background: var(--marca-tint);
 }
 
 .nav-item:hover {
   color: var(--texto);
+  background: var(--fundo);
 }
 
 .barra-controles {
@@ -123,20 +127,9 @@ h1, h2, h3 {
   min-width: 170px;
 }
 
-.resumo-ano {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  padding: 4px 0 16px;
-  margin-bottom: 4px;
-  font-size: 0.92rem;
-  color: var(--texto-suave);
-  border-bottom: 1px solid var(--borda);
-}
-
-.resumo-ano strong {
-  color: var(--tinta);
-  font-weight: 600;
+.seletor select:focus-visible {
+  outline: 2px solid var(--marca);
+  outline-offset: 1px;
 }
 
 .nota-cobertura {
@@ -157,7 +150,6 @@ h1, h2, h3 {
 .abas-quadro {
   display: flex;
   gap: 4px;
-  border-bottom: 1px solid var(--borda);
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
@@ -165,25 +157,24 @@ h1, h2, h3 {
 .aba-quadro, .aba-quadro-ativa {
   border: none;
   background: transparent;
-  padding: 10px 16px 10px 2px;
-  margin-right: 14px;
+  padding: 7px 14px;
+  border-radius: 999px;
   font-family: "Poppins", "Inter", sans-serif;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   color: var(--texto-suave);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease;
 }
 
 .aba-quadro-ativa {
-  border-bottom-color: var(--azul);
-  color: var(--tinta);
+  background: var(--marca-tint);
+  color: var(--marca);
   font-weight: 600;
 }
 
 .aba-quadro:hover {
   color: var(--texto);
+  background: var(--fundo);
 }
 
 .abas-esfera {
@@ -206,7 +197,7 @@ h1, h2, h3 {
 }
 
 .aba:hover {
-  border-color: var(--azul);
+  border-color: var(--marca);
   color: var(--tinta);
 }
 
@@ -219,11 +210,11 @@ h1, h2, h3 {
 
 .painel, .grafico-wrap, .tabela-wrap {
   background: var(--superficie);
-  border: 1px solid var(--borda);
+  border: 1px solid var(--borda-sutil);
   border-radius: 14px;
   padding: 20px 24px 24px;
   margin-bottom: 24px;
-  box-shadow: 0 1px 2px rgba(30, 26, 10, 0.04), 0 10px 24px -16px rgba(30, 26, 10, 0.14);
+  box-shadow: 0 1px 3px rgba(30, 26, 10, 0.05), 0 14px 28px -18px rgba(30, 26, 10, 0.18);
 }
 
 .grafico-canvas {
@@ -251,23 +242,30 @@ h1, h2, h3 {
   min-width: 0;
 }
 
-.cartoes-variacao {
+.cartoes-kpi {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
 
-.cartao-variacao {
+.cartao-kpi {
   flex: 1 1 240px;
   background: var(--superficie);
-  border: 1px solid var(--borda);
+  border: 1px solid var(--borda-sutil);
   border-radius: 14px;
   padding: 18px 22px;
-  box-shadow: 0 1px 2px rgba(30, 26, 10, 0.04), 0 10px 24px -16px rgba(30, 26, 10, 0.14);
+  box-shadow: 0 1px 3px rgba(30, 26, 10, 0.05), 0 14px 28px -18px rgba(30, 26, 10, 0.18);
 }
 
-.cartao-variacao .rotulo {
+.cartao-kpi-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cartao-kpi .rotulo {
   font-family: "Poppins", "Inter", sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
@@ -276,22 +274,42 @@ h1, h2, h3 {
   color: var(--texto-suave);
 }
 
-.cartao-variacao .valor {
+.cartao-kpi .valor {
   display: block;
   margin-top: 6px;
   font-family: "Poppins", "Inter", sans-serif;
   font-size: 1.8rem;
   font-weight: 600;
+  color: var(--tinta);
 }
 
-.cartao-variacao .valor.alta { color: var(--positivo); }
-.cartao-variacao .valor.queda { color: var(--negativo); }
+.cartao-kpi .valor.alta { color: var(--positivo); }
+.cartao-kpi .valor.queda { color: var(--negativo); }
 
-.cartao-variacao .contexto {
+.cartao-kpi .contexto {
   display: block;
   margin-top: 4px;
   font-size: 0.82rem;
   color: var(--texto-suave);
+}
+
+.tag-variacao {
+  flex-shrink: 0;
+  font-family: "Poppins", "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.tag-variacao.alta {
+  background: rgba(47, 143, 87, 0.12);
+  color: var(--positivo);
+}
+
+.tag-variacao.queda {
+  background: rgba(192, 80, 63, 0.12);
+  color: var(--negativo);
 }
 
 .fluxo-transferencias {
@@ -331,8 +349,8 @@ h1, h2, h3 {
 }
 
 .botao-secundario:hover {
-  border-color: var(--azul);
-  color: var(--azul);
+  border-color: var(--marca);
+  color: var(--marca);
 }
 
 .tabela-scroll {
@@ -391,11 +409,12 @@ h1, h2, h3 {
 }
 
 .bloco-transferencia {
-  border: 1px solid var(--borda);
+  border: 1px solid var(--borda-sutil);
   background: var(--superficie);
   border-radius: 10px;
   padding: 4px 16px;
   margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(30, 26, 10, 0.04);
 }
 
 .bloco-transferencia summary {
@@ -444,7 +463,7 @@ h1, h2, h3 {
 }
 
 .conceito-carga a {
-  color: var(--azul);
+  color: var(--marca);
 }
 
 .rodape {

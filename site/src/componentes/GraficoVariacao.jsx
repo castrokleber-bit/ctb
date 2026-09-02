@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { pontosPib } from "../lib/formato";
-import { COR_ALTA, COR_QUEDA } from "../lib/cores";
+import { COR_ALTA, COR_QUEDA, TOOLTIP_TEMA } from "../lib/cores";
 
 // Barra horizontal divergente (eixo zero ao centro) — usada tanto pro ranking de
 // tributos (muitas linhas, `altura` maior) quanto pra variação por esfera (3 linhas,
@@ -34,6 +34,7 @@ export default function GraficoVariacao({ linhas, titulo, nomeArquivoPng, altura
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
       grid: { left: margemEsquerda, right: 60, top: 50, bottom: 30 },
       tooltip: {
+        ...TOOLTIP_TEMA,
         trigger: "axis",
         axisPointer: { type: "shadow" },
         valueFormatter: (v) => pontosPib(v, 2),

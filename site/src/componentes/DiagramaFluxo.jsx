@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { numero } from "../lib/formato";
-import { CORES_ESFERA } from "../lib/cores";
+import { CORES_ESFERA, TOOLTIP_TEMA } from "../lib/cores";
 
 const ESFERAS = ["U", "E", "M"];
 
@@ -69,6 +69,7 @@ export default function DiagramaFluxo({ adEsfera, transferencias, rotuloEsfera, 
         textStyle: { fontSize: 14 },
       },
       tooltip: {
+        ...TOOLTIP_TEMA,
         trigger: "item",
         triggerOn: "mousemove",
         formatter: (p) =>

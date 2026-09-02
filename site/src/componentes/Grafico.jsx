@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { UNIDADES } from "../lib/formato";
-import { PALETA_CATEGORICA, matizes } from "../lib/cores";
+import { PALETA_CATEGORICA, matizes, TOOLTIP_TEMA } from "../lib/cores";
 
 // Rosca (pizza com furo) — cada fatia é uma linha do quadro. `cor` deixa o chamador
 // tingir todas as fatias em tons de uma única cor (QuadroPorEsfera: identidade da
@@ -36,6 +36,7 @@ export default function Grafico({
     instancia.setOption({
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
       tooltip: {
+        ...TOOLTIP_TEMA,
         trigger: "item",
         formatter: (p) => `${p.marker} ${p.name}: ${config.formatar(p.value)} (${p.percent}%)`,
       },

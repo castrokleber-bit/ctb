@@ -53,14 +53,17 @@ export default function Quadros() {
         <SeletorUnidade unidadeSelecionada={unidade} aoMudar={setUnidade} />
       </div>
 
-      <div className="resumo-ano">
-        <span>
-          <strong>Total geral {ano}:</strong> {reaisBi(dadosAno.total_geral.valor_bi)} (
-          {percentual(dadosAno.total_geral.pct_pib, 2)} do PIB)
-        </span>
-        <span>
-          PIB corrente: {reaisBi(dadosAno.pib_bi)} (extraído em {dadosAno.data_extracao_pib})
-        </span>
+      <div className="cartoes-kpi">
+        <div className="cartao-kpi">
+          <span className="rotulo">Total geral {ano}</span>
+          <span className="valor">{reaisBi(dadosAno.total_geral.valor_bi)}</span>
+          <span className="contexto">{percentual(dadosAno.total_geral.pct_pib, 2)} do PIB</span>
+        </div>
+        <div className="cartao-kpi">
+          <span className="rotulo">PIB corrente</span>
+          <span className="valor">{reaisBi(dadosAno.pib_bi)}</span>
+          <span className="contexto">extraído em {dadosAno.data_extracao_pib}</span>
+        </div>
       </div>
 
       <NotaCobertura cobertura={dadosAno.cobertura_imputacao} gapFgtsSistemaS={dadosAno.gap_fgts_sistema_s} />

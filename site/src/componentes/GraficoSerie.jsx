@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { UNIDADES } from "../lib/formato";
-import { CORES_ESFERA } from "../lib/cores";
+import { CORES_ESFERA, gradienteVertical, TOOLTIP_TEMA } from "../lib/cores";
 
 const ESFERAS_EMPILHADAS = ["U", "E", "M"];
 const ROTULO_TOTAL = "Setor Público Consolidado";
@@ -39,7 +39,7 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
       stack: "esferas",
       barMaxWidth: 46,
       data: serie[esf].map((p) => p[config.campo]),
-      itemStyle: { color: CORES_ESFERA[esf] },
+      itemStyle: { color: gradienteVertical(CORES_ESFERA[esf]) },
       label: {
         show: true,
         position: "inside",
@@ -72,6 +72,7 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
       title: { text: titulo, left: "center", textStyle: { fontSize: 14 } },
       grid: { left: 70, right: 30, top: 60, bottom: 60 },
       tooltip: {
+        ...TOOLTIP_TEMA,
         trigger: "axis",
         axisPointer: { type: "shadow" },
         formatter: (params) => {
