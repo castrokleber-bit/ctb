@@ -50,6 +50,13 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
       labelLayout: { hideOverlap: true },
     }));
 
+    // Fronteira 2015→2016: série histórica (2000-2015) é extraída direto do
+    // CTB-Resumo.xlsx, sem passar pela metodologia automatizada — ver
+    // manual/README.md §ctb_resumo_*.csv. Marca a virada em vez de deixar o degrau
+    // (ex.: "Multas e Dívida Ativa" some) sem contexto.
+    const primeiroAnoNovo = anos.find((a) => a >= 2016);
+    const temFronteira = primeiroAnoNovo !== undefined && anos.some((a) => a < 2016);
+
     const serieTotal = {
       name: ROTULO_TOTAL,
       type: "bar",
@@ -66,6 +73,15 @@ export default function GraficoSerie({ serie, rotuloEsfera, unidade, titulo, nom
         fontWeight: 600,
         formatter: (p) => config.formatar(totais[p.dataIndex]?.[config.campo]),
       },
+      markLine: temFronteira
+        ? {
+            silent: true,
+            symbol: "none",
+            lineStyle: { type: "dashed", color: "#9aa3ad" },
+            label: { formatter: "metodologia nova →", color: "#6b7684", fontSize: 10 },
+            data: [{ xAxis: primeiroAnoNovo }],
+          }
+        : undefined,
     };
 
     instancia.setOption({

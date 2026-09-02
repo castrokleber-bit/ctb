@@ -796,6 +796,39 @@ fugir do tom sóbrio que a decisão 8 exige):
   publicar direto e revisar ao vivo, já que o site está em estado de rascunho
   pré-aprovação editorial de qualquer forma (decisão 8).
 
+### Fase 5.5 — Extensão histórica 2000-2015 ✅ **publicada, 2026-09-02**
+
+Pedido do usuário: estender a série pra trás de 2016, **sem recalcular pela
+metodologia automatizada** — importar direto de `CTB-Resumo.xlsx` (decisão 10,
+`docs/decisoes-pendentes.md`). Exceção deliberada à regra de escopo do CLAUDE.md,
+registrada porque muda o que fica publicado.
+
+`pipeline/dominio/publicar_legado.py` lê `manual/ctb_resumo_*.csv` (extraídos das cinco
+abas de `CTB-Resumo.xlsx` — byGOVDetalhado, AD ESFERA, PRINCIPAIS TRIBUTOS, Bases de
+Incidência, RD ESFERA — com um script pontual não versionado; detalhe completo da
+extração e normalização de rótulo em `manual/README.md` §`ctb_resumo_*.csv`) e monta o
+mesmo formato de JSON que `publicar.py` produz pros anos 2016+, reaproveitando
+`quadros._linha`/`ad_por_esfera_indicadores`/`rd_por_esfera_indicadores`/
+`consolidar_linhas` (nenhuma lógica de indicador duplicada). `publicar.py::_publicar_ano`
+despacha pra esse módulo quando `ano < 2016`, então `uv run ctb publicar --anos
+2000-2025` cobre a série inteira num comando só.
+
+Cada ano carrega `"fonte_dados"`: `"ctb_resumo_legado"` (2000-2015) ou `"siconfi_dca"`
+(2016+) — o site sinaliza a diferença de proveniência em vez de esconder:
+`NotaFonteLegado.jsx` (aviso na aba Quadros), marca `metodologia nova →` no gráfico de
+Série Histórica (`GraficoSerie.jsx`, linha tracejada em 2016), e aviso na Variação da
+Carga quando a comparação escolhida atravessa a fronteira de 2016.
+
+**Consequência aceita, não escondida:** a linha "Multas e Dívida Ativa" (decisão 1,
+abolida em 2016) existe em 2000-2015 e some em 2016 — o valor passa a ser redistribuído
+nas rubricas de origem a partir dali, não é queda de arrecadação. `cobertura_imputacao`
+fica `null` e `gap_fgts_sistema_s` fica `false` pra 2000-2015 (nenhum dos dois existe
+nessa fonte — FGTS/Sistema S já vêm embutidos nos números da União da planilha antiga).
+
+Total geral passou a cobrir 2000-2025 (26 anos): a carga foi de 30,56% do PIB em 2000
+até 35,90% em 2025, com o degrau metodológico de 2016 visível e explicado, não
+suavizado.
+
 ### Fase 6 — Automação
 GitHub Action mensal: roda o pipeline e, se algum número mudou, abre PR com o diff.
 Publicação só após aprovação.

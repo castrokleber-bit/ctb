@@ -17,6 +17,8 @@ import polars as pl
 from pipeline.dominio.agregacao import calcular_ano
 from pipeline.dominio.dicionario import carregar_mapeamentos
 from pipeline.dominio.manual_uniao import ANOS_DISPONIVEIS as ANOS_FGTS_SISTEMA_S
+from pipeline.dominio.publicar_legado import ANOS_DISPONIVEIS as ANOS_LEGADO
+from pipeline.dominio.publicar_legado import publicar_ano_legado
 from pipeline.dominio.quadros import (
     ESFERAS_COM_CONSOLIDADO, ROTULO_CONSOLIDADO, ROTULO_ESFERA, ad_esfera,
     ad_por_esfera_indicadores, bases_incidencia, bygov_detalhado, consolidar_linhas,
@@ -66,6 +68,8 @@ def _cobertura_municipal(relatorio) -> dict:
 
 
 def _publicar_ano(ano: int) -> dict:
+    if ano in ANOS_LEGADO:
+        return publicar_ano_legado(ano)
     if not (DIR_INTERMEDIARIO / f"{ano}.parquet").exists():
         raise ErroPublicar(
             f"{ano}: dados/intermediario/{ano}.parquet não existe — rode "
@@ -88,6 +92,7 @@ def _publicar_ano(ano: int) -> dict:
         "pib_bi": pib / 1e9,
         "data_extracao_pib": data_pib.isoformat(),
         "populacao": populacao,
+        "fonte_dados": "siconfi_dca",
         "total_geral": {
             "valor_reais": total,
             "valor_bi": total / 1e9,
@@ -157,8 +162,12 @@ def _construir_serie_historica() -> dict:
     )
     ad: dict[str, list] = {esf: [] for esf in ESFERAS_COM_CONSOLIDADO}
     rd: dict[str, list] = {esf: [] for esf in ESFERAS_COM_CONSOLIDADO}
+    anos_legado = []
     for ano in anos_publicados:
         dados_ano = json.loads((DIR_PUBLICADO / f"{ano}.json").read_text(encoding="utf-8"))
+        fonte_dados = dados_ano.get("fonte_dados")
+        if fonte_dados == "ctb_resumo_legado":
+            anos_legado.append(ano)
         for esf in ESFERAS_COM_CONSOLIDADO:
             linha_ad = dados_ano["ad_esfera"][esf]
             ad[esf].append({
@@ -180,7 +189,12 @@ def _construir_serie_historica() -> dict:
                     "pct_total": linha_rd["pct_total"],
                     "per_capita": linha_rd["per_capita"],
                 })
-    return {"anos_disponiveis": anos_publicados, "ad_esfera": ad, "rd_esfera": rd}
+    return {
+        "anos_disponiveis": anos_publicados,
+        "anos_legado": anos_legado,
+        "ad_esfera": ad,
+        "rd_esfera": rd,
+    }
 
 
 def executar(anos: range) -> Path:
@@ -197,8 +211,14 @@ def executar(anos: range) -> Path:
     anos_publicados = sorted(
         int(p.stem) for p in DIR_PUBLICADO.glob("*.json") if p.stem.isdigit()
     )
+    anos_legado = sorted(
+        ano for ano in anos_publicados
+        if json.loads((DIR_PUBLICADO / f"{ano}.json").read_text(encoding="utf-8")).get("fonte_dados")
+        == "ctb_resumo_legado"
+    )
     metadados = {
         "anos_disponiveis": anos_publicados,
+        "anos_legado": anos_legado,
         "gerado_em": datetime.now().isoformat(timespec="seconds"),
         "rotulo_esfera": {**ROTULO_ESFERA, "consolidado": ROTULO_CONSOLIDADO},
         "versao_schema": VERSAO_SCHEMA,

@@ -109,9 +109,20 @@ function ConteudoVariacao({ anoInicial, anoFinal, dadosInicial, dadosFinal, rotu
     dadosFinal.rd_esfera?.por_esfera,
     rotuloEsfera
   );
+  const atravessaFronteira = dadosInicial.fonte_dados !== dadosFinal.fonte_dados;
 
   return (
     <div>
+      {atravessaFronteira && (
+        <aside className="nota-legado">
+          <strong>{anoInicial} e {anoFinal} vêm de metodologias diferentes</strong> — um
+          é da série antiga (CTB-Resumo.xlsx), o outro da metodologia automatizada deste
+          projeto (Siconfi/DCA, 2016+). Parte da variação abaixo — sobretudo a linha
+          "Multas e Dívida Ativa" — reflete a mudança de classificação, não crescimento
+          ou queda real da carga.
+        </aside>
+      )}
+
       <div className="cartoes-kpi">
         <div className="cartao-kpi">
           <div className="cartao-kpi-cabecalho">

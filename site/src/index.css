@@ -143,6 +143,21 @@ h1, h2, h3 {
   margin: 16px 0 24px;
 }
 
+.nota-legado {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  background: var(--fundo);
+  border-left: 3px solid var(--roxo);
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin: 16px 0 24px;
+}
+
+.nota-legado strong {
+  color: var(--texto);
+}
+
 .nota-cobertura strong {
   color: var(--texto);
 }

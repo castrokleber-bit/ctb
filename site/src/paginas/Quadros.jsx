@@ -6,6 +6,7 @@ import QuadroRdEsfera from "../componentes/QuadroRdEsfera";
 import TabelaQuadro from "../componentes/TabelaQuadro";
 import Grafico from "../componentes/Grafico";
 import NotaCobertura from "../componentes/NotaCobertura";
+import NotaFonteLegado from "../componentes/NotaFonteLegado";
 import { reaisBi, percentual } from "../lib/formato";
 import { exportarBygovTudo } from "../lib/exportarCsv";
 
@@ -66,6 +67,7 @@ export default function Quadros() {
         </div>
       </div>
 
+      <NotaFonteLegado fonteDados={dadosAno.fonte_dados} ano={ano} />
       <NotaCobertura cobertura={dadosAno.cobertura_imputacao} gapFgtsSistemaS={dadosAno.gap_fgts_sistema_s} />
 
       <nav className="abas-quadro">

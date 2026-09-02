@@ -66,6 +66,14 @@ export default function SerieHistorica() {
       ) : (
         <p className="aviso-vazio">Sem anos disponíveis para {tituloTipo}.</p>
       )}
+
+      {serie.anos_legado?.length > 0 && (
+        <p className="aviso-vazio">
+          {serie.anos_legado[0]}–{serie.anos_legado[serie.anos_legado.length - 1]} vêm do
+          CTB-Resumo.xlsx (série antiga), não da metodologia automatizada deste projeto —
+          ver Metodologia.
+        </p>
+      )}
     </div>
   );
 }

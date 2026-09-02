@@ -121,7 +121,12 @@ export default function Metodologia() {
         A carga tributária é calculada a partir de um <strong>dicionário versionado</strong>{" "}
         que mapeia cada conta do plano de contas da DCA (Siconfi/Tesouro Nacional) a uma
         rubrica de publicação. A tabela abaixo é gerada direto desse dicionário — não é um
-        texto solto que pode dessincronizar do que o pipeline realmente aplica.
+        texto solto que pode dessincronizar do que o pipeline realmente aplica. Essa
+        metodologia automatizada cobre <strong>2016 em diante</strong>. Os anos de{" "}
+        <strong>2000 a 2015</strong> vêm direto do CTB-Resumo.xlsx (a série histórica já
+        publicada antes deste projeto), sem passar pelo dicionário — por isso a linha
+        "Multas e Dívida Ativa" existe até 2015 e desaparece em 2016: não é queda de
+        arrecadação, é o valor sendo redistribuído nas rubricas de origem a partir dali.
       </p>
       <p>
         Cada rubrica é publicada como <strong>receita líquida</strong> (Receitas Brutas

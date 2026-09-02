@@ -102,3 +102,68 @@ para conferência.
   (23,815 / 26,919 / 29,320 bi, vindos do `Sistema S.xlsx`) — mesma fonte primária,
   cruzamento perfeito. Usado para 2025 (R$ 32,385 bi), ano que `Sistema S.xlsx` não
   cobria.
+
+## `ctb_resumo_*.csv` (2000-2015)
+
+**Única exceção deliberada à regra de escopo do CLAUDE.md** ("`CTB-Resumo.xlsx` é
+especificação e referência de comparação, nunca fonte de dados") — pedido explícito do
+usuário em 2026-09-02: estender a série pra trás de 2016 **sem** recalcular pela
+metodologia automatizada (que exigiria reconstruir o dicionário de classificação pra
+pelo menos mais duas eras do plano de contas da DCA anteriores a 2016, trabalho não
+solicitado). Em vez disso, os cinco quadros de 2000-2015 são extraídos direto de
+`CTB-Resumo.xlsx` (fornecido pelo usuário no início do projeto), que já traz a série
+2000-2024 pronta pela **metodologia antiga** — a mesma que os quadros de 2016-2025
+substituíram (ver `docs/divergencias.md` §1 e `docs/revisao-metodologica.md`).
+
+**Isso é uma fonte de dados fundamentalmente diferente das outras em `manual/`**: não é
+um complemento a um cálculo já feito pelo dicionário (como FGTS/Sistema S), é a
+**publicação inteira** de cada ano 2000-2015 — nenhum desses anos passa pelo
+Siconfi/DCA nem pelo dicionário de classificação. `pipeline/dominio/publicar_legado.py`
+lê estes CSVs e monta o mesmo formato JSON dos anos 2016+, mas marca
+`"fonte_dados": "ctb_resumo_legado"` em vez de `"siconfi_dca"` — o site sinaliza a
+diferença, não esconde.
+
+**Consequência que aparece nos quadros**: a linha "Multas e Dívida Ativa" (União) e
+"Demais (multas, juros e dívida ativa)" (Estados/Municípios) existem em 2000-2015 e
+desaparecem em 2016 — não é erro, é a mudança de metodologia (decisão 1,
+`docs/decisoes-pendentes.md`): o valor não some, é redistribuído nas rubricas de
+origem a partir de 2016. Uma comparação de tributo por tributo atravessando essa
+fronteira (aba Variação da Carga) vai mostrar esse degrau.
+
+Extraído com um script pontual (não versionado, não faz parte do pipeline) que leu as
+cinco abas de `CTB-Resumo.xlsx`
+(`byGOVDetalhado`, `AD ESFERA`, `PRINCIPAIS TRIBUTOS`, `Bases de Incidência`,
+`RD ESFERA`) e voltou os valores de R$ bilhões (como a planilha guarda) pra R$ reais.
+Rótulos de rubrica só foram normalizados onde o conceito é exatamente o mesmo do
+dicionário novo (remoção de nota de rodapé tipo "Previdência (1)" → "Previdência
+Social"; "PATRIMONIAIS" → "Patrimônio" pra bater com a mesma decisão já tomada pro
+rótulo de Bases de Incidência de 2016+) — nunca forçando equivalência que não existe
+(as linhas de multas/dívida ativa ficam como estão, sem tentar redistribuir sem o
+detalhe original que permitiria fazer isso direito).
+
+- **`ctb_resumo_pib_populacao.csv`** — PIB e população 2000-2015, colunas `PIB` e
+  `População` das próprias abas da planilha (mesmo valor em todas as cinco, só extraído
+  uma vez).
+- **`ctb_resumo_bygov_detalhado.csv`** — `ano;esfera;rubrica;valor_reais`, da aba
+  `byGOVDetalhado` (34 rubricas: 18 União, 8 Estados, 8 Municípios).
+- **`ctb_resumo_ad_esfera.csv`** — `ano;esfera;categoria;valor_reais`, da aba
+  `AD ESFERA` (categorias agregadas: Impostos/Contribuições Sociais/Previdência
+  Social/FGTS/Demais na União; ICMS/IPVA/Demais em Estados; ISS/IPTU/Demais em
+  Municípios).
+- **`ctb_resumo_principais_tributos.csv`** — `ano;tributo;valor_reais`, da aba
+  `PRINCIPAIS TRIBUTOS`. Lista de tributos não é idêntica à de 2016+ (ex.: tem uma
+  linha "FGTS" própria que a metodologia nova não replica nesse quadro) — mantida como
+  a planilha original define, sem forçar paridade.
+- **`ctb_resumo_bases_incidencia.csv`** — `ano;base_incidencia;valor_reais`, da aba
+  `Bases de Incidência`, rótulos já normalizados pro mesmo Title Case de
+  `dicionario/bases_incidencia.csv`.
+- **`ctb_resumo_rd_esfera.csv`** — `ano;esfera;valor_reais`, totais de receita
+  disponível por esfera, da aba `RD ESFERA`.
+- **`ctb_resumo_rd_transferencias.csv`** — `ano;bloco_origem;bloco_destino;modalidade;
+  valor_reais`, os três blocos de transferência (União→Estados, União→Municípios,
+  Estados→Municípios) com detalhe por modalidade (FPE, FPM, FUNDEF/FUNDEB, Royalties
+  etc.) da mesma aba `RD ESFERA`.
+
+Conferido: soma de `ctb_resumo_bygov_detalhado.csv` bate exato, ano a ano, com a soma
+de `ctb_resumo_rd_esfera.csv` (a AD e a RD têm que somar o mesmo total — é
+redistribuição, não dinheiro novo) — testado em 2000, 2008 e 2015, diferença zero.

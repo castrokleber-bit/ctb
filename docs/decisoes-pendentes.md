@@ -469,3 +469,41 @@ por analogia à mesma regra de repasse de 25%).
 > quase exato. Implementado em `pipeline/dominio/rd_esfera.py`
 > (`RETENCAO_FUNDEB_ICMS_MUNICIPAL`); a linha aparece como "ICMS (cota-parte municipal,
 > líq. FUNDEB)" em `docs/resultado-2024.md`. A cota do IPVA não recebe esse ajuste.
+
+## 10. Anos 2000-2015: recalcular pela metodologia automatizada ou importar da série antiga? — ✅ **DECIDIDA em 2026-09-02: importar do `CTB-Resumo.xlsx`, sem recalcular**
+
+Pedido do usuário para estender a série publicada pra trás de 2016 — o site só cobria
+2016-2025 (Fases 0-4). Duas opções:
+
+1. **Recalcular pela metodologia automatizada** — exigiria reconstruir o dicionário de
+   classificação (`dicionario/contas_dca_*.csv`) pra pelo menos mais duas eras do plano
+   de contas da DCA anteriores a 2016 (o plano de contas já mudou pelo menos três vezes
+   *dentro* de 2016-2025; antes de 2016 provavelmente mudou mais), sem garantia de que o
+   Siconfi DCA tenha os mesmos anexos disponíveis nesse formato pra período tão antigo.
+   Não solicitado pelo usuário.
+2. **Importar direto do `CTB-Resumo.xlsx`** (fornecido pelo usuário no início do
+   projeto) — a planilha já tem a série 2000-2024 completa, calculada pela metodologia
+   antiga (a mesma que os anos 2016+ deste projeto substituíram, `docs/divergencias.md`
+   §1). Zero recálculo.
+
+> **Decisão:** opção 2, pedido explícito do usuário — "não busque nas fontes primárias
+> dessa vez: extraia tudo do arquivo CTB Resumo". **Isso é uma exceção deliberada à regra
+> de escopo do CLAUDE.md** ("`CTB-Resumo.xlsx`... nunca fonte de dados"), registrada aqui
+> porque muda o que fica publicado (adiciona 16 anos com proveniência diferente dos
+> demais) — não porque o usuário pediu decisão, ele já decidiu; registrada pra não ficar
+> só enterrada no commit (regra do CLAUDE.md sobre reportar mudança de lógica
+> explicitamente).
+>
+> Implementado em `pipeline/dominio/publicar_legado.py`, lendo `manual/ctb_resumo_*.csv`
+> (extraídos de `CTB-Resumo.xlsx` — ver `manual/README.md` §`ctb_resumo_*.csv` pro
+> detalhe completo da extração e normalização de rótulos). Cada ano 2000-2015 carrega
+> `"fonte_dados": "ctb_resumo_legado"` no JSON publicado (2016+ carrega
+> `"siconfi_dca"`) — o site sinaliza a diferença de proveniência em vez de esconder
+> (`NotaFonteLegado.jsx`, marca na Série Histórica, aviso na Variação da Carga quando a
+> comparação atravessa a fronteira de 2016).
+>
+> **Consequência aceita, não escondida:** a linha "Multas e Dívida Ativa" (União) e
+> "Demais (multas, juros e dívida ativa)" (Estados/Municípios) existe em 2000-2015 e some
+> em 2016 — não é queda de arrecadação, é a mudança de metodologia da decisão 1
+> (o valor passa a ser redistribuído nas rubricas de origem a partir de 2016). Uma
+> comparação em "Variação da Carga" que atravesse essa fronteira mostra esse degrau.
